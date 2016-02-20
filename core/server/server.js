@@ -93,10 +93,9 @@ app.delete('/user/delete/:userId', userCtrl.deleteUser);
 //tested through user
 
 //chat endpoints
-app.post('/chat/:teamId', chatCtrl.create);
-app.get('/chat/:teamId', chatCtrl.readAllChatsInTeam);
-//delete team session chats when last person logs out?
-app.delete('/chat/:teamId', chatCtrl.deleteTeamSessionChats)
+app.post('/chat', chatCtrl.create);
+app.get('/chat', chatCtrl.readAllChatsInTeam);
+app.delete('/chat', chatCtrl.deleteTeamSessionChats)
 
 //team endpoints
 app.post('/team/create', teamCtrl.create);

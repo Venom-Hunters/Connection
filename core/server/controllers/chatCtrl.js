@@ -4,8 +4,7 @@ module.exports = {
 
 	create: function(req, res, next) {
 		var newChat = new Chat();
-		newChat.teamId = req.params.teamId;
-		newChat.userId = req.body.userId;
+		newChat.userName = req.body.userName;
 		newChat.message = req.body.message;
 		newChat.timeStamp = new Date();
 		newChat.save(function(err, result){
@@ -15,7 +14,7 @@ module.exports = {
 	},
 	readAllChatsInTeam: function(req, res, next) {
 		Chat
-		.find({teamId: req.params.teamId}).populate('userId')
+		.find({})
 		.sort('-timeStamp')
 		.exec(function(err, result) {
 			if (err) res.sendStatus(500);
@@ -23,7 +22,7 @@ module.exports = {
 		});
 	},
 	deleteTeamSessionChats: function(req, res, next) {
-		Chat.remove({teamId: req.params.teamId}, function(err) {
+		Chat.remove({}, function(err) {
 				if (err) res.sendStatus(500);
 				else res.send('chats deleted');
 			});
