@@ -4,7 +4,7 @@ module.exports = {
 	create: function(req, res, next) {
 	    User.findOne({'email': req.body.email}, function(err, user) {
 	        if (user) {
-	            res.status(403).send('Email already exists. Please use a different email.');
+	            return res.status(403).send('Email already exists. Please use a different email.');
 	        } else {
 			    var newUser = new User();
 			    newUser.userName = req.body.userName;
@@ -13,10 +13,8 @@ module.exports = {
 			        newUser.password = response;
 			        newUser.save(function(err, result) {
 			            if (err) {
-			                res.status(500).send();
-			            } else {
-			            	next();
-			            }
+			                return res.status(500).send();
+			            } else return next();
 			        })
 			    });
 			}
@@ -24,14 +22,14 @@ module.exports = {
 	},
 	updateUserProfile: function(req, res, next) {
 		User.findById(req.user._id, function(err, user) {
-			if (err) res.status(500).send(err);
+			if (err) return res.status(500).send(err);
 			else {
 				user.userName = req.body.userName;
 				user.generateHash(req.body.password).then(function(response) {
 					user.password = response;
 					user.save(function(err, result) {
-						if (err) res.status(500).send(err);
-						else res.send(user); 
+						if (err) return res.status(500).send(err);
+						else return res.send(user); 
 					})
 				})
 			}
@@ -39,8 +37,8 @@ module.exports = {
 	},
 	deleteUser: function(req, res, next) {
 		User.findOneAndRemove({_id: req.params.userId}, function(err, result) {
-			if(err) res.status(500).send(err);
-			else res.send(result);
+			if(err) return res.status(500).send(err);
+			else return res.send(result);
 		})
 	},	
 	getUser: function(req, res, next) {
@@ -48,29 +46,29 @@ module.exports = {
 			User.findById(req.user._id).populate('lastTeamViewed').exec(function(err, user) {
 				if (err) res.status(500).send(err);
 				else if (!user) {
-					req.status(401).send();
+					return res.status(401).send();
 				}
 				else {
-					res.send(user);
+					return res.send(user);
 				}
 			});
 		} else res.status(401).send();
 	},
 	logout: function(req, res, next) {
 		User.findById(req.params.userId, function(err, user) {
-			if(err) res.sendStatus(500);
+			if(err) return res.sendStatus(500);
 			else {
 				user.loggedIn = false;
 				user.save(function(err, result) {
-					if (err) res.sendStatus(500);
+					if (err) return res.sendStatus(500);
 					else {
 						req.session.destroy();
 						req.logout();
-						res.send(result);
+						return res.send(result);
 					}
-				})
+				});
 			}
-		})
+		});
 	}
 
 }

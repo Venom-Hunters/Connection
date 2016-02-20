@@ -17,6 +17,7 @@ passport.use('local', new localStrategy({
 	passReqToCallback: true
 }, function(req, email, password, done) {
 	process.nextTick(function() {
+		//possibly pull this code out to userCtrl
 		User.findOne({'email': email}, function(err, user) {
 			if (err) return done(err);
 			else if(user) {
@@ -87,7 +88,7 @@ app.get('/auth/logout/:userId', userCtrl.logout);
 
 //user endpoints
 app.put('/user/update', userCtrl.updateUserProfile);
-app.get('/user/currentUser', userCtrl.getUser);
+app.get('/user/currentUser/:userId', userCtrl.getUser);
 app.delete('/user/delete/:userId', userCtrl.deleteUser);
 //tested through user
 
