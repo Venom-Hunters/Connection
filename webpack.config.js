@@ -15,19 +15,19 @@ module.exports = {
   module: {
     preLoaders: [
       {
-        test: /(\.jsx$ | \.js$)/,
-        exclude: /(node_modules | server | bundle.js)/,
+        test: /(\.js$)/,
+        exclude: /(node_module|server)/,
         loader: "jshint-loader"
       }
     ],
     loaders: [
       {
-        test: /(\.jsx$ | \.js$)/,
-        exclude: /(node_modules | server | bundle.js)/,
+        test: /(\.jsx$|\.js$)/,
+        exclude: /(node_module|server)/,
         loader: "babel-loader"
       }, {
         test: /\.scss$/,
-        exclude: /(node_modules | server)/,
+        exclude: /(node_modules|server)/,
         loader: "style-loader!css-loader!autoprefixer-loader!sass-loader"
       }
     ]
