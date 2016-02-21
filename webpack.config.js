@@ -1,7 +1,7 @@
 var path = require("path");
 var webpack = require("webpack");
 
-module.exports ={
+module.exports = {
   context: path.resolve("core/app/"),
   entry: "./index.jsx",
   output: {
@@ -15,18 +15,17 @@ module.exports ={
   module: {
     preLoaders: [
       {
-        test: /\.js$/,
-        exclude: /(node_modules | server)/,
+        test: /(\.jsx$ | \.js$)/,
+        exclude: /(node_modules | server | bundle.js)/,
         loader: "jshint-loader"
       }
     ],
     loaders: [
       {
         test: /(\.jsx$ | \.js$)/,
-        exclude: /(node_modules | server)/,
-        loader: "babel-loader!jsxhint-loader"
-      },
-      {
+        exclude: /(node_modules | server | bundle.js)/,
+        loader: "babel-loader"
+      }, {
         test: /\.scss$/,
         exclude: /(node_modules | server)/,
         loader: "style-loader!css-loader!autoprefixer-loader!sass-loader"
@@ -34,7 +33,12 @@ module.exports ={
     ]
   },
   resolve: {
-    extensions: ["", ".js", ".jsx"]
+    extensions: [
+      "", ".js", ".jsx"
+    ],
+    alais: {
+      skeleton: __dirname + "/node_modules/skeleton-sass/skeleton_template.scss"
+    }
   },
   watch: true
 };
