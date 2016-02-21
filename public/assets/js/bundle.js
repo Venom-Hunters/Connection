@@ -46,5 +46,11 @@
 
 	"use strict";
 
+	var amarillo = function amarillo() {
+	   console.log("hey");
+	};
+
+	amarillo();
+
 /***/ }
 /******/ ]);
