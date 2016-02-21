@@ -16,25 +16,25 @@ module.exports ={
     preLoaders: [
       {
         test: /\.js$/,
-        exclude: "node_modules",
+        exclude: /(node_modules | server)/,
         loader: "jshint-loader"
       }
     ],
     loaders: [
       {
-        test: /\.jsx$/,
-        exclude: /node_modules/,
-        loader: "babel-loader"
+        test: /(\.jsx$ | \.js$)/,
+        exclude: /(node_modules | server)/,
+        loader: "babel-loader!jsxhint-loader"
       },
       {
         test: /\.scss$/,
-        exclude: "/node_modules/",
+        exclude: /(node_modules | server)/,
         loader: "style-loader!css-loader!autoprefixer-loader!sass-loader"
       }
     ]
   },
   resolve: {
-    extensions: ["", "./js", ".jsx"]
+    extensions: ["", ".js", ".jsx"]
   },
   watch: true
 };
