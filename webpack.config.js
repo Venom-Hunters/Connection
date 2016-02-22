@@ -28,17 +28,14 @@ module.exports = {
       }, {
         test: /\.scss$/,
         exclude: /(node_modules|server)/,
-        loader: "style-loader!css-loader!autoprefixer-loader!sass-loader"
+        loader: "style-loader!css-loader!autoprefix!sass-loader"
       }
     ]
   },
   resolve: {
     extensions: [
       "", ".js", ".jsx"
-    ],
-    alais: {
-      skeleton: __dirname + "/node_modules/skeleton-sass/skeleton_template.scss"
-    }
+    ]
   },
   watch: true
 };
