@@ -10,7 +10,7 @@ var app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use(express.static(__dirname + '/../../public'));
+app.use(express.static('./public'));
 
 var mongoUri = config.mongoUri;
 mongoose.connect(mongoUri);
@@ -25,4 +25,4 @@ app.delete('/chat', chatCtrl.deleteTeamSessionChats);
 
 app.listen(config.port, function() {
 	console.log('You are rocking on port: ', config.port);
-})
+});

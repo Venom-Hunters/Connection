@@ -1,0 +1,28 @@
+.button,
+.button-primary,
+textarea {
+  border-radius: 0;
+}
+
+textarea {
+  resize: none;
+}
+
+.chatBody{
+  height: 300px;
+  border: 1px #DFDFDF solid;
+  background-color: #DFDFDF;
+}
+
+.messageBody{
+  background-color: #33C3F0;
+  width: 50%;
+  padding: 2%;
+  margin: 2%;
+  font: 13.3333px Arial;
+  font-weight: 600;
+  color: #ffffff;
+}
+.messageText{
+  margin: 0;
+}
