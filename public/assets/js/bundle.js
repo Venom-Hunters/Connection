@@ -62,13 +62,13 @@
 
 	var _app2 = _interopRequireDefault(_app);
 
-	var _reducers = __webpack_require__(187);
+	var _reducers = __webpack_require__(184);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(183);
+	__webpack_require__(186);
 
 
 	var createStoreWithMiddleware = (0, _redux.applyMiddleware)()(_redux.createStore);
@@ -21221,7 +21221,7 @@
 
 	var _chat_input2 = _interopRequireDefault(_chat_input);
 
-	var _index = __webpack_require__(191);
+	var _index = __webpack_require__(183);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21250,9 +21250,7 @@
 	          _react2.default.createElement(
 	            "p",
 	            { className: "messageText" },
-	            message.user,
-	            ": ",
-	            message.text
+	            message.message
 	          ),
 	          _react2.default.createElement(
 	            "span",
@@ -21302,7 +21300,7 @@
 
 	var _redux = __webpack_require__(165);
 
-	var _index = __webpack_require__(191);
+	var _index = __webpack_require__(183);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21325,6 +21323,8 @@
 	    };
 
 	    _this.onInputChange = _this.onInputChange.bind(_this);
+	    _this.onFormSubmit = _this.onFormSubmit.bind(_this);
+
 	    return _this;
 	  }
 
@@ -21338,14 +21338,15 @@
 	    key: "onFormSubmit",
 	    value: function onFormSubmit(event) {
 	      event.preventDefault();
-	      console.log(this.props.messages.map());
+	      console.log("out");
+	      this.props.sendMessage(this.state.term, String(new Date()));
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
 	      return _react2.default.createElement(
-	        "from",
-	        null,
+	        "form",
+	        { onSubmit: this.onFormSubmit },
 	        _react2.default.createElement(
 	          "div",
 	          { className: "row" },
@@ -21358,6 +21359,7 @@
 	              "Message"
 	            ),
 	            _react2.default.createElement("textarea", { className: "u-full-width",
+	              ref: "createMessage",
 	              placeholder: "Message Here...",
 	              id: "exampleMessage",
 	              onChange: this.onInputChange })
@@ -21370,7 +21372,6 @@
 	              "button",
 	              {
 	                type: "submit",
-	                onClick: this.onFormSubmit,
 	                className: "button-primary" },
 	              "Submit"
 	            )
@@ -21383,23 +21384,99 @@
 	  return ChatInput;
 	}(_react.Component);
 
-	function mapStateToProps(state) {
-	  return { messages: state.messages };
+	function mapDispatchToProps(dispatch) {
+	  return (0, _redux.bindActionCreators)({ sendMessage: _index.sendMessage }, dispatch);
 	}
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(ChatInput);
+	exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(ChatInput);
 
 /***/ },
 /* 183 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.sendMessage = sendMessage;
+	exports.getMessage = getMessage;
+	function sendMessage(message, date) {
+	  console.log(message);
+	  return {
+	    type: "SEND_MESSAGE",
+	    playload: {
+	      message: message,
+	      date: date
+	    }
+	  };
+	}
+
+	function getMessage() {
+	  return {
+	    type: "GET_MESSAGE",
+	    playload: message
+	  };
+	}
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _redux = __webpack_require__(165);
+
+	var _reducer_sendMessage = __webpack_require__(185);
+
+	var _reducer_sendMessage2 = _interopRequireDefault(_reducer_sendMessage);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var rootReducer = (0, _redux.combineReducers)({
+	  messages: _reducer_sendMessage2.default
+	});
+
+	exports.default = rootReducer;
+
+/***/ },
+/* 185 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function () {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case "SEND_MESSAGE":
+	      return [action.playload].concat(_toConsumableArray(state));
+	  }
+	  return state;
+	};
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+/***/ },
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(184);
+	var content = __webpack_require__(187);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(186)(content, {});
+	var update = __webpack_require__(189)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -21416,10 +21493,10 @@
 	}
 
 /***/ },
-/* 184 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(185)();
+	exports = module.exports = __webpack_require__(188)();
 	// imports
 
 
@@ -21430,7 +21507,7 @@
 
 
 /***/ },
-/* 185 */
+/* 188 */
 /***/ function(module, exports) {
 
 	/*
@@ -21486,7 +21563,7 @@
 
 
 /***/ },
-/* 186 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -21738,93 +21815,6 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
-
-/***/ },
-/* 187 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _redux = __webpack_require__(165);
-
-	var _reducer_messages = __webpack_require__(192);
-
-	var _reducer_messages2 = _interopRequireDefault(_reducer_messages);
-
-	var _reducer_sendMessage = __webpack_require__(190);
-
-	var _reducer_sendMessage2 = _interopRequireDefault(_reducer_sendMessage);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var rootReducer = (0, _redux.combineReducers)({
-	  messages: _reducer_messages2.default,
-	  sendMessage: _reducer_sendMessage2.default
-	});
-
-	exports.default = rootReducer;
-
-/***/ },
-/* 188 */,
-/* 189 */,
-/* 190 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	exports.default = function () {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case "MESAGE_SEND":
-	      return action.playload;
-	  }
-	  return state;
-	};
-
-/***/ },
-/* 191 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.SendMessage = SendMessage;
-	function SendMessage(message) {
-	  return {
-	    type: "MESAGE_SEND",
-	    playload: message
-	  };
-	}
-
-/***/ },
-/* 192 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	exports.default = function () {
-	  return [{
-	    user: "Im not mark",
-	    text: "hello",
-	    date: String(new Date())
-	  }];
-	};
 
 /***/ }
 /******/ ]);

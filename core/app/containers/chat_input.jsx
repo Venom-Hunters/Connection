@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
-import {messages} from "../actions/index";
+import {sendMessage} from "../actions/index";
 
 class ChatInput extends Component {
   constructor(props) {
@@ -13,6 +13,8 @@ class ChatInput extends Component {
     };
 
     this.onInputChange = this.onInputChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+
   }
 
   onInputChange(event) {
@@ -22,16 +24,18 @@ class ChatInput extends Component {
 
   onFormSubmit(event) {
     event.preventDefault();
-    console.log(this.props.messages.map());
+    console.log("out");
+    this.props.sendMessage(this.state.term, String(new Date()));
   }
 
   render() {
     return (
-      <from>
+      <form onSubmit={this.onFormSubmit}>
         <div className="row">
           <div className="ten columns">
             <label htmlFor="exampleMessage">Message</label>
             <textarea className="u-full-width"
+              ref="createMessage"
               placeholder="Message Here..."
               id="exampleMessage"
               onChange={this.onInputChange}></textarea>
@@ -40,18 +44,17 @@ class ChatInput extends Component {
             <br/>
             <button
               type="submit"
-              onClick={this.onFormSubmit}
               className="button-primary">Submit</button>
           </div>
         </div>
-      </from>
+      </form>
     )
   };
 
 }
 
-function mapStateToProps(state) {
-  return {messages: state.messages}
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ sendMessage }, dispatch);
 }
 
-export default connect(mapStateToProps)(ChatInput);
+export default connect(null, mapDispatchToProps)(ChatInput);

@@ -3,15 +3,16 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
 import ChatInput from "./chat_input";
-import {messages} from "../actions/index";
+import {getMessage} from "../actions/index";
 
 class ChatBody extends Component {
+
   renderMessages() {
     return this.props.messages.map((message) => {
       return (
         <div key={message.date} className="messageBody">
           <p className="messageText">
-            {message.user}: {message.text}
+            {message.message}
           </p>
           <span>{message.date}</span>
         </div>

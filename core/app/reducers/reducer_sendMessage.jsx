@@ -1,7 +1,7 @@
-export default function (state = null, action) {
+export default function (state = [], action) {
   switch (action.type) {
-    case "MESAGE_SEND":
-      return action.playload;
+    case "SEND_MESSAGE":
+      return [action.playload, ...state];
   }
   return state
 }
