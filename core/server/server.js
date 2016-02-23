@@ -3,16 +3,13 @@ var express = require('express'),
   cors = require('cors'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
-  chatCtrl = require('./controllers/chatCtrl'),
-  config = require('./config');
 	cors = require('cors'),
-	bodyParser = require('body-parser'),
-	mongoose = require('mongoose'),
 	session = require('express-session'),
 	passport = require('passport'),
-	localStrategy = require('passport-local'),
-	userCtrl = require('./controllers/userCtrl'),
-	chatCtrl = require('./controllers/chatCtrl'),
+	localStrategy = require('passport-local');
+
+var	chatCtrl = require('./controllers/chatCtrl'),
+  userCtrl = require('./controllers/userCtrl'),
 	teamCtrl = require('./controllers/teamCtrl'),
 	User = require('./models/userModel'),
 	config = require('./config');
@@ -116,6 +113,7 @@ app.put('/team/removeMember/:teamId', teamCtrl.removeMember);
 app.listen(config.port, function() {
   console.log('You are rocking on port: ', config.port);
 });
+
 http.listen(config.port, function() {
 	console.log('You are rocking on port: ', config.port);
 })
