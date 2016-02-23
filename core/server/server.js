@@ -1,12 +1,10 @@
 var express = require('express'),
-<<<<<<< HEAD
   fallback = require("express-history-api-fallback"),
   cors = require('cors'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
   chatCtrl = require('./controllers/chatCtrl'),
   config = require('./config');
-=======
 	cors = require('cors'),
 	bodyParser = require('body-parser'),
 	mongoose = require('mongoose'),
@@ -18,7 +16,6 @@ var express = require('express'),
 	teamCtrl = require('./controllers/teamCtrl'),
 	User = require('./models/userModel'),
 	config = require('./config');
->>>>>>> d5df31555aa3d23d4b3ae766953375ae5f3c43ab
 
 passport.use('local', new localStrategy({
 	usernameField: 'email',
@@ -73,11 +70,8 @@ var http = require('http').Server(app),
 app.use(bodyParser.json());
 app.use(cors());
 
-<<<<<<< HEAD
 app.use(express.static('./public'));
 app.use(fallback("index.html", {root: "./public"}));
-=======
-app.use(express.static(__dirname + '/../../public'));
 
 app.use(session({
 	secret: config.sessionSecret,
@@ -87,7 +81,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
->>>>>>> d5df31555aa3d23d4b3ae766953375ae5f3c43ab
 
 var mongoUri = config.mongoUri;
 mongoose.connect(mongoUri);
@@ -120,12 +113,9 @@ app.get('/team/getTeamInfo/:teamId', teamCtrl.getTeamInfo);
 app.put('/team/addMember/:teamId', teamCtrl.addMember);
 app.put('/team/removeMember/:teamId', teamCtrl.removeMember);
 
-<<<<<<< HEAD
 app.listen(config.port, function() {
   console.log('You are rocking on port: ', config.port);
 });
-=======
 http.listen(config.port, function() {
 	console.log('You are rocking on port: ', config.port);
 })
->>>>>>> d5df31555aa3d23d4b3ae766953375ae5f3c43ab
