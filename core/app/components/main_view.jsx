@@ -1,11 +1,11 @@
-import React from 'react';
-import { Component } from 'react';
+import React, { Component } from 'react';
+import TeamSidebar from './'
 
 export default class MainView extends Component {
   render() {
     return(
-      <div>
-        main
+      <div className="mainContainer">
+		
       </div>
     );
   }

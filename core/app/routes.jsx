@@ -4,7 +4,7 @@ import {Route, IndexRoute} from "react-router";
 import App from "./components/app";
 import Home from "./components/home";
 import MainView from "./components/main_view";
-import TeamView from "./components/team_view";
+import TeamView from "./components/team_invite_view";
 
 export default (
   <Route path="/" component={App}>
