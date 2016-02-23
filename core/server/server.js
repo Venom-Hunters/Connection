@@ -1,12 +1,15 @@
 var express = require('express'),
+  fallback = require("express-history-api-fallback"),
+  cors = require('cors'),
+  bodyParser = require('body-parser'),
+  mongoose = require('mongoose'),
 	cors = require('cors'),
-	bodyParser = require('body-parser'),
-	mongoose = require('mongoose'),
 	session = require('express-session'),
 	passport = require('passport'),
-	localStrategy = require('passport-local'),
-	userCtrl = require('./controllers/userCtrl'),
-	chatCtrl = require('./controllers/chatCtrl'),
+	localStrategy = require('passport-local');
+
+var	chatCtrl = require('./controllers/chatCtrl'),
+  userCtrl = require('./controllers/userCtrl'),
 	teamCtrl = require('./controllers/teamCtrl'),
 	User = require('./models/userModel'),
 	config = require('./config');
@@ -64,7 +67,8 @@ var http = require('http').Server(app),
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use(express.static(__dirname + '/../../public'));
+app.use(express.static('./public'));
+app.use(fallback("index.html", {root: "./public"}));
 
 app.use(session({
 	secret: config.sessionSecret,
@@ -78,7 +82,7 @@ app.use(passport.session());
 var mongoUri = config.mongoUri;
 mongoose.connect(mongoUri);
 mongoose.connection.once('open', function() {
-	console.log('Connected to MongoDB');
+  console.log('Connected to MongoDB');
 });
 
 //auth endpoints
@@ -105,6 +109,10 @@ app.put('/team/updateTeamProfile/:teamId', teamCtrl.updateTeamProfile);
 app.get('/team/getTeamInfo/:teamId', teamCtrl.getTeamInfo);
 app.put('/team/addMember/:teamId', teamCtrl.addMember);
 app.put('/team/removeMember/:teamId', teamCtrl.removeMember);
+
+app.listen(config.port, function() {
+  console.log('You are rocking on port: ', config.port);
+});
 
 http.listen(config.port, function() {
 	console.log('You are rocking on port: ', config.port);
