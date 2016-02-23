@@ -110,10 +110,6 @@ app.get('/team/getTeamInfo/:teamId', teamCtrl.getTeamInfo);
 app.put('/team/addMember/:teamId', teamCtrl.addMember);
 app.put('/team/removeMember/:teamId', teamCtrl.removeMember);
 
-app.listen(config.port, function() {
-  console.log('You are rocking on port: ', config.port);
-});
-
 http.listen(config.port, function() {
 	console.log('You are rocking on port: ', config.port);
 })
