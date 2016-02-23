@@ -31,7 +31,7 @@ passport.use('local', new localStrategy({
 						user.save(function(err, result) {
 							if (err) return done('Server Error', false);
 							else return done(null, result);
-						})
+						});
 					} else {
 						return done('Password incorrect', false);
 					}
@@ -42,8 +42,8 @@ passport.use('local', new localStrategy({
 			} else {
 				return done('User not found', false);
 			}
-		})
-	})
+		});
+	});
 }));
 
 passport.serializeUser(function(user, done) {
@@ -56,7 +56,7 @@ passport.deserializeUser(function(user, done) {
 function ensuerAuthenticated(req, res, next) {
 	if(req.isAuthenticated()) { return next();}
 	res.sendStatus(401);
-};
+}
 
 var app = express();
 
@@ -71,7 +71,7 @@ app.use(express.static('./public'));
 app.use(fallback("index.html", {root: "./public"}));
 
 app.use(session({
-	secret: config.sessionSecret,
+	secret: config.secret,
 	saveUninitialized: config.saveUninitialized,
 	resave: config.resave
 }));
