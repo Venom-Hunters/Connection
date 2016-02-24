@@ -5,7 +5,6 @@ export default function(state = null, action) {
 
   switch(action.type) {
     case(USER_LOGIN):
-      console.log(state);
       return Object.assign({}, state, action.payload.data );
     case(USER_REGISTER):
    	  return Object.assign({}, state, action.payload.data );
