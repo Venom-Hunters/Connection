@@ -1,4 +1,5 @@
 var User = require('./../models/userModel');
+var Team = require('./../models/teamModel');
 
 module.exports = {
 	create: function(req, res, next) {
@@ -53,6 +54,9 @@ module.exports = {
 				}
 			});
 		} else res.status(401).send();
+	},
+	getTeams: function(req,res,next) {
+		
 	},
 	logout: function(req, res, next) {
 		User.findById(req.params.userId, function(err, user) {
