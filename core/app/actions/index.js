@@ -4,9 +4,14 @@ export const USER_LOGIN = 'USER_LOGIN';
 export const USER_REGISTER = 'USER_REGISTER';
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';
+export const GET_USER_TEAMS = 'GET_USER_TEAMS';
+export const SET_ACTIVE_TEAM = 'SET_ACTIVE_TEAM';
+export const GET_ACTIVE_TEAM_CHATS = 'GET_ACTIVE_TEAM_CHATS';
+
+const ROOT_URL = 'http://localhost:8888';
 
 export function login(props) {
-  const request = axios.post('http://localhost:8081/auth/login', props);
+  const request = axios.post(`${ROOT_URL}/auth/login`, props);
 
   return {
     type: USER_LOGIN,
@@ -15,7 +20,7 @@ export function login(props) {
 }
 
 export function userLogout(userId) {
-  const request = axios.get();
+  const request = axios.get(`${ROOT_URL}/auth/logout/${userId}`);
 
   return {
     type: USER_LOGOUT,
@@ -24,7 +29,7 @@ export function userLogout(userId) {
 }
 
 export function register(props) {
-  const request = axios.post('http://localhost:8081/auth/addAccount', props);
+  const request = axios.post(`${ROOT_URL}/auth/addAccount`, props);
 
   return {
     type: USER_REGISTER,
@@ -40,3 +45,30 @@ export function updateUserProfile(userProfile) {
     payload: request
   };
 }
+
+export function getUserTeams(userId) {
+  const request = axios.get(`${ROOT_URL}/user/getTeams/${userId}`);
+
+  return {
+    type: GET_USER_TEAMS,
+    payload: request
+  }
+}
+
+export function setActiveTeam(team) {
+  return {
+    type: SET_ACTIVE_TEAM,
+    payload: team
+  }
+}
+
+
+export function getActiveTeamChats(teamId) {
+  const request = axios.get(`${ROOT_URL}/chat/${teamId}`);
+
+  return {
+    type: GET_ACTIVE_TEAM_CHATS,
+    payload: request
+  }
+}
+

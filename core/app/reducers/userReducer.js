@@ -1,15 +1,14 @@
-import { USER_LOGIN, USER_REGISTER } from '../actions/index';
+import { USER_LOGIN, USER_REGISTER, GET_USER_TEAMS} from '../actions/index';
 
-const INITIAL_STATE = {
-  all: [],
-  post: null
-};
-
-export default function(state = INITIAL_STATE, action) {
+export default function(state = null, action) {
   switch(action.type) {
     case(USER_LOGIN):
-      console.log(action.payload.data);
-      return Object.assign({}, state, { user: action.payload.data} );
+      console.log(state);
+      return Object.assign({}, state, action.payload.data );
+    case(USER_REGISTER):
+   	  return Object.assign({}, state, action.payload.data );
+   	case(GET_USER_TEAMS):
+   	  return  Object.assign({}, state, {teams: action.payload.data} );
     default:
       return state;
     }

@@ -92,6 +92,7 @@ app.get('/auth/logout/:userId', userCtrl.logout);
 //user endpoints
 app.put('/user/update', userCtrl.updateUserProfile);
 app.get('/user/currentUser/:userId', userCtrl.getUser);
+app.get('/user/getTeams/:userId', userCtrl.getTeams);
 app.delete('/user/delete/:userId', userCtrl.deleteUser);
 //tested through user
 

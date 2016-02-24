@@ -68,13 +68,13 @@
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
-	var _routes = __webpack_require__(307);
+	var _routes = __webpack_require__(309);
 
 	var _routes2 = _interopRequireDefault(_routes);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(338);
+	__webpack_require__(340);
 
 	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxPromise2.default)(_redux.createStore);
 
@@ -26928,11 +26928,21 @@
 
 	var _userReducer2 = _interopRequireDefault(_userReducer);
 
+	var _active_team_reducer = __webpack_require__(307);
+
+	var _active_team_reducer2 = _interopRequireDefault(_active_team_reducer);
+
+	var _chats_reducer = __webpack_require__(308);
+
+	var _chats_reducer2 = _interopRequireDefault(_chats_reducer);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var rootReducer = (0, _redux.combineReducers)({
 	  form: _reduxForm.reducer,
-	  user: _userReducer2.default
+	  user: _userReducer2.default,
+	  activeTeam: _active_team_reducer2.default,
+	  activeTeamChats: _chats_reducer2.default
 	});
 
 	exports.default = rootReducer;
@@ -30006,24 +30016,23 @@
 	});
 
 	exports.default = function () {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? INITIAL_STATE : arguments[0];
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
 	  var action = arguments[1];
 
 	  switch (action.type) {
 	    case _index.USER_LOGIN:
-	      console.log(action.payload.data);
-	      return Object.assign({}, state, { user: action.payload.data });
+	      console.log(state);
+	      return Object.assign({}, state, action.payload.data);
+	    case _index.USER_REGISTER:
+	      return Object.assign({}, state, action.payload.data);
+	    case _index.GET_USER_TEAMS:
+	      return Object.assign({}, state, { teams: action.payload.data });
 	    default:
 	      return state;
 	  }
 	};
 
 	var _index = __webpack_require__(289);
-
-	var INITIAL_STATE = {
-	  all: [],
-	  post: null
-	};
 
 /***/ },
 /* 289 */
@@ -30034,11 +30043,14 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.UPDATE_USER_PROFILE = exports.USER_LOGOUT = exports.USER_REGISTER = exports.USER_LOGIN = undefined;
+	exports.GET_ACTIVE_TEAM_CHATS = exports.SET_ACTIVE_TEAM = exports.GET_USER_TEAMS = exports.UPDATE_USER_PROFILE = exports.USER_LOGOUT = exports.USER_REGISTER = exports.USER_LOGIN = undefined;
 	exports.login = login;
 	exports.userLogout = userLogout;
 	exports.register = register;
 	exports.updateUserProfile = updateUserProfile;
+	exports.getUserTeams = getUserTeams;
+	exports.setActiveTeam = setActiveTeam;
+	exports.getActiveTeamChats = getActiveTeamChats;
 
 	var _axios = __webpack_require__(290);
 
@@ -30050,9 +30062,14 @@
 	var USER_REGISTER = exports.USER_REGISTER = 'USER_REGISTER';
 	var USER_LOGOUT = exports.USER_LOGOUT = 'USER_LOGOUT';
 	var UPDATE_USER_PROFILE = exports.UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';
+	var GET_USER_TEAMS = exports.GET_USER_TEAMS = 'GET_USER_TEAMS';
+	var SET_ACTIVE_TEAM = exports.SET_ACTIVE_TEAM = 'SET_ACTIVE_TEAM';
+	var GET_ACTIVE_TEAM_CHATS = exports.GET_ACTIVE_TEAM_CHATS = 'GET_ACTIVE_TEAM_CHATS';
+
+	var ROOT_URL = 'http://localhost:8888';
 
 	function login(props) {
-	  var request = _axios2.default.post('http://localhost:8081/auth/login', props);
+	  var request = _axios2.default.post(ROOT_URL + '/auth/login', props);
 
 	  return {
 	    type: USER_LOGIN,
@@ -30061,7 +30078,7 @@
 	}
 
 	function userLogout(userId) {
-	  var request = _axios2.default.get();
+	  var request = _axios2.default.get(ROOT_URL + '/auth/logout/' + userId);
 
 	  return {
 	    type: USER_LOGOUT,
@@ -30070,7 +30087,7 @@
 	}
 
 	function register(props) {
-	  var request = _axios2.default.post('http://localhost:8081/auth/addAccount', props);
+	  var request = _axios2.default.post(ROOT_URL + '/auth/addAccount', props);
 
 	  return {
 	    type: USER_REGISTER,
@@ -30083,6 +30100,31 @@
 
 	  return {
 	    type: UPDATE_USER_PROFILE,
+	    payload: request
+	  };
+	}
+
+	function getUserTeams(userId) {
+	  var request = _axios2.default.get(ROOT_URL + '/user/getTeams/' + userId);
+
+	  return {
+	    type: GET_USER_TEAMS,
+	    payload: request
+	  };
+	}
+
+	function setActiveTeam(team) {
+	  return {
+	    type: SET_ACTIVE_TEAM,
+	    payload: team
+	  };
+	}
+
+	function getActiveTeamChats(teamId) {
+	  var request = _axios2.default.get(ROOT_URL + '/chat/' + teamId);
+
+	  return {
+	    type: GET_ACTIVE_TEAM_CHATS,
 	    payload: request
 	  };
 	}
@@ -31182,6 +31224,56 @@
 /* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function () {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _index.USER_LOGIN:
+	      return action.payload.data.lastTeamViewed;
+	    case _index.SET_ACTIVE_TEAM:
+	      return action.payload.data;
+	    default:
+	      return state;
+	  }
+	};
+
+	var _index = __webpack_require__(289);
+
+/***/ },
+/* 308 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function () {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _index.GET_ACTIVE_TEAM_CHATS:
+	      return action.payload.data;
+	    default:
+	      return state;
+	  }
+	};
+
+	var _index = __webpack_require__(289);
+
+/***/ },
+/* 309 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -31194,19 +31286,19 @@
 
 	var _reactRouter = __webpack_require__(180);
 
-	var _app = __webpack_require__(308);
+	var _app = __webpack_require__(310);
 
 	var _app2 = _interopRequireDefault(_app);
 
-	var _main_view = __webpack_require__(329);
+	var _main_view = __webpack_require__(331);
 
 	var _main_view2 = _interopRequireDefault(_main_view);
 
-	var _login_view = __webpack_require__(334);
+	var _login_view = __webpack_require__(336);
 
 	var _login_view2 = _interopRequireDefault(_login_view);
 
-	var _register_view = __webpack_require__(336);
+	var _register_view = __webpack_require__(338);
 
 	var _register_view2 = _interopRequireDefault(_register_view);
 
@@ -31221,7 +31313,7 @@
 	);
 
 /***/ },
-/* 308 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31236,7 +31328,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _header = __webpack_require__(309);
+	var _header = __webpack_require__(311);
 
 	var _header2 = _interopRequireDefault(_header);
 
@@ -31285,7 +31377,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(App);
 
 /***/ },
-/* 309 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31306,7 +31398,7 @@
 
 	var _index = __webpack_require__(289);
 
-	var _reactMotionMenu = __webpack_require__(310);
+	var _reactMotionMenu = __webpack_require__(312);
 
 	var _reactMotionMenu2 = _interopRequireDefault(_reactMotionMenu);
 
@@ -31397,7 +31489,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { userLogout: _index.userLogout, updateUserProfile: _index.updateUserProfile })(HeaderBar);
 
 /***/ },
-/* 310 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31422,13 +31514,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactMotion = __webpack_require__(311);
+	var _reactMotion = __webpack_require__(313);
 
-	var _item = __webpack_require__(327);
+	var _item = __webpack_require__(329);
 
 	var _item2 = _interopRequireDefault(_item);
 
-	var _button = __webpack_require__(328);
+	var _button = __webpack_require__(330);
 
 	var _button2 = _interopRequireDefault(_button);
 
@@ -31580,7 +31672,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 311 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31593,11 +31685,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _components2 = __webpack_require__(312);
+	var _components2 = __webpack_require__(314);
 
 	var _components3 = _interopRequireDefault(_components2);
 
-	var _reorderKeys = __webpack_require__(326);
+	var _reorderKeys = __webpack_require__(328);
 
 	var _reorderKeys2 = _interopRequireDefault(_reorderKeys);
 
@@ -31614,13 +31706,13 @@
 	exports.StaggeredMotion = StaggeredMotion;
 	exports.TransitionMotion = TransitionMotion;
 
-	var _spring2 = __webpack_require__(322);
+	var _spring2 = __webpack_require__(324);
 
 	var _spring3 = _interopRequireDefault(_spring2);
 
 	exports.spring = _spring3['default'];
 
-	var _presets2 = __webpack_require__(323);
+	var _presets2 = __webpack_require__(325);
 
 	var _presets3 = _interopRequireDefault(_presets2);
 
@@ -31631,7 +31723,7 @@
 	exports.utils = utils;
 
 /***/ },
-/* 312 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31644,33 +31736,33 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _noVelocity = __webpack_require__(313);
+	var _noVelocity = __webpack_require__(315);
 
 	var _noVelocity2 = _interopRequireDefault(_noVelocity);
 
-	var _hasReachedStyle = __webpack_require__(314);
+	var _hasReachedStyle = __webpack_require__(316);
 
 	var _hasReachedStyle2 = _interopRequireDefault(_hasReachedStyle);
 
-	var _mergeDiff = __webpack_require__(315);
+	var _mergeDiff = __webpack_require__(317);
 
 	var _mergeDiff2 = _interopRequireDefault(_mergeDiff);
 
-	var _animationLoop = __webpack_require__(316);
+	var _animationLoop = __webpack_require__(318);
 
 	var _animationLoop2 = _interopRequireDefault(_animationLoop);
 
-	var _zero = __webpack_require__(319);
+	var _zero = __webpack_require__(321);
 
 	var _zero2 = _interopRequireDefault(_zero);
 
-	var _updateTree = __webpack_require__(320);
+	var _updateTree = __webpack_require__(322);
 
-	var _deprecatedSprings2 = __webpack_require__(324);
+	var _deprecatedSprings2 = __webpack_require__(326);
 
 	var _deprecatedSprings3 = _interopRequireDefault(_deprecatedSprings2);
 
-	var _stripStyle = __webpack_require__(325);
+	var _stripStyle = __webpack_require__(327);
 
 	var _stripStyle2 = _interopRequireDefault(_stripStyle);
 
@@ -32090,7 +32182,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 313 */
+/* 315 */
 /***/ function(module, exports) {
 
 	
@@ -32117,7 +32209,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 314 */
+/* 316 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32150,7 +32242,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 315 */
+/* 317 */
 /***/ function(module, exports) {
 
 	
@@ -32266,7 +32358,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 316 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32276,11 +32368,11 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _performanceNow = __webpack_require__(317);
+	var _performanceNow = __webpack_require__(319);
 
 	var _performanceNow2 = _interopRequireDefault(_performanceNow);
 
-	var _raf = __webpack_require__(318);
+	var _raf = __webpack_require__(320);
 
 	var _raf2 = _interopRequireDefault(_raf);
 
@@ -32415,7 +32507,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 317 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {// Generated by CoffeeScript 1.7.1
@@ -32454,10 +32546,10 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 318 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(317)
+	/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(319)
 	  , root = typeof window === 'undefined' ? global : window
 	  , vendors = ['moz', 'webkit']
 	  , suffix = 'AnimationFrame'
@@ -32533,7 +32625,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 319 */
+/* 321 */
 /***/ function(module, exports) {
 
 	
@@ -32550,7 +32642,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 320 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -32565,11 +32657,11 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _stepper = __webpack_require__(321);
+	var _stepper = __webpack_require__(323);
 
 	var _stepper2 = _interopRequireDefault(_stepper);
 
-	var _spring = __webpack_require__(322);
+	var _spring = __webpack_require__(324);
 
 	var _spring2 = _interopRequireDefault(_spring);
 
@@ -32646,7 +32738,7 @@
 	}
 
 /***/ },
-/* 321 */
+/* 323 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32684,7 +32776,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 322 */
+/* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32694,7 +32786,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _presets = __webpack_require__(323);
+	var _presets = __webpack_require__(325);
 
 	var _presets2 = _interopRequireDefault(_presets);
 
@@ -32707,7 +32799,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 323 */
+/* 325 */
 /***/ function(module, exports) {
 
 	
@@ -32724,7 +32816,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 324 */
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -32778,7 +32870,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 325 */
+/* 327 */
 /***/ function(module, exports) {
 
 	
@@ -32804,7 +32896,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 326 */
+/* 328 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32826,7 +32918,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 327 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32853,7 +32945,7 @@
 
 	var _reactLibObjectAssign2 = _interopRequireDefault(_reactLibObjectAssign);
 
-	var _reactMotion = __webpack_require__(311);
+	var _reactMotion = __webpack_require__(313);
 
 	var Item = (function (_Component) {
 	  _inherits(Item, _Component);
@@ -32991,7 +33083,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 328 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33018,7 +33110,7 @@
 
 	var _reactLibObjectAssign2 = _interopRequireDefault(_reactLibObjectAssign);
 
-	var _reactMotion = __webpack_require__(311);
+	var _reactMotion = __webpack_require__(313);
 
 	var Button = (function (_Component) {
 	  _inherits(Button, _Component);
@@ -33117,7 +33209,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 329 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33132,11 +33224,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _team_sidebar = __webpack_require__(330);
+	var _team_sidebar = __webpack_require__(332);
 
 	var _team_sidebar2 = _interopRequireDefault(_team_sidebar);
 
-	var _interaction_area = __webpack_require__(333);
+	var _interaction_area = __webpack_require__(335);
 
 	var _interaction_area2 = _interopRequireDefault(_interaction_area);
 
@@ -33177,7 +33269,7 @@
 	exports.default = MainView;
 
 /***/ },
-/* 330 */
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33192,7 +33284,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _card_stack_component = __webpack_require__(331);
+	var _card_stack_component = __webpack_require__(333);
 
 	var _card_stack_component2 = _interopRequireDefault(_card_stack_component);
 
@@ -33230,7 +33322,7 @@
 	exports.default = TeamSidebar;
 
 /***/ },
-/* 331 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33241,11 +33333,15 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _cardstack = __webpack_require__(332);
+	var _cardstack = __webpack_require__(334);
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(159);
+
+	var _index = __webpack_require__(289);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33413,12 +33509,15 @@
 			value: function updateDimensions() {
 				this.setState({
 					width: window.innerWidth,
-					height: window.innerHeight - 60
+					height: window.innerHeight - 60,
+					userTeams: [],
+					activeTeam: {}
 				});
 			}
 		}, {
 			key: 'componentWillMount',
 			value: function componentWillMount() {
+				this.props.getUserTeams();
 				this.updateDimensions();
 			}
 		}, {
@@ -33432,8 +33531,47 @@
 				window.removeEventListener('resize', this.updateDimensions);
 			}
 		}, {
+			key: 'checkActiveTeam',
+			value: function checkActiveTeam(teamId) {
+				if (teamId === this.props.activeTeam) {
+					return false;
+				}
+			}
+		}, {
+			key: 'activeTeamClick',
+			value: function activeTeamClick() {
+				if (this.checkActiveTeam(this.props.team._id)) {
+					this.props.setActiveTeam(this.props.team);
+					this.props.getActiveTeamChats(this.props.team._id);
+				}
+			}
+		}, {
+			key: 'renderTeamList',
+			value: function renderTeamList() {
+				var _this2 = this;
+
+				if (!this.props.teams) {
+					return _react2.default.createElement(
+						_cardstack.Card,
+						null,
+						'No Teams'
+					);
+				}
+				return this.props.teams.map(function (team) {
+					_react2.default.createElement(
+						_cardstack.Card,
+						{ onClick: _this2.activeTeamClick.bind(_this2), background: '#9B27AE', key: team._id },
+						'This is a user team card. Team Id: ',
+						team._id,
+						'Team Name: ',
+						team.teamName
+					);
+				});
+			}
+		}, {
 			key: 'render',
 			value: function render() {
+
 				return _react2.default.createElement(
 					_cardstack.CardStack,
 					{
@@ -33458,7 +33596,8 @@
 							{ className: 'testing' },
 							'This card will be for adding members to a team.'
 						)
-					)
+					),
+					this.renderTeamList()
 				);
 			}
 		}]);
@@ -33466,10 +33605,17 @@
 		return CardStackComponent;
 	}(_react.Component);
 
-	exports.default = CardStackComponent;
+	function mapStateToProps(state) {
+		return {
+			teams: state.teams,
+			activeTeam: state.activeTeam
+		};
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getUserTeams: _index.getUserTeams, setActiveTeam: _index.setActiveTeam, getActiveTeamChats: _index.getActiveTeamChats })(CardStackComponent);
 
 /***/ },
-/* 332 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33671,7 +33817,7 @@
 	exports.Card = Card;
 
 /***/ },
-/* 333 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -33720,7 +33866,7 @@
 	exports.default = InteractionArea;
 
 /***/ },
-/* 334 */
+/* 336 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33735,7 +33881,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _LoginBox = __webpack_require__(335);
+	var _LoginBox = __webpack_require__(337);
 
 	var _LoginBox2 = _interopRequireDefault(_LoginBox);
 
@@ -33769,7 +33915,7 @@
 	exports.default = LoginView;
 
 /***/ },
-/* 335 */
+/* 337 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33893,7 +34039,7 @@
 	}, null, { login: _actions.login })(LoginBox);
 
 /***/ },
-/* 336 */
+/* 338 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33908,7 +34054,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _RegisterBox = __webpack_require__(337);
+	var _RegisterBox = __webpack_require__(339);
 
 	var _RegisterBox2 = _interopRequireDefault(_RegisterBox);
 
@@ -33942,7 +34088,7 @@
 	exports.default = RegisterView;
 
 /***/ },
-/* 337 */
+/* 339 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34077,16 +34223,16 @@
 	}, null, { register: _index.register })(RegisterBox);
 
 /***/ },
-/* 338 */
+/* 340 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(339);
+	var content = __webpack_require__(341);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(341)(content, {});
+	var update = __webpack_require__(343)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -34103,10 +34249,10 @@
 	}
 
 /***/ },
-/* 339 */
+/* 341 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(340)();
+	exports = module.exports = __webpack_require__(342)();
 	// imports
 
 
@@ -34117,7 +34263,7 @@
 
 
 /***/ },
-/* 340 */
+/* 342 */
 /***/ function(module, exports) {
 
 	/*
@@ -34173,7 +34319,7 @@
 
 
 /***/ },
-/* 341 */
+/* 343 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
