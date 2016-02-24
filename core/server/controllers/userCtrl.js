@@ -15,10 +15,10 @@ module.exports = {
 			            if (err) {
 			                return res.status(500).send();
 			            } else return next();
-			        })
+			        });
 			    });
 			}
-	    })
+		});
 	},
 	updateUserProfile: function(req, res, next) {
 		User.findById(req.user._id, function(err, user) {
@@ -29,18 +29,18 @@ module.exports = {
 					user.password = response;
 					user.save(function(err, result) {
 						if (err) return res.status(500).send(err);
-						else return res.send(user); 
-					})
-				})
+						else return res.send(user);
+					});
+				});
 			}
-		})
+		});
 	},
 	deleteUser: function(req, res, next) {
 		User.findOneAndRemove({_id: req.params.userId}, function(err, result) {
 			if(err) return res.status(500).send(err);
 			else return res.send(result);
-		})
-	},	
+		});
+	},
 	getUser: function(req, res, next) {
 		if (req.isAuthenticated()) {
 			User.findById(req.user._id).populate('lastTeamViewed').exec(function(err, user) {
