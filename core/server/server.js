@@ -1,12 +1,12 @@
 var express = require('express'),
-  fallback = require("express-history-api-fallback"),
   cors = require('cors'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
 	cors = require('cors'),
 	session = require('express-session'),
 	passport = require('passport'),
-	localStrategy = require('passport-local');
+	localStrategy = require('passport-local'),
+  path = require('path');
 
 var	chatCtrl = require('./controllers/chatCtrl'),
   userCtrl = require('./controllers/userCtrl'),
@@ -68,7 +68,6 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use(express.static('./public'));
-app.use(fallback("index.html", {root: "./public"}));
 
 app.use(session({
 	secret: config.secret,
@@ -100,7 +99,7 @@ app.delete('/user/delete/:userId', userCtrl.deleteUser);
 app.post('/chat/:teamId', chatCtrl.create);
 app.get('/chat/:teamId', chatCtrl.readAllChatsInTeam);
 //delete team session chats when last person logs out?
-app.delete('/chat/:teamId', chatCtrl.deleteTeamSessionChats)
+app.delete('/chat/:teamId', chatCtrl.deleteTeamSessionChats);
 
 //team endpoints
 app.post('/team/create', teamCtrl.create);
@@ -110,6 +109,11 @@ app.get('/team/getTeamInfo/:teamId', teamCtrl.getTeamInfo);
 app.put('/team/addMember/:teamId', teamCtrl.addMember);
 app.put('/team/removeMember/:teamId', teamCtrl.removeMember);
 
+app.get('*', function (req, res) {
+ res.sendFile(path.resolve('./public/index.html'));
+});
+
+
 http.listen(config.port, function() {
 	console.log('You are rocking on port: ', config.port);
-})
+});

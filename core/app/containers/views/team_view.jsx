@@ -1,11 +1,11 @@
 import React from 'react';
 import { Component } from 'react';
 
-export default class Home extends Component {
+export default class TeamView extends Component {
   render() {
     return(
       <div>
-        home(loging/registration)
+        <h3>Team View</h3>
       </div>
     );
   }
