@@ -1,5 +1,12 @@
 @import "../../../node_modules/purecss-sass/vendor/assets/stylesheets/_purecss.scss";
 
+html, body {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+
 .pure-button-primary, .pure-button-secondary {
   margin-right: 1em;
 }
@@ -7,3 +14,48 @@
 .registration {
   margin: 2em auto;
 }
+
+
+.headerBar {
+	display: flex;
+	height: 60px;
+}
+
+.logo {
+	width: 60px;
+	height: 100%;
+}
+
+.userCtrls {
+	flex: 1;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	height: 100%;
+}
+
+.mainContainer {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	height: calc(100vh - 60px);
+}
+
+.teamSidebar {
+	width: 250px;
+	height: 100%;
+}
+
+.testing {
+	padding: 30px;
+}
+
+.interactionArea {
+	flex: 1;
+	height: 100%;
+}
+
+.registration {
+  border: 1px solid black;
+}
+

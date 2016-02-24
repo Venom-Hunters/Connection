@@ -53,7 +53,7 @@ passport.deserializeUser(function(user, done) {
 	done(null, user);
 });
 
-function ensuerAuthenticated(req, res, next) {
+function ensureAuthenticated(req, res, next) {
 	if(req.isAuthenticated()) { return next();}
 	res.sendStatus(401);
 }

@@ -37,6 +37,5 @@ module.exports = {
       "", ".js", ".jsx"
     ]
   },
-  
-  watch: true
+  watch:true
 };
