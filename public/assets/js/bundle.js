@@ -30009,8 +30009,13 @@
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? INITIAL_STATE : arguments[0];
 	  var action = arguments[1];
 
-	  console.log(action);
-	  return state;
+	  switch (action.type) {
+	    case _index.USER_LOGIN:
+	      console.log(action.payload.data);
+	      return Object.assign({}, state, { user: action.payload.data });
+	    default:
+	      return state;
+	  }
 	};
 
 	var _index = __webpack_require__(289);
@@ -31214,6 +31219,8 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRedux = __webpack_require__(159);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31237,6 +31244,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'app' },
+	        this.props.user.user ? this.props.user.user._id : "",
 	        this.props.children
 	      );
 	    }
@@ -31245,7 +31253,11 @@
 	  return App;
 	}(_react.Component);
 
-	exports.default = App;
+	function mapStateToProps(state) {
+	  return { user: state.user };
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(App);
 
 /***/ },
 /* 309 */
@@ -31262,6 +31274,8 @@
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(180);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
