@@ -5,7 +5,7 @@ export default class MainView extends Component {
   render() {
     return(
       <div>
-        main
+        <h3>Main View</h3>
       </div>
     );
   }

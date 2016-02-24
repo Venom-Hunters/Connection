@@ -1,5 +1,9 @@
 @import "../../../node_modules/purecss-sass/vendor/assets/stylesheets/_purecss.scss";
 
+.pure-button-primary, .pure-button-secondary {
+  margin-right: 1em;
+}
+
 .registration {
-  border: 1px solid black;
+  margin: 2em auto;
 }
