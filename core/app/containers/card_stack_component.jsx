@@ -1,4 +1,4 @@
-import { CardStack, Card } from './cardstack';
+import { CardStack, Card } from '../components/cardstack';
 import React, {Component} from 'react';
 
 const styles = {

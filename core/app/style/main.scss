@@ -1,15 +1,20 @@
 @import "../../../node_modules/purecss-sass/vendor/assets/stylesheets/_purecss.scss";
 
-*{
-	outline:1px solid red;
-}
-
 html, body {
 	width: 100%;
 	height: 100%;
 	padding: 0;
 	margin: 0;
 }
+
+.pure-button-primary, .pure-button-secondary {
+  margin-right: 1em;
+}
+
+.registration {
+  margin: 2em auto;
+}
+
 
 .headerBar {
 	display: flex;

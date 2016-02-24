@@ -6,8 +6,6 @@ import Menu from 'react-motion-menu';
 
 class HeaderBar extends Component {
 
-
-
 	render() {
 		return (
 			<div className="headerBar">
