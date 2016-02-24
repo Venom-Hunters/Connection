@@ -10,15 +10,11 @@ html, body {
 .headerBar {
 	display: flex;
 	height: 60px;
-	border: 1px solid blue;
-	box-sizing: border-box;
 }
 
 .logo {
 	width: 60px;
 	height: 100%;
-	border: 1px solid blue;
-	box-sizing: border-box;	
 }
 
 .userCtrls {
@@ -27,8 +23,6 @@ html, body {
 	justify-content: flex-end;
 	align-items: center;
 	height: 100%;
-	border: 1px solid blue;
-	box-sizing: border-box;
 }
 
 .mainContainer {
@@ -36,19 +30,18 @@ html, body {
 	flex-direction: row;
 	width: 100%;
 	height: calc(100vh - 60px);
-	box-sizing: border-box;
 }
 
 .teamSidebar {
 	width: 250px;
 	height: 100%;
-	border: 1px solid blue;
-	box-sizing: border-box;
+}
+
+.testing {
+	padding: 30px;
 }
 
 .interactionArea {
 	flex: 1;
 	height: 100%;
-	border: 1px solid blue;	
-	box-sizing: border-box;
 }

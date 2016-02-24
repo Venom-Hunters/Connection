@@ -6,6 +6,7 @@ import Home from "./components/home";
 import MainView from "./components/main_view";
 import TeamInviteView from "./components/team_invite_view";
 
+
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={Home} />

@@ -71,7 +71,7 @@ app.use(express.static('./public'));
 app.use(fallback("index.html", {root: "./public"}));
 
 app.use(session({
-	secret: config.sessionSecret,
+	secret: config.secret,
 	saveUninitialized: config.saveUninitialized,
 	resave: config.resave
 }));
