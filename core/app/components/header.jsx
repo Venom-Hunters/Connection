@@ -24,7 +24,7 @@ class HeaderBar extends Component {
           width={70}
           height={40}
           y={5}
-          x={1840}>
+          x={window.innerWidth - 80}>
           <div>
             name
           </div>
@@ -32,7 +32,7 @@ class HeaderBar extends Component {
 						<Link to="main">Main</Link>
           </div>
           <div>
-						<Link to="login">Login</Link>
+						<Link to="/">Login</Link>
           </div>
           <div>
 						<Link to="register">Register</Link>

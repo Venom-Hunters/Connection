@@ -33,7 +33,7 @@ class RegisterBox extends Component {
             </div>
 
             <div className="pure-controls">
-              <Link to="/login" className="pure-button pure-button-secondary">Log in</Link>
+              <Link to="/" className="pure-button pure-button-secondary">Log in</Link>
               <button type="submit" className="pure-button pure-button-primary">Register</button>
             </div>
           </fieldset>
