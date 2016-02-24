@@ -1,5 +1,7 @@
 import { CardStack, Card } from '../components/cardstack';
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
+import { getUserTeams, setActiveTeam, getActiveTeamChats } from '../actions/index';
 
 const styles = {
 	cardHeader: {
@@ -24,9 +26,6 @@ const styles = {
 		textAlign: 'right'
 	}
 };
-
-
-
 
 const ProfilePicture = ({ imgSrc, borderColor }) => (
 	<img
@@ -119,7 +118,7 @@ const TeamMemberCard = (props) => (
 );
 
 
-export default class CardStackComponent extends Component{
+class CardStackComponent extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -132,11 +131,14 @@ export default class CardStackComponent extends Component{
 	updateDimensions() {
 		this.setState({
 			width: window.innerWidth,
-			height: window.innerHeight-60
+			height: window.innerHeight-60,
+			userTeams: [],
+			activeTeam: {}
 		})
 	}
 
 	componentWillMount() {
+		this.props.getUserTeams();
 		this.updateDimensions();
 	}
 
@@ -148,7 +150,34 @@ export default class CardStackComponent extends Component{
 		window.removeEventListener('resize', this.updateDimensions);
 	}
 
+	checkActiveTeam(teamId) {
+		if (teamId === this.props.activeTeam) {
+			return false;
+		}
+	}
+
+	activeTeamClick() {
+		if(this.checkActiveTeam(this.props.team._id)){
+			this.props.setActiveTeam(this.props.team);
+			this.props.getActiveTeamChats(this.props.team._id);
+		}
+	}
+
+	renderTeamList() {
+		if(!this.props.teams) {
+			return <Card>No Teams</Card>;
+		}
+		return this.props.teams.map((team) => {
+			<Card onClick={this.activeTeamClick.bind(this)} background='#9B27AE' key={team._id}>
+				This is a user team card.
+				Team Id: {team._id}
+				Team Name: {team.teamName}
+			</Card>
+		})
+	}
+
 	render() {
+	
 		return (	
 			<CardStack
 				height={this.state.height}
@@ -167,7 +196,17 @@ export default class CardStackComponent extends Component{
 						This card will be for adding members to a team.
 					</div>
 				</Card>
+				{this.renderTeamList()}
 			</CardStack>
 		);
 	}
 }
+
+function mapStateToProps(state) {
+	return {
+		teams: state.teams,
+		activeTeam: state.activeTeam,
+	}
+}
+
+export default connect(mapStateToProps, { getUserTeams, setActiveTeam, getActiveTeamChats })(CardStackComponent);
