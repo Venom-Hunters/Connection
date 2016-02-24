@@ -17,8 +17,12 @@ html, body {
 
 
 .headerBar {
-	display: flex;
 	height: 60px;
+}
+
+a{
+	color: white;
+	text-decoration: none;
 }
 
 .logo {
@@ -54,8 +58,3 @@ html, body {
 	flex: 1;
 	height: 100%;
 }
-
-.registration {
-  border: 1px solid black;
-}
-
