@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   post: null
 };
 
-export default function(state = INITIAL_STATE, action) {
+export default function(state = INITIAL_STATE, action = "") {
   switch(action.type) {
     case(USER_LOGIN):
       console.log(action.payload.data);
