@@ -18,7 +18,6 @@ class HeaderBar extends Component {
 
 	render() {
 		return (
-			<div className="headerBar">
 				<Menu
           direction="horizontal"
           customStyle={{
@@ -35,7 +34,7 @@ class HeaderBar extends Component {
           y={0}
           x={0}>
           <div>
-            {this.props.user ? this.props.user.userName : <Link to="/">Login</Link>}
+            {this.props.user ? this.props.user.userName : "Nobody"}
           </div>
           <div>
 						<Link to="main">Main</Link>
@@ -47,7 +46,6 @@ class HeaderBar extends Component {
 						<Link to="/" onClick={this.props.userLogout}>Logout</Link>
           </div>
         </Menu>
-			</div>
 		);
 	}
 }
