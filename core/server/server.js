@@ -110,7 +110,7 @@ app.get('/team/getTeamInfo/:teamId', teamCtrl.getTeamInfo);
 app.put('/team/addMember/:teamId', teamCtrl.addMember);
 app.put('/team/removeMember/:teamId', teamCtrl.removeMember);
 
-app.get('*', function (req, res) {
+app.get(/^(?!.*(images))/, function (req, res) {
  res.sendFile(path.resolve('./public/index.html'));
 });
 
