@@ -2,38 +2,13 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { getUserTeams, setActiveTeam, getActiveTeamChats } from '../actions/index';
 import {colors}  from '../constants/color_scheme';
+import { Link, browserHistory } from 'react-router';
 
 
 class SideBar extends Component{
-	constructor(props) {
-		super(props);
-		this.state = {
-			width: 0,
-			height: 0
-		}
-		this.updateDimensions = this.updateDimensions.bind(this);
-	}
-	
-	updateDimensions() {
-		this.setState({
-			width: window.innerWidth,
-			height: window.innerHeight-60,
-			userTeams: [],
-			activeTeam: {}
-		})
-	}
 
 	componentWillMount() {
 		this.props.getUserTeams();
-		this.updateDimensions();
-	}
-
-	componentDidMount() {
-		window.addEventListener('resize', this.updateDimensions);
-	}
-
-	comppnentWillUnmount() {
-		window.removeEventListener('resize', this.updateDimensions);
 	}
 
 	checkActiveTeam(teamId) {
@@ -49,14 +24,22 @@ class SideBar extends Component{
 		}
 	}
 
+	routeToCreateNewTeam() {
+		browserHistory.push('/main/createNewTeam')
+	}
+
 	renderActiveTeam() {
 		/*if (!this.props.activeTeam) {
 			return;
 		}*/
 		return (
 			<div>
-				<div className="activeTeam">Active Team</div>
-				<hr />
+				<div className="activeTeam">
+					Active Team
+				</div>
+				<div className="otherTeams">
+					Other Teams
+				</div>
 			</div>
 		)
 	}
@@ -72,15 +55,14 @@ class SideBar extends Component{
 		/*if(!this.props.teams) {
 			return (
 				<div className="teamSidebar">
-					<h2>Teams:</h2>
+					<div className="teamHeader"><div>Create New Team:</div><i className="zmdi zmdi-plus-circle-o"></i></div>
 				</div>
 			);
 		}*/
 	
 		return (	
 			<div className="teamSidebar">
-				<div className="teamHeader"><div>Teams:</div><i className="zmdi zmdi-plus-circle-o"></i></div>
-				<hr />
+				<div className="teamHeader"><div>Teams:</div><i onClick={this.routeToCreateNewTeam.bind()} className="zmdi zmdi-plus-circle-o"></i></div>
 				{this.renderActiveTeam()}
 
 			</div>
