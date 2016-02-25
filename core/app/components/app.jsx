@@ -7,16 +7,19 @@ import { getUser } from '../actions/index';
 
 class App extends Component {
 
-  getUserInfo() {
-    this.props.getUser();
+  showHeader() {
+    if (this.props.user && this.props.user._id)
+    {
+      return <HeaderBar user={this.props.user} />;
+    } else {
+      // this.props.getUser();
+    }
   }
-
-
 
   render() {
     return(
       <div>
-        {this.props.user ? <HeaderBar user={this.props.user}/> : this.getUserInfo()}
+        {this.showHeader()}
   		  <div className="mainContainer">
           {this.props.children}
         </div>

@@ -15,6 +15,7 @@ class HeaderBar extends Component {
 
 	}
 
+
 	render() {
 		return (
 			<div className="headerBar">
@@ -28,11 +29,11 @@ class HeaderBar extends Component {
           border: "solid 1px #1F8DD6",
           cursor: "pointer"
           }}
-          distance={-80}
+          distance={80}
           width={70}
           height={40}
-          y={5}
-          x={window.innerWidth - 80}>
+          y={0}
+          x={0}>
           <div>
             {this.props.user ? this.props.user.userName : <Link to="/">Login</Link>}
           </div>
@@ -43,7 +44,7 @@ class HeaderBar extends Component {
 						<Link to="register">Register</Link>
           </div>
           <div>
-						<Link to="/">Logout</Link>
+						<Link to="/" onClick={this.props.userLogout}>Logout</Link>
           </div>
         </Menu>
 			</div>
@@ -54,7 +55,7 @@ class HeaderBar extends Component {
 function mapStateToProps(state) {
 	return {
 		user: state.user
-	}
+	};
 }
 
 export default connect(mapStateToProps, { userLogout, updateUserProfile })(HeaderBar);
