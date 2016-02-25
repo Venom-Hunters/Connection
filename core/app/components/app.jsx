@@ -3,12 +3,20 @@ import { Component } from 'react';
 import HeaderBar from './header';
 import { connect } from 'react-redux';
 
+import { getUser } from '../actions/index';
 
 class App extends Component {
+
+  getUserInfo() {
+    this.props.getUser();
+  }
+
+
+
   render() {
     return(
       <div>
-        {this.props.user ? <HeaderBar user={this.props.user}/> : ""}
+        {this.props.user ? <HeaderBar user={this.props.user}/> : this.getUserInfo()}
   		  <div className="mainContainer">
           {this.props.children}
         </div>
@@ -22,4 +30,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { getUser })(App);

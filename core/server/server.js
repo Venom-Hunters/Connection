@@ -87,11 +87,11 @@ mongoose.connection.once('open', function() {
 //auth endpoints
 app.post('/auth/login', passport.authenticate('local', {failureRedirect: '/login' }), userCtrl.getUser);
 app.post('/auth/addAccount', userCtrl.create, passport.authenticate('local', {failureRedirect: '/login'}), userCtrl.getUser);
-app.get('/auth/logout/:userId', userCtrl.logout);
+app.get('/auth/logout', userCtrl.logout);
 
 //user endpoints
 app.put('/user/update', userCtrl.updateUserProfile);
-app.get('/user/currentUser/:userId', userCtrl.getUser);
+app.get('/user/getUser', userCtrl.getUser);
 app.get('/user/getTeams/:userId', userCtrl.getTeams);
 app.delete('/user/delete/:userId', userCtrl.deleteUser);
 //tested through user

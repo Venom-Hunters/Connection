@@ -40,14 +40,14 @@ class HeaderBar extends Component {
 						<Link to="main">Main</Link>
           </div>
           <div>
-						<Link to="/">Login</Link>
+						<Link to="register">Register</Link>
           </div>
           <div>
-						<Link to="register">Register</Link>
+						<Link to="/">Logout</Link>
           </div>
         </Menu>
 			</div>
-		)
+		);
 	}
 }
 
