@@ -59,10 +59,13 @@ function ensureAuthenticated(req, res, next) {
 }
 
 var app = express();
+var server = require('http').Server(app);
 
-var http = require('http').Server(app),
-	io = require('socket.io')(http);
+var io = require('socket.io')(server);
 
+io.on('connection', function(socket) {
+  console.log('Connection made: ' + socket);
+});
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -114,7 +117,6 @@ app.get(/^(?!.*(images))/, function (req, res) {
  res.sendFile(path.resolve('./public/index.html'));
 });
 
-
-http.listen(config.port, function() {
-	console.log('You are rocking on port: ', config.port);
+server.listen(config.port, function() {
+  console.log('About to murder Rey on port', config.port + '!');
 });
