@@ -3,6 +3,7 @@ var Team = require('./../models/teamModel');
 
 module.exports = {
 	create: function(req, res, next) {
+		console.log()
 	    User.findOne({'email': req.body.email}, function(err, user) {
 	        if (user) {
 	            return res.status(403).send('Email already exists. Please use a different email.');

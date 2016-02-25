@@ -165,7 +165,13 @@ class CardStackComponent extends Component{
 
 	renderTeamList() {
 		if(!this.props.teams) {
-			return <Card>No Teams</Card>;
+			return (
+				<Card>
+					<div className="testing">
+						No Teams					
+					</div>
+				</Card>
+			);
 		}
 		return this.props.teams.map((team) => {
 			<Card onClick={this.activeTeamClick.bind(this)} background='#9B27AE' key={team._id}>
