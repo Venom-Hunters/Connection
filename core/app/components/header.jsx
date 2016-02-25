@@ -17,35 +17,12 @@ class HeaderBar extends Component {
 
 	render() {
 		return (
-			<div className="headerBar">
-				<Menu
-          direction="horizontal"
-          customStyle={{
-          color: "#fff",
-          textAlign: "center",
-          lineHeight: "40px",
-          backgroundColor: "#1F8DD6",
-          border: "solid 1px #1F8DD6",
-          cursor: "pointer"
-          }}
-          distance={-80}
-          width={70}
-          height={40}
-          y={5}
-          x={window.innerWidth - 80}>
-          <div>
-            {this.props.user ? this.props.user.userName : <Link to="/">Login</Link>}
-          </div>
-          <div>
-						<Link to="main">Main</Link>
-          </div>
-          <div>
-						<Link to="register">Register</Link>
-          </div>
-          <div>
-						<Link to="/">Logout</Link>
-          </div>
-        </Menu>
+			<div className="pure-menu pure-menu-horizontal">
+				<ul className="pure-menu-list">
+					{this.props.user ? this.props.user.userName :<li className="pure-menu-item"><Link className="pure-menu-link" to="/">Login</Link></li>}
+        	<li className="pure-menu-item"><Link className="pure-menu-link" to="main">Main</Link></li>
+        	<li className="pure-menu-item"><Link className="pure-menu-link" to="/">Logout</Link></li>
+    		</ul>
 			</div>
 		);
 	}
