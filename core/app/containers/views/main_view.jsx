@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import TeamSidebar from '../../components/team_sidebar';
+import CardStack from '../card_stack';
 import InteractionArea from '../interaction_area';
 import { Connect } from 'react-router';
 
@@ -9,7 +9,7 @@ export default class MainView extends Component {
     return(
 
       <div className="mainContainer">
-		    <TeamSidebar />
+      		<CardStack className="teamSidebar" />
 		    <InteractionArea />
       </div>
     );
