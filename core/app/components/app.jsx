@@ -12,7 +12,7 @@ class App extends Component {
     {
       return <HeaderBar user={this.props.user} />;
     } else {
-      // this.props.getUser();
+      this.props.getUser();
     }
   }
 
