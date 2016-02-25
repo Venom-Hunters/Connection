@@ -19,7 +19,7 @@ const throwError = (condition, message) => {
 
 const equalsZero = (num) => num === 0;
 
-class CardStack extends Component {
+class CardStackBuilder extends Component {
 
 	constructor(props) {
 		super(props);
@@ -141,4 +141,4 @@ class Card extends Component {
 	}
 }
 
-export { CardStack, Card };
+export { CardStackBuilder, Card };
