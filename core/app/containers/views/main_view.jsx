@@ -7,8 +7,10 @@ export default class MainView extends Component {
   render() {
     return (
       <div className="mainContainer">
-        <SideBar/>
-        <ChatBox/>
+      		<SideBar />
+      		<div>
+			         {this.props.children}
+      		</div>
       </div>
     );
   }
