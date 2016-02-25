@@ -47,12 +47,23 @@ a{
 }
 
 .teamSidebar {
+	position: relative;
 	width: 250px;
 	height: 100%;
+	text-align: center;
+	background-color: #7c7c7c;
+	color: white;
 }
 
-.testing {
-	padding: 30px;
+.teamHeader {
+	display: flex;
+	justify-content: space-between;
+	font-size: 1.5em;
+}
+
+.activeTeam {
+	font-style: italic;
+	color: red;
 }
 
 .interactionArea {

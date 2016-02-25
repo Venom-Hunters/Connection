@@ -165,9 +165,14 @@ class CardStack extends Component{
 	}
 
 	renderTeamList() {
+		let colorArray = [];
+		for (var prop in colors) {
+			colorArray.push(colors[prop]);
+		}
+		console.log(colorArray);
 		if(!this.props.teams) {
 			return (
-				<Card>
+				<Card background={colors.darkGrey}>
 					<div className="testing">
 						No Teams					
 					</div>
@@ -189,7 +194,7 @@ class CardStack extends Component{
 			<CardStackBuilder
 				height={this.state.height}
 				width={250}
-				background='#f8f8f8'
+				background='#ffffff'
 			  	hoverOffset={25}>
 
 				<Card background={colors.blue}>
@@ -198,7 +203,7 @@ class CardStack extends Component{
 					</div>
 				</Card>
 
-				<Card background={colors.green}>
+				<Card background={colors.grey}>
 					<div className="testing">
 						This card will be for adding members to a team.
 					</div>
