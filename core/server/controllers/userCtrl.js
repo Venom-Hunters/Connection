@@ -57,10 +57,10 @@ module.exports = {
 		} else res.status(401).send();
 	},
 	getTeams: function(req,res,next) {
-		
+
 	},
 	logout: function(req, res, next) {
-		User.findById(req.params.userId, function(err, user) {
+		User.findById(req.user._id, function(err, user) {
 			if(err) return res.sendStatus(500);
 			else {
 				user.loggedIn = false;
