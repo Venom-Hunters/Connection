@@ -6,15 +6,6 @@ import { Link } from "react-router";
 import Menu from "react-motion-menu";
 
 class HeaderBar extends Component {
-	constructor(props) {
-		super(props);
-	}
-
-	componentWillReceiveProps(nextProps) {
-		console.log(nextProps);
-
-	}
-
 	render() {
 		return (
 			<div className="pure-menu pure-menu-horizontal">
