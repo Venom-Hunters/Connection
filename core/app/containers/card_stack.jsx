@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 import { CardStackBuilder, Card } from "../components/cardStackBuilder";
 import React, {Component} from "react";
 import { connect } from "react-redux";
 import { getUserTeams, setActiveTeam, getActiveTeamChats } from "../actions/index";
+=======
+import { CardStackBuilder, Card } from '../components/cardStackBuilder';
+import React, {Component} from 'react';
+import { connect } from 'react-redux';
+import { getUserTeams, setActiveTeam, getActiveTeamChats } from '../actions/index';
+import {colors}  from '../constants/color_scheme';
+>>>>>>> b6a2e52a0360b615b9d5a1c059e104e457ca32b8
 
 const styles = {
 	cardHeader: {
@@ -164,9 +172,14 @@ class CardStack extends Component{
 	}
 
 	renderTeamList() {
+		let colorArray = [];
+		for (var prop in colors) {
+			colorArray.push(colors[prop]);
+		}
+		console.log(colorArray);
 		if(!this.props.teams) {
 			return (
-				<Card>
+				<Card background={colors.darkGrey}>
 					<div className="testing">
 						No Teams					
 					</div>
@@ -188,16 +201,27 @@ class CardStack extends Component{
 			<CardStackBuilder
 				height={this.state.height}
 				width={250}
+<<<<<<< HEAD
 				background="#f8f8f8"
 			  	hoverOffset={25}>
 
 				<Card background="#2980B9">
+=======
+				background='#ffffff'
+			  	hoverOffset={25}>
+
+				<Card background={colors.blue}>
+>>>>>>> b6a2e52a0360b615b9d5a1c059e104e457ca32b8
 					<div className="testing">
 						This card will be for creating teams and inviting the members.
 					</div>
 				</Card>
 
+<<<<<<< HEAD
 				<Card background="#27AE60">
+=======
+				<Card background={colors.grey}>
+>>>>>>> b6a2e52a0360b615b9d5a1c059e104e457ca32b8
 					<div className="testing">
 						This card will be for adding members to a team.
 					</div>

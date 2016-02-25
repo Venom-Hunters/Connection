@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { userLogout, updateUserProfile } from "../actions/index";
 import { Link } from "react-router";
-import Menu from "react-motion-menu";
 
 class HeaderBar extends Component {
 	render() {
@@ -22,7 +21,7 @@ class HeaderBar extends Component {
 function mapStateToProps(state) {
 	return {
 		user: state.user
-	}
+	};
 }
 
 export default connect(mapStateToProps, { userLogout, updateUserProfile })(HeaderBar);

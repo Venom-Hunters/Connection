@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import CardStack from "../card_stack";
+import { Connect } from 'react-router';
+
 import Chat from "../chat";
-import { Connect } from "react-router";
+import SideBar from '../side_bar';
 
 export default class MainView extends Component {
   render() {

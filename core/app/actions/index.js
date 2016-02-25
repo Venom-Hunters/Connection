@@ -23,7 +23,6 @@ export function login(props) {
 
 export function getUser() {
   const request = axios.get(`${ROOT_URL}/user/getUser`);
-  console.log("Inside getUser action");
 
   return {
     type: USER_GET,
@@ -32,7 +31,7 @@ export function getUser() {
 }
 
 export function userLogout(userId) {
-  const request = axios.get(`${ROOT_URL}/auth/logout/${userId}`);
+  const request = axios.get(`${ROOT_URL}/auth/logout`);
 
   return {
     type: USER_LOGOUT,
