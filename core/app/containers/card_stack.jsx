@@ -192,13 +192,13 @@ class CardStack extends Component{
 				background='#f8f8f8'
 			  	hoverOffset={25}>
 
-				<Card background={colors.orange}>
+				<Card background={colors.blue}>
 					<div className="testing">
 						This card will be for creating teams and inviting the members.
 					</div>
 				</Card>
 
-				<Card background={colors.red}>
+				<Card background={colors.green}>
 					<div className="testing">
 						This card will be for adding members to a team.
 					</div>
