@@ -7,7 +7,9 @@ import { login } from '../actions/';
 class LoginBox extends Component {
 
   onSubmit(props) {
-    this.props.login(props);
+    this.props.login(props).then( () => {
+      this.context.router.push('main');
+    });
   }
 
   render() {

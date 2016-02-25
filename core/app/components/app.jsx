@@ -8,7 +8,7 @@ class App extends Component {
   render() {
     return(
       <div>
-		    <HeaderBar />
+        {this.props.user ? <HeaderBar user={this.props.user}/> : ""}
   		  <div className="mainContainer">
           {this.props.children}
         </div>

@@ -7,7 +7,7 @@ import RegistrationView from "./containers/views/register_view";
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={LoginView} />
+    <IndexRoute component={LoginView} />  
     <Route path="main" component={MainView} />
     <Route path="register" component={RegistrationView} />
   </Route>

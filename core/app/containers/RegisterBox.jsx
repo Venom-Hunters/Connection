@@ -7,11 +7,13 @@ import { register } from '../actions/index';
 class RegisterBox extends Component {
 
   onSubmit(props) {
-    this.props.register(props);
+    this.props.register(props).then( () => {
+      this.context.router.push('main');
+    });
   }
 
   render() {
-    const { fields: { email, username, password }, handleSubmit } = this.props;
+    const { fields: { email, userName, password }, handleSubmit } = this.props;
 
     return(
       <div className="registration">
@@ -23,8 +25,8 @@ class RegisterBox extends Component {
             </div>
 
             <div className="pure-control-group">
-              <label htmlFor="username">Username</label>
-              <input id="username" placeholder="Username" {...username} />
+              <label htmlFor="userName">Username</label>
+              <input id="userName" placeholder="Username" {...userName} />
             </div>
 
             <div className="pure-control-group">
@@ -55,6 +57,6 @@ function validate(values) {
 
 export default reduxForm({
   form: 'RegisterBoxForm',
-  fields: ['email', 'username', 'password'],
+  fields: ['email', 'userName', 'password'],
   validate
 }, null, { register })(RegisterBox);

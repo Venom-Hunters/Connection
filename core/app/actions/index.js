@@ -52,14 +52,14 @@ export function getUserTeams(userId) {
   return {
     type: GET_USER_TEAMS,
     payload: request
-  }
+  };
 }
 
 export function setActiveTeam(team) {
   return {
     type: SET_ACTIVE_TEAM,
     payload: team
-  }
+  };
 }
 
 
@@ -69,6 +69,5 @@ export function getActiveTeamChats(teamId) {
   return {
     type: GET_ACTIVE_TEAM_CHATS,
     payload: request
-  }
+  };
 }
-
