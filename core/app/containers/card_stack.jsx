@@ -1,8 +1,8 @@
-import { CardStackBuilder, Card } from '../components/cardStackBuilder';
-import React, {Component} from 'react';
-import { connect } from 'react-redux';
-import { getUserTeams, setActiveTeam, getActiveTeamChats } from '../actions/index';
-import {colors}  from '../constants/color_scheme';
+import { CardStackBuilder, Card } from "../components/cardStackBuilder";
+import React, {Component} from "react";
+import { connect } from "react-redux";
+import { getUserTeams, setActiveTeam, getActiveTeamChats } from "../actions/index";
+import {colors}  from "../constants/color_scheme";
 
 const styles = {
 	cardHeader: {
@@ -200,7 +200,7 @@ class CardStack extends Component{
 
 				<Card background="#2980B9">
 =======
-				background='#ffffff'
+				background="#ffffff"
 			  	hoverOffset={25}>
 
 				<Card background={colors.blue}>

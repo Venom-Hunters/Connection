@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import { connect } from 'react-redux';
-import { getUserTeams, setActiveTeam, getActiveTeamChats } from '../actions/index';
-import {colors}  from '../constants/color_scheme';
+import React, {Component} from "react";
+import { connect } from "react-redux";
+import { getUserTeams, setActiveTeam, getActiveTeamChats } from "../actions/index";
+import {colors}  from "../constants/color_scheme";
 
 
 class SideBar extends Component{
@@ -29,11 +29,11 @@ class SideBar extends Component{
 	}
 
 	componentDidMount() {
-		window.addEventListener('resize', this.updateDimensions);
+		window.addEventListener("resize", this.updateDimensions);
 	}
 
 	comppnentWillUnmount() {
-		window.removeEventListener('resize', this.updateDimensions);
+		window.removeEventListener("resize", this.updateDimensions);
 	}
 
 	checkActiveTeam(teamId) {

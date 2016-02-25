@@ -69,3 +69,10 @@ html, body {
 textarea{
 	resize: none;
 }
+
+.chatBody{
+	height: 100%;
+	overflow: auto;
+  border: 1px #DFDFDF solid;
+  background-color: #DFDFDF;
+}
