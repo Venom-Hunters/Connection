@@ -14,6 +14,7 @@ class HeaderBar extends Component {
         	<li className="pure-menu-item"><Link className="pure-menu-link" to="/">Logout</Link></li>
     		</ul>
 			</div>
+
 		);
 	}
 }

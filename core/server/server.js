@@ -59,10 +59,12 @@ function ensureAuthenticated(req, res, next) {
 }
 
 var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-var http = require("http").Server(app),
-	io = require("socket.io")(http);
-
+io.on('connection', function(socket) {
+  console.log('Connection made: ' + socket);
+});
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -103,18 +105,17 @@ app.get("/chat/:teamId", chatCtrl.readAllChatsInTeam);
 app.delete("/chat/:teamId", chatCtrl.deleteTeamSessionChats);
 
 //team endpoints
-app.post("/team/create", teamCtrl.create);
-app.delete("/team/delete/:teamId", teamCtrl.deleteTeam);
-app.put("/team/updateTeamProfile/:teamId", teamCtrl.updateTeamProfile);
-app.get("/team/getTeamInfo/:teamId", teamCtrl.getTeamInfo);
-app.put("/team/addMember/:teamId", teamCtrl.addMember);
-app.put("/team/removeMember/:teamId", teamCtrl.removeMember);
+app.post('/team/create', teamCtrl.create);
+app.delete('/team/delete/:teamId', teamCtrl.deleteTeam);
+app.put('/team/updateTeamProfile/:teamId', teamCtrl.updateTeamProfile);
+app.get('/team/getTeamInfo/:teamId', teamCtrl.getTeamInfo);
+app.put('/team/addMember/:teamId', teamCtrl.addMember);
+app.put('/team/removeMember/:teamId', teamCtrl.removeMember);
 
-app.get("*", function (req, res) {
- res.sendFile(path.resolve("./public/index.html"));
+app.get(/^(?!.*(images))/, function (req, res) {
+ res.sendFile(path.resolve('./public/index.html'));
 });
 
-
-http.listen(config.port, function() {
-	console.log("You are rocking on port: ", config.port);
+server.listen(config.port, function() {
+  console.log('About to murder Rey on port', config.port + '!');
 });
