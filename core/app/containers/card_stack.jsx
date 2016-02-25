@@ -1,4 +1,4 @@
-import { CardStack, Card } from '../components/cardstack';
+import { CardStackBuilder, Card } from '../components/cardStackBuilder';
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { getUserTeams, setActiveTeam, getActiveTeamChats } from '../actions/index';
@@ -118,7 +118,7 @@ const TeamMemberCard = (props) => (
 );
 
 
-class CardStackComponent extends Component{
+class CardStack extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -185,7 +185,7 @@ class CardStackComponent extends Component{
 	render() {
 	
 		return (	
-			<CardStack
+			<CardStackBuilder
 				height={this.state.height}
 				width={250}
 				background='#f8f8f8'
@@ -203,7 +203,7 @@ class CardStackComponent extends Component{
 					</div>
 				</Card>
 				{this.renderTeamList()}
-			</CardStack>
+			</CardStackBuilder>
 		);
 	}
 }
@@ -215,4 +215,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, { getUserTeams, setActiveTeam, getActiveTeamChats })(CardStackComponent);
+export default connect(mapStateToProps, { getUserTeams, setActiveTeam, getActiveTeamChats })(CardStack);
