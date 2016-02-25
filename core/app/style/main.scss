@@ -7,23 +7,14 @@ html, body {
 	margin: 0;
 }
 
+
+
 .pure-button-primary, .pure-button-secondary {
   margin-right: 1em;
 }
 
 .registration {
   margin: 2em auto;
-}
-
-
-.headerBar {
-	padding: 1em;
-	height: 45px;
-}
-
-a{
-	color: white;
-	text-decoration: none;
 }
 
 .logo {
@@ -43,7 +34,7 @@ a{
 	display: flex;
 	flex-direction: row;
 	width: 100%;
-	height: calc(100vh - 60px);
+	height: calc(100vh - 34px);
 }
 
 .teamSidebar {
@@ -76,7 +67,11 @@ a{
 	border-bottom: 1px solid white;
 }
 
-.interactionArea {
+.chat {
 	flex: 1;
 	height: 100%;
+}
+
+textarea{
+	resize: none;
 }

@@ -1,14 +1,14 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import { reduxForm } from 'redux-form';
+import React, { Component, PropTypes } from "react";
+import { Link } from "react-router";
+import { reduxForm } from "redux-form";
 
-import { register } from '../actions/index';
+import { register } from "../actions/index";
 
 class RegisterBox extends Component {
 
   onSubmit(props) {
     this.props.register(props).then( () => {
-      this.context.router.push('main');
+      this.context.router.push("main");
     });
   }
 
@@ -56,7 +56,7 @@ function validate(values) {
 }
 
 export default reduxForm({
-  form: 'RegisterBoxForm',
-  fields: ['email', 'userName', 'password'],
+  form: "RegisterBoxForm",
+  fields: ["email", "userName", "password"],
   validate
 }, null, { register })(RegisterBox);

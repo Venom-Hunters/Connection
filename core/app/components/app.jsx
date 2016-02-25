@@ -1,9 +1,9 @@
-import React from 'react';
-import { Component } from 'react';
-import HeaderBar from './header';
-import { connect } from 'react-redux';
+import React from "react";
+import { Component } from "react";
+import HeaderBar from "./header";
+import { connect } from "react-redux";
 
-import { getUser } from '../actions/index';
+import { getUser } from "../actions/index";
 
 class App extends Component {
 
@@ -19,9 +19,8 @@ class App extends Component {
   render() {
     return(
       <div>
-        <div className="headerBar">
+        
         {this.showHeader()}
-      </div>
   		  <div className="mainContainer">
           {this.props.children}
         </div>

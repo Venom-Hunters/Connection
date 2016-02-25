@@ -1,13 +1,13 @@
-var mongoose = require('mongoose'),
-	bcrypt = require('bcrypt-nodejs'),
-	q = require('q');
+var mongoose = require("mongoose"),
+	bcrypt = require("bcrypt-nodejs"),
+	q = require("q");
 
 var userSchema = new mongoose.Schema({
-	userName: {type: 'String', require: true},
-	email: {type: 'String', unique: true, require: true},
-	password: {type: 'String'},
-	lastTeamViewed: {type: mongoose.Schema.Types.ObjectId, ref: 'teams'},
-	loggedIn: {type: 'Boolean'}
+	userName: {type: "String", require: true},
+	email: {type: "String", unique: true, require: true},
+	password: {type: "String"},
+	lastTeamViewed: {type: mongoose.Schema.Types.ObjectId, ref: "teams"},
+	loggedIn: {type: "Boolean"}
 })
 
 userSchema.methods.generateHash = function (password) {
@@ -38,4 +38,4 @@ userSchema.methods.validPassword = function (password) {
 	return dfd.promise;
 };
 
-module.exports = mongoose.model('users', userSchema);
+module.exports = mongoose.model("users", userSchema);

@@ -1,4 +1,4 @@
-import { GET_ACTIVE_TEAM_CHATS } from '../actions/index';
+import { GET_ACTIVE_TEAM_CHATS } from "../actions/index";
 
 export default function(state = null, action = "") {
   switch(action.type) {

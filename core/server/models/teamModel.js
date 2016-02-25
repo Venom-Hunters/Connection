@@ -1,13 +1,13 @@
-var mongoose = require('mongoose'),
-	bcrypt = require('bcrypt-nodejs'),
-	q = require('q');
+var mongoose = require("mongoose"),
+	bcrypt = require("bcrypt-nodejs"),
+	q = require("q");
 
 var teamSchema = mongoose.Schema({
-	teamName: {type: 'String'},
-	members: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}],
-	teamLead: {type: mongoose.Schema.Types.ObjectId, ref: 'users'},
-	regToken: {type: 'String'},
-	creationDate: {type: 'Date'}
+	teamName: {type: "String"},
+	members: [{type: mongoose.Schema.Types.ObjectId, ref: "users"}],
+	teamLead: {type: mongoose.Schema.Types.ObjectId, ref: "users"},
+	regToken: {type: "String"},
+	creationDate: {type: "Date"}
 });
 
 teamSchema.methods.generateHash = function (regToken) {
@@ -38,4 +38,4 @@ teamSchema.methods.validToken = function (regToken) {
 	return dfd.promise;
 };
 
-module.exports = mongoose.model('teams', teamSchema);
+module.exports = mongoose.model("teams", teamSchema);

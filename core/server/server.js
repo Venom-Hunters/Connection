@@ -1,27 +1,27 @@
-var express = require('express'),
-  cors = require('cors'),
-  bodyParser = require('body-parser'),
-  mongoose = require('mongoose'),
-	cors = require('cors'),
-	session = require('express-session'),
-	passport = require('passport'),
-	localStrategy = require('passport-local'),
-  path = require('path');
+var express = require("express"),
+  cors = require("cors"),
+  bodyParser = require("body-parser"),
+  mongoose = require("mongoose"),
+	cors = require("cors"),
+	session = require("express-session"),
+	passport = require("passport"),
+	localStrategy = require("passport-local"),
+  path = require("path");
 
-var	chatCtrl = require('./controllers/chatCtrl'),
-  userCtrl = require('./controllers/userCtrl'),
-	teamCtrl = require('./controllers/teamCtrl'),
-	User = require('./models/userModel'),
-	config = require('./config');
+var	chatCtrl = require("./controllers/chatCtrl"),
+  userCtrl = require("./controllers/userCtrl"),
+	teamCtrl = require("./controllers/teamCtrl"),
+	User = require("./models/userModel"),
+	config = require("./config");
 
-passport.use('local', new localStrategy({
-	usernameField: 'email',
-	passwordField: 'password',
+passport.use("local", new localStrategy({
+	usernameField: "email",
+	passwordField: "password",
 	passReqToCallback: true
 }, function(req, email, password, done) {
 	process.nextTick(function() {
 		//possibly pull this code out to userCtrl
-		User.findOne({'email': email}, function(err, user) {
+		User.findOne({"email": email}, function(err, user) {
 			if (err) return done(err);
 			else if(user) {
 				user.validPassword(password)
@@ -29,18 +29,18 @@ passport.use('local', new localStrategy({
 					if(response === true) {
 						user.loggedIn = true;
 						user.save(function(err, result) {
-							if (err) return done('Server Error', false);
+							if (err) return done("Server Error", false);
 							else return done(null, result);
 						});
 					} else {
-						return done('Password incorrect', false);
+						return done("Password incorrect", false);
 					}
 				})
 				.catch(function(err) {
-					return done('Server Error', false);
+					return done("Server Error", false);
 				});
 			} else {
-				return done('User not found', false);
+				return done("User not found", false);
 			}
 		});
 	});
@@ -59,15 +59,17 @@ function ensureAuthenticated(req, res, next) {
 }
 
 var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-var http = require('http').Server(app),
-	io = require('socket.io')(http);
-
+io.on('connection', function(socket) {
+  console.log('Connection made: ' + socket);
+});
 
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use(express.static('./public'));
+app.use(express.static("./public"));
 
 app.use(session({
 	secret: config.secret,
@@ -80,27 +82,27 @@ app.use(passport.session());
 
 var mongoUri = config.mongoUri;
 mongoose.connect(mongoUri);
-mongoose.connection.once('open', function() {
-  console.log('Connected to MongoDB');
+mongoose.connection.once("open", function() {
+  console.log("Connected to MongoDB");
 });
 
 //auth endpoints
-app.post('/auth/login', passport.authenticate('local', {failureRedirect: '/login' }), userCtrl.getUser);
-app.post('/auth/addAccount', userCtrl.create, passport.authenticate('local', {failureRedirect: '/login'}), userCtrl.getUser);
-app.get('/auth/logout', userCtrl.logout);
+app.post("/auth/login", passport.authenticate("local", {failureRedirect: "/login" }), userCtrl.getUser);
+app.post("/auth/addAccount", userCtrl.create, passport.authenticate("local", {failureRedirect: "/login"}), userCtrl.getUser);
+app.get("/auth/logout", userCtrl.logout);
 
 //user endpoints
-app.put('/user/update', userCtrl.updateUserProfile);
-app.get('/user/getUser', userCtrl.getUser);
-app.get('/user/getTeams/:userId', userCtrl.getTeams);
-app.delete('/user/delete/:userId', userCtrl.deleteUser);
+app.put("/user/update", userCtrl.updateUserProfile);
+app.get("/user/getUser", userCtrl.getUser);
+app.get("/user/getTeams/:userId", userCtrl.getTeams);
+app.delete("/user/delete/:userId", userCtrl.deleteUser);
 //tested through user
 
 //chat endpoints
-app.post('/chat/:teamId', chatCtrl.create);
-app.get('/chat/:teamId', chatCtrl.readAllChatsInTeam);
+app.post("/chat/:teamId", chatCtrl.create);
+app.get("/chat/:teamId", chatCtrl.readAllChatsInTeam);
 //delete team session chats when last person logs out?
-app.delete('/chat/:teamId', chatCtrl.deleteTeamSessionChats);
+app.delete("/chat/:teamId", chatCtrl.deleteTeamSessionChats);
 
 //team endpoints
 app.post('/team/create', teamCtrl.create);
@@ -114,7 +116,6 @@ app.get(/^(?!.*(images))/, function (req, res) {
  res.sendFile(path.resolve('./public/index.html'));
 });
 
-
-http.listen(config.port, function() {
-	console.log('You are rocking on port: ', config.port);
+server.listen(config.port, function() {
+  console.log('About to murder Rey on port', config.port + '!');
 });

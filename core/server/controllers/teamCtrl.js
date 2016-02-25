@@ -1,4 +1,4 @@
-var Team = require('./../models/teamModel');
+var Team = require("./../models/teamModel");
 
 module.exports = {
 	
@@ -46,7 +46,7 @@ module.exports = {
 	getTeamInfo: function(req, res, next) {
 		Team
 			.findById(req.params.teamId)
-			.populate('members teamLead')
+			.populate("members teamLead")
 			.exec(function(err, team) {
 				if (err) return res.sendStatus(500);
 				else return res.send(team);
@@ -59,7 +59,7 @@ module.exports = {
 				for (var i = 0; i < team.members.length; i++) {
 					team.members[i] = team.members[i].toString();
 					if (team.members[i] === req.body.userId) {
-						return res.status(403).send('Member already in team.');
+						return res.status(403).send("Member already in team.");
 					}
 				}
 				team.members.push(req.body.userId);
