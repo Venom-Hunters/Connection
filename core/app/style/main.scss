@@ -54,7 +54,11 @@ a{
 	padding: 30px;
 }
 
-.interactionArea {
+.chat {
 	flex: 1;
 	height: 100%;
+}
+
+textarea{
+	resize: none;
 }

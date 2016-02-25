@@ -1,12 +1,12 @@
-var User = require('./../models/userModel');
-var Team = require('./../models/teamModel');
+var User = require("./../models/userModel");
+var Team = require("./../models/teamModel");
 
 module.exports = {
 	create: function(req, res, next) {
 		console.log()
-	    User.findOne({'email': req.body.email}, function(err, user) {
+	    User.findOne({"email": req.body.email}, function(err, user) {
 	        if (user) {
-	            return res.status(403).send('Email already exists. Please use a different email.');
+	            return res.status(403).send("Email already exists. Please use a different email.");
 	        } else {
 			    var newUser = new User();
 			    newUser.userName = req.body.userName;
@@ -45,7 +45,7 @@ module.exports = {
 	},
 	getUser: function(req, res, next) {
 		if (req.isAuthenticated()) {
-			User.findById(req.user._id).populate('lastTeamViewed').exec(function(err, user) {
+			User.findById(req.user._id).populate("lastTeamViewed").exec(function(err, user) {
 				if (err) res.status(500).send(err);
 				else if (!user) {
 					return res.status(401).send();

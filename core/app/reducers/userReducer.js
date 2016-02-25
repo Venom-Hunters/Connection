@@ -2,7 +2,7 @@ import {
    USER_LOGIN,
    USER_REGISTER,
    GET_USER_TEAMS,
-   USER_GET } from '../actions/index';
+   USER_GET } from "../actions/index";
 
 export default function(state = null, action = "") {
   switch(action.type) {

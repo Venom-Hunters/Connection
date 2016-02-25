@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { userLogout, updateUserProfile } from '../actions/index';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { userLogout, updateUserProfile } from "../actions/index";
 import { Link } from "react-router";
-import Menu from 'react-motion-menu';
+import Menu from "react-motion-menu";
 
 class HeaderBar extends Component {
 	constructor(props) {

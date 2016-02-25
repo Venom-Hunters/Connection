@@ -1,14 +1,14 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import { reduxForm } from 'redux-form';
+import React, { Component, PropTypes } from "react";
+import { Link } from "react-router";
+import { reduxForm } from "redux-form";
 
-import { login } from '../actions/';
+import { login } from "../actions/";
 
 class LoginBox extends Component {
 
   onSubmit(props) {
     this.props.login(props).then( () => {
-      this.context.router.push('main');
+      this.context.router.push("main");
     });
   }
 
@@ -52,7 +52,7 @@ function validate(values) {
 }
 
 export default reduxForm({
-  form: 'LoginForm',
-  fields: ['email', 'password'],
+  form: "LoginForm",
+  fields: ["email", "password"],
   validate
 }, null, { login })( LoginBox );
