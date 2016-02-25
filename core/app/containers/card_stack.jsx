@@ -1,15 +1,8 @@
-<<<<<<< HEAD
-import { CardStackBuilder, Card } from "../components/cardStackBuilder";
-import React, {Component} from "react";
-import { connect } from "react-redux";
-import { getUserTeams, setActiveTeam, getActiveTeamChats } from "../actions/index";
-=======
 import { CardStackBuilder, Card } from '../components/cardStackBuilder';
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { getUserTeams, setActiveTeam, getActiveTeamChats } from '../actions/index';
 import {colors}  from '../constants/color_scheme';
->>>>>>> b6a2e52a0360b615b9d5a1c059e104e457ca32b8
 
 const styles = {
 	cardHeader: {
@@ -135,7 +128,7 @@ class CardStack extends Component{
 		}
 		this.updateDimensions = this.updateDimensions.bind(this);
 	}
-	
+
 	updateDimensions() {
 		this.setState({
 			width: window.innerWidth,
@@ -181,7 +174,7 @@ class CardStack extends Component{
 			return (
 				<Card background={colors.darkGrey}>
 					<div className="testing">
-						No Teams					
+						No Teams
 					</div>
 				</Card>
 			);
@@ -196,8 +189,8 @@ class CardStack extends Component{
 	}
 
 	render() {
-	
-		return (	
+
+		return (
 			<CardStackBuilder
 				height={this.state.height}
 				width={250}

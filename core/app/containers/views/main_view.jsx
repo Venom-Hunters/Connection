@@ -1,16 +1,14 @@
-import React, { Component } from "react";
-import { Connect } from 'react-router';
-
 import Chat from "../chat";
+import React, {Component} from 'react';
 import SideBar from '../side_bar';
+import {Connect} from 'react-router';
 
 export default class MainView extends Component {
   render() {
-    return(
-
+    return (
       <div className="mainContainer">
-      	<CardStack className="teamSidebar" />
-		    <Chat />
+        <SideBar/>
+        <Chat/>
       </div>
     );
   }
