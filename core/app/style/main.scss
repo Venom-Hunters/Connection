@@ -7,18 +7,14 @@ html, body {
 	margin: 0;
 }
 
+
+
 .pure-button-primary, .pure-button-secondary {
   margin-right: 1em;
 }
 
 .registration {
   margin: 2em auto;
-}
-
-
-.headerBar {
-	padding: 1em;
-	height: 45px;
 }
 
 .logo {
@@ -38,7 +34,7 @@ html, body {
 	display: flex;
 	flex-direction: row;
 	width: 100%;
-	height: calc(100vh - 60px);
+	height: calc(100vh - 34px);
 }
 
 .teamSidebar {
