@@ -2,6 +2,7 @@ import { CardStackBuilder, Card } from '../components/cardStackBuilder';
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { getUserTeams, setActiveTeam, getActiveTeamChats } from '../actions/index';
+import {colors}  from '../constants/color_scheme';
 
 const styles = {
 	cardHeader: {
@@ -191,13 +192,13 @@ class CardStack extends Component{
 				background='#f8f8f8'
 			  	hoverOffset={25}>
 
-				<Card background='#2980B9'>
+				<Card background={colors.orange}>
 					<div className="testing">
 						This card will be for creating teams and inviting the members.
 					</div>
 				</Card>
 
-				<Card background='#27AE60'>
+				<Card background={colors.red}>
 					<div className="testing">
 						This card will be for adding members to a team.
 					</div>
