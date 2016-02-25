@@ -1,4 +1,4 @@
-var Chat = require('./../models/chatModel');
+var Chat = require("./../models/chatModel");
 
 module.exports = {
 
@@ -15,8 +15,8 @@ module.exports = {
 	},
 	readAllChatsInTeam: function(req, res, next) {
 		Chat
-		.find({teamId: req.params.teamId}).populate('userId')
-		.sort('-timeStamp')
+		.find({teamId: req.params.teamId}).populate("userId")
+		.sort("-timeStamp")
 		.exec(function(err, result) {
 			if (err) res.sendStatus(500);
 			else res.send(result);
@@ -25,7 +25,7 @@ module.exports = {
 	deleteTeamSessionChats: function(req, res, next) {
 		Chat.remove({teamId: req.params.teamId}, function(err) {
 				if (err) res.sendStatus(500);
-				else res.send('chats deleted');
+				else res.send("chats deleted");
 			});
 	}
 }

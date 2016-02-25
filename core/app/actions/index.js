@@ -1,16 +1,16 @@
-import axios from 'axios';
+import axios from "axios";
 
-export const USER_LOGIN = 'USER_LOGIN';
-export const USER_REGISTER = 'USER_REGISTER';
-export const USER_LOGOUT = 'USER_LOGOUT';
-export const USER_GET = 'USER_GET';
+export const USER_LOGIN = "USER_LOGIN";
+export const USER_REGISTER = "USER_REGISTER";
+export const USER_LOGOUT = "USER_LOGOUT";
+export const USER_GET = "USER_GET";
 
-export const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';
-export const GET_USER_TEAMS = 'GET_USER_TEAMS';
-export const SET_ACTIVE_TEAM = 'SET_ACTIVE_TEAM';
-export const GET_ACTIVE_TEAM_CHATS = 'GET_ACTIVE_TEAM_CHATS';
+export const UPDATE_USER_PROFILE = "UPDATE_USER_PROFILE";
+export const GET_USER_TEAMS = "GET_USER_TEAMS";
+export const SET_ACTIVE_TEAM = "SET_ACTIVE_TEAM";
+export const GET_ACTIVE_TEAM_CHATS = "GET_ACTIVE_TEAM_CHATS";
 
-const ROOT_URL = 'http://localhost:8888';
+const ROOT_URL = "http://localhost:8888";
 
 export function login(props) {
   const request = axios.post(`${ROOT_URL}/auth/login`, props);

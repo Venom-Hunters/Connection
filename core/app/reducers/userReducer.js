@@ -2,8 +2,8 @@ import {
    USER_LOGIN,
    USER_REGISTER,
    GET_USER_TEAMS,
-   USER_LOGOUT,
-   USER_GET } from '../actions/index';
+   USER_GET,
+   USER_LOGOUT } from "../actions/index";
 
 export default function(state = null, action = "") {
   switch(action.type) {

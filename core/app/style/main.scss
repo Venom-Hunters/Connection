@@ -21,11 +21,6 @@ html, body {
 	height: 45px;
 }
 
-a{
-	color: white;
-	text-decoration: none;
-}
-
 .logo {
 	width: 60px;
 	height: 100%;
@@ -76,7 +71,11 @@ a{
 	border-bottom: 1px solid white;
 }
 
-.interactionArea {
+.chat {
 	flex: 1;
 	height: 100%;
+}
+
+textarea{
+	resize: none;
 }

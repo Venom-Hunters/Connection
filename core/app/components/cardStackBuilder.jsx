@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 
 
 const styles = {
 	card: {
-		position: 'absolute',
+		position: "absolute",
 	  	top: 0,
-		width: '100%',
-		cursor: 'pointer',
-		transition: '0.5s transform ease',
+		width: "100%",
+		cursor: "pointer",
+		transition: "0.5s transform ease",
 	}
 };
 
@@ -26,7 +26,7 @@ class CardStackBuilder extends Component {
 		const childrenLength = props.children.length || 1;
 		const headerHeight = props.height / childrenLength;
 
-		throwError(childrenLength <= 1, 'CardStack component must have at least two child Card components. Please check the children of this CardStack instance.');
+		throwError(childrenLength <= 1, "CardStack component must have at least two child Card components. Please check the children of this CardStack instance.");
 
 		this.initialTopOffsets = props.children.map((child, i) => equalsZero(i) ? 0: headerHeight * i);
 
@@ -88,10 +88,10 @@ class CardStackBuilder extends Component {
 			background: this.props.background,
 			height: this.props.height,
 			width: this.props.width,
-			display: 'flex',
-			flexDirection: 'column',
-			position: 'relative',
-			overflow: 'hidden',
+			display: "flex",
+			flexDirection: "column",
+			position: "relative",
+			overflow: "hidden",
 			padding: 0,
 			margin: 0
 	  };

@@ -1,9 +1,9 @@
-import React from 'react';
-import { Component } from 'react';
-import HeaderBar from './header';
-import { connect } from 'react-redux';
+import React from "react";
+import { Component } from "react";
+import HeaderBar from "./header";
+import { connect } from "react-redux";
 
-import { getUser } from '../actions/index';
+import { getUser } from "../actions/index";
 
 class App extends Component {
 
