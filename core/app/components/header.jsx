@@ -9,9 +9,15 @@ class HeaderBar extends Component {
 		return (
 			<div className="pure-menu pure-menu-horizontal">
 				<ul className="pure-menu-list">
-					{this.props.user ? this.props.user.userName :<li className="pure-menu-item"><Link className="pure-menu-link" to="/">Login</Link></li>}
-        	<li className="pure-menu-item"><Link className="pure-menu-link" to="main">Main</Link></li>
-        	<li className="pure-menu-item"><Link className="pure-menu-link" to="/">Logout</Link></li>
+					<li className="pure-menu-item">
+					{this.props.user ? <Link className="pure-menu-link" to="/"> {this.props.user.userName + "\'s profile"} </Link> : <Link className="pure-menu-link" to="/"> Login </Link>}
+					</li>
+        	<li className="pure-menu-item">
+						<Link className="pure-menu-link" to="main">Main</Link>
+					</li>
+        	<li className="pure-menu-item">
+						<Link className="pure-menu-link" onClick={this.props.userLogout} to="/">Logout</Link>
+					</li>
     		</ul>
 			</div>
 
