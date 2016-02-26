@@ -24,13 +24,10 @@ class SideBar extends Component{
 	}
 
 	routeToCreateNewTeam() {
-		browserHistory.push("/main/createNewTeam")
+		browserHistory.push("/main/createNewTeam");
 	}
 
 	renderActiveTeam() {
-		/*if (!this.props.activeTeam) {
-			return;
-		}*/
 		return (
 			<div>
 				<div className="activeTeam">
@@ -40,30 +37,28 @@ class SideBar extends Component{
 					Other Teams
 				</div>
 			</div>
-		)
+		);
 	}
 
 	renderTeamList() {
+		if (this.props.teams && this.props.teams.length) {
+				return this.props.teams.map((team) => {
+				});
+		} else {
+				return (
+					<div> Join a team!</div>
+				);
+		}
 
-		return this.props.teams.map((team) => {
-
-		})
 	}
 
 	render() {
-		/*if(!this.props.teams) {
-			return (
-				<div className="teamSidebar">
-					<div className="teamHeader"><div>Create New Team:</div><i className="zmdi zmdi-plus-circle-o"></i></div>
-				</div>
-			);
-		}*/
-
 		return (
-			<div className="teamSidebar">
-				<div className="teamHeader"><div>Teams:</div><i onClick={this.routeToCreateNewTeam.bind()} className="zmdi zmdi-plus-circle-o"></i></div>
-				{this.renderActiveTeam()}
-
+			<div className="pure-u-1-5 sideBar">
+				<h3 className="teamHeader">
+					Teams <Link to="/main/createNewTeam" className="zmdi zmdi-plus-circle-o"></Link>
+				</h3>
+				{this.renderTeamList()}
 			</div>
 			//remember to place {this.renderTeamList()} in
 			//active team - expanded with team members (red if not online, green if online)
@@ -76,7 +71,7 @@ function mapStateToProps(state) {
 	return {
 		teams: state.teams,
 		activeTeam: state.activeTeam,
-	}
+	};
 }
 
 export default connect(mapStateToProps, { getUserTeams, setActiveTeam, getActiveTeamChats })(SideBar);

@@ -13,16 +13,15 @@ class App extends Component {
       return <HeaderBar user={this.props.user} />;
     } else {
       this.props.getUser();
+      return <HeaderBar />;
     }
   }
 
   render() {
     return(
-      <div>
+      <div className="mainContainer">
         {this.showHeader()}
-  		  <div className="mainContainer">
-          {this.props.children}
-        </div>
+        {this.props.children}
       </div>
     );
   }

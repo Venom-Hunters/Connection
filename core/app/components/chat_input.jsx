@@ -37,8 +37,8 @@ class ChatInput extends Component {
   render() {
     return (
       <div className="chatInput">
-        <form onSubmit={this.onFormSubmit} className="pure-form">
-            <textarea onKeyPress={this.handleKeyPress} value={this.state.message} onChange={this.onInputChange} placeholder="Message Here ..." className="pure-u-1"></textarea>
+        <form onSubmit={this.onFormSubmit} className="pure-form chatInputTextarea">
+            <textarea className="chatInputTextarea" onKeyPress={this.handleKeyPress} value={this.state.message} onChange={this.onInputChange} placeholder="Enter a message.."></textarea>
         </form>
       </div>
     );

@@ -12,8 +12,8 @@ export default (
   <Route path="/" component={App}>
     <IndexRoute component={LoginView} />
     <Route path="main" component={MainView}>
-		<IndexRoute component={ChatView} />
-		<Route path="createNewTeam" component={CreateTeamView} />
+  		<IndexRoute component={ChatView} />
+  		<Route path="createNewTeam" component={CreateTeamView} />
     </Route>
     <Route path="register" component={RegistrationView} />
   </Route>
