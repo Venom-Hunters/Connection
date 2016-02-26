@@ -65,6 +65,7 @@ var io = require("socket.io")(server);
 io.on("connection", function(socket) {
   socket.join('team-test');
   socket.on('SEND_MESSAGE', function(payload) {
+    io.to("team-test").emit('SEND_MESSAGE', payload);
     console.log(payload);
   });
 });

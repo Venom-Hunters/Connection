@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_REGISTER = "USER_REGISTER";
 export const USER_LOGOUT = "USER_LOGOUT";
@@ -11,6 +12,7 @@ export const SET_ACTIVE_TEAM = "SET_ACTIVE_TEAM";
 export const GET_ACTIVE_TEAM_CHATS = "GET_ACTIVE_TEAM_CHATS";
 
 export const SEND_MESSAGE = "SEND_MESSAGE";
+export const ADD_MESSAGE = "ADD_MESSAGE";
 export const GET_MESSAGE = "GET_MESSAGE";
 
 
@@ -88,18 +90,18 @@ export function getActiveTeamChats(teamId) {
 }
 
 export function sendMessage (message) {
+  var socket = io();
   socket.emit(SEND_MESSAGE, message);
-  console.log("mark suck a chorizo delicioso");
   return {
     type: SEND_MESSAGE,
     playload: message
   };
 }
 
-export function getMessage (message) {
-  socket.emit(GET_MESSAGE, message);
+export function addMessage (message) {
+  console.log('in addmessage');
   return {
-    type: GET_MESSAGE,
-    playload: message
+    type: ADD_MESSAGE,
+    payload: message
   };
 }

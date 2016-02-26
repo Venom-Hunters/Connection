@@ -20,7 +20,6 @@ class ChatInput extends Component {
 
   onInputChange(event) {
     this.setState({message: event.target.value});
-    console.log(event.target.value);
   }
 
   handleKeyPress(event) {

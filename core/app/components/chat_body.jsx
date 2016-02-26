@@ -2,32 +2,47 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
-class ChatBody extends Component {
+import {addMessage} from "../actions/index"
 
-  renderMessages() {
-    // return this.props.messages.map((message) => {
-      return (
-        <div>
-          <p>
-            hello
-          </p>
-          <span>date</span>
-        </div>
-      )
-    // })
+const socket = io();
+
+class ChatBody extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      messages: []
+    };
+
+    socket.on("SEND_MESSAGE", function(message) {
+      this.addMessage(message);
+    }.bind(this));
+
   };
 
+  addMessage(message) {
+    console.log('sending message');
+    this.props.addMessage(message);
+  }
+
   render() {
+    console.log(this.state);
     return (
       <div className="chatBody">
-        {this.renderMessages()}
+        {this.props.messages.map(function(message) {
+          console.log(message);
+          return message;
+        })}
       </div>
     )
   }
 }
 
 function mapStateToProps(state) {
-  return {messages: state.messages}
+  return { messages: state.chatMessages };
 }
 
-export default ChatBody;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators ({addMessage}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatBody);
