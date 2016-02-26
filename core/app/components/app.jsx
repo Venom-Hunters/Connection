@@ -19,7 +19,6 @@ class App extends Component {
   render() {
     return(
       <div>
-        
         {this.showHeader()}
   		  <div className="mainContainer">
           {this.props.children}
