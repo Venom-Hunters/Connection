@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
-import {addMessage} from "../actions/index"
+import {addMessage} from "../actions/index";
 
 const socket = io();
 
@@ -17,7 +17,7 @@ class ChatBody extends Component {
       this.addMessage(message);
     }.bind(this));
 
-  };
+  }
 
   addMessage(message) {
     console.log('sending message');
@@ -29,11 +29,10 @@ class ChatBody extends Component {
     return (
       <div className="chatBody">
         {this.props.messages.map(function(message) {
-          console.log(message);
-          return message;
-        })}
+          return <p className="chatMessage"> {message} </p>;
+        }).reverse()}
       </div>
-    )
+    );
   }
 }
 

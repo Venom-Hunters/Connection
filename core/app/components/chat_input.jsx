@@ -10,7 +10,7 @@ class ChatInput extends Component {
     super(props);
 
     this.state = {
-      term: ""
+      message: ""
     };
 
     this.onInputChange = this.onInputChange.bind(this);
@@ -24,7 +24,9 @@ class ChatInput extends Component {
 
   handleKeyPress(event) {
     if (event.key === "Enter") {
+      event.preventDefault();
       this.onFormSubmit();
+      this.setState({message: ""});
     }
   }
 
@@ -32,12 +34,13 @@ class ChatInput extends Component {
     this.props.sendMessage(this.state.message);
   }
 
-
   render() {
     return (
-      <form onSubmit={this.onFormSubmit} className="pure-form">
-          <textarea onKeyPress={this.handleKeyPress} onChange={this.onInputChange} placeholder="Message Here ..." className="pure-u-1"></textarea>
-      </form>
+      <div className="chatInput">
+        <form onSubmit={this.onFormSubmit} className="pure-form">
+            <textarea onKeyPress={this.handleKeyPress} value={this.state.message} onChange={this.onInputChange} placeholder="Message Here ..." className="pure-u-1"></textarea>
+        </form>
+      </div>
     );
   }
 }

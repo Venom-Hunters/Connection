@@ -67,12 +67,17 @@ html, body {
 
 textarea{
 	resize: none;
-	box-sizing: border-box;
 }
 
 .chatBody{
 	height: 81vh;
+	font-size: 1.1em;
+	padding: 1em;
 	overflow: auto;
   border: 1px #DFDFDF solid;
-  background-color: #DFDFDF;
+  background-color: #FFF;
+}
+
+.chatInput {
+	padding: 1em;
 }
