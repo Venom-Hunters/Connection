@@ -63,8 +63,15 @@ var server = require("http").Server(app);
 var io = require("socket.io")(server);
 
 io.on("connection", function(socket) {
-  console.log("Connection made: " + socket);
+  socket.join('team-test');
+  socket.on('SEND_MESSAGE', function(payload) {
+    console.log(payload);
+  });
 });
+
+// io.on("SEND_MESSAGE", function(socket) {
+//
+// });
 
 app.use(bodyParser.json());
 app.use(cors());
