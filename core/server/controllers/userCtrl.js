@@ -59,6 +59,16 @@ module.exports = {
 	getTeams: function(req,res,next) {
 
 	},
+	potentialMembers: function(req, res, next) {
+		if (!req.body.searchParams) {
+			return res.send([]);
+		}
+		User.find({$or:[{'userName': {'$regex': req.body.searchParams, '$options': 'i'}}, {'email': {'$regex': req.body.searchParams, '$options': 'i'}}]}, function(err, result) {
+			if (err) res.sendStatus(500);
+			else if (result.length === 0) res.sendStatus(404);
+			else res.send(result);
+		})
+	},
 	logout: function(req, res, next) {
 		User.findById(req.user._id, function(err, user) {
 			if(err) return res.sendStatus(500);

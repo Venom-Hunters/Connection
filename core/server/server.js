@@ -59,12 +59,20 @@ function ensureAuthenticated(req, res, next) {
 }
 
 var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+var server = require("http").Server(app);
+var io = require("socket.io")(server);
 
-io.on('connection', function(socket) {
-  console.log('Connection made: ' + socket);
+io.on("connection", function(socket) {
+  socket.join('team-test');
+  socket.on('SEND_MESSAGE', function(payload) {
+    io.to("team-test").emit('SEND_MESSAGE', payload);
+    console.log(payload);
+  });
 });
+
+// io.on("SEND_MESSAGE", function(socket) {
+//
+// });
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -105,17 +113,19 @@ app.get("/chat/:teamId", chatCtrl.readAllChatsInTeam);
 app.delete("/chat/:teamId", chatCtrl.deleteTeamSessionChats);
 
 //team endpoints
+
 app.post('/team/create', teamCtrl.create);
 app.delete('/team/delete/:teamId', teamCtrl.deleteTeam);
 app.put('/team/updateTeamProfile/:teamId', teamCtrl.updateTeamProfile);
 app.get('/team/getTeamInfo/:teamId', teamCtrl.getTeamInfo);
 app.put('/team/addMember/:teamId', teamCtrl.addMember);
 app.put('/team/removeMember/:teamId', teamCtrl.removeMember);
+app.post('/team/potentialMembers', userCtrl.potentialMembers);
 
 app.get(/^(?!.*(images))/, function (req, res) {
- res.sendFile(path.resolve('./public/index.html'));
+ res.sendFile(path.resolve("./public/index.html"));
 });
 
 server.listen(config.port, function() {
-  console.log('About to murder Rey on port', config.port + '!');
+  console.log("About to murder Rey on port", config.port + "!");
 });
