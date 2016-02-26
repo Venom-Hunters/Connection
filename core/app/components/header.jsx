@@ -20,7 +20,6 @@ class HeaderBar extends Component {
 					</li>
     		</ul>
 			</div>
-
 		);
 	}
 }
