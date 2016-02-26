@@ -23,8 +23,12 @@ class SideBar extends Component{
 		}
 	}
 
-	routeToCreateNewTeam() {
-		browserHistory.push('/main/createNewTeam')
+	routeToCreateTeam() {
+		browserHistory.push('/main/formsAndSuch/createTeamView');
+	}
+
+	routeToAddMember() {
+		browserHistory.push('/main/formsAndSuch/addMemberView');
 	}
 
 	renderActiveTeam() {
@@ -33,11 +37,9 @@ class SideBar extends Component{
 		}*/
 		return (
 			<div>
-				<div className="activeTeam">
-					Active Team
+				<div className="activeTeam"><i onClick={this.routeToAddMember.bind()} className="zmdi zmdi-plus-circle-o addTeamMember"></i> Active Team
 				</div>
-				<div className="otherTeams">
-					Other Teams
+				<div className="otherTeams"><i onClick={this.routeToAddMember.bind()} className="zmdi zmdi-plus-circle-o addTeamMember"></i> Other Teams
 				</div>
 			</div>
 		)
@@ -61,7 +63,7 @@ class SideBar extends Component{
 
 		return (
 			<div className="teamSidebar">
-				<div className="teamHeader"><div>Teams:</div><i onClick={this.routeToCreateNewTeam.bind()} className="zmdi zmdi-plus-circle-o"></i></div>
+				<div className="teamHeader"><div>Teams:</div><i onClick={this.routeToCreateTeam.bind()} className="zmdi zmdi-plus-circle-o" style={{position: 'relative', bottom:'-3px'}}></i></div>
 				{this.renderActiveTeam()}
 
 			</div>

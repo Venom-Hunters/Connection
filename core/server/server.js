@@ -111,6 +111,11 @@ app.put('/team/updateTeamProfile/:teamId', teamCtrl.updateTeamProfile);
 app.get('/team/getTeamInfo/:teamId', teamCtrl.getTeamInfo);
 app.put('/team/addMember/:teamId', teamCtrl.addMember);
 app.put('/team/removeMember/:teamId', teamCtrl.removeMember);
+app.post('/team/potentialMembers', userCtrl.potentialMembers);
+
+// app.get('*', function (req, res) {
+//  res.sendFile(path.resolve('./public/index.html'));
+// });
 
 app.get(/^(?!.*(images))/, function (req, res) {
  res.sendFile(path.resolve('./public/index.html'));

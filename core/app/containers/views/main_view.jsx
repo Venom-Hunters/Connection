@@ -9,7 +9,7 @@ export default class MainView extends Component {
       <div className="mainContainer">
       		<SideBar />
       		<div className="chat">
-			    {this.props.children}
+			      {this.props.children}
       		</div>
       </div>
     );

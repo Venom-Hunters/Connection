@@ -11,6 +11,10 @@ html, body {
   margin-right: 1em;
 }
 
+.zmdi {
+	cursor: pointer;
+}
+
 .registration {
   margin: 2em auto;
 }
@@ -53,6 +57,7 @@ html, body {
 }
 
 .activeTeam {
+	position: relative;
 	font-style: italic;
 	color: red;
 	padding: 5px 7px;
@@ -60,9 +65,21 @@ html, body {
 }
 
 .otherTeams {
+	position: relative;
 	font-style: italic;
 	padding: 5px 7px;
 	border-bottom: 1px solid white;
+}
+
+.addTeamMember:hover:after {
+	color: white;
+	background-color: rgba(0,0,0,0.7);
+	content: 'Add Team Member';
+	position: absolute;
+ 	bottom: 3px;
+ 	right: 10px;
+	padding: 3px;
+	border-radius: 2px;
 }
 
 .chat {
@@ -79,4 +96,11 @@ textarea{
 	overflow: auto;
   border: 1px #DFDFDF solid;
   background-color: #DFDFDF;
+}
+
+.teamStuff {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 10px;
 }
