@@ -128,7 +128,7 @@ textarea {
 	font-size: 1.1em;
 	display: block;
 	padding: 1em;
-	overflow: auto;
+	overflow: scroll;
   background-color: #FFF;
 }
 
@@ -136,7 +136,7 @@ textarea {
 	display: flex;
 	flex: 1;
 	max-height: 200px;
-	min-height: 50px;
+	min-height: 200px;
 	box-sizing: border-box;
 	padding: 1em;
 	border: none;

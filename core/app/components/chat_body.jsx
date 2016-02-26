@@ -4,7 +4,8 @@ import {bindActionCreators} from "redux";
 
 import {addMessage} from "../actions/index";
 
-const socket = io();
+
+
 
 class ChatBody extends Component {
   constructor(props){
@@ -13,21 +14,34 @@ class ChatBody extends Component {
       messages: []
     };
 
-    socket.on("SEND_MESSAGE", function(message) {
+    this.socket = io();
+
+
+
+    this.socket.on("SEND_MESSAGE", function(message) {
       this.addMessage(message);
     }.bind(this));
 
   }
 
+  componentWillUnmount()
+  {
+    this.socket.off("SEND_MESSAGE");
+  }
+
+  componentDidMount() {
+    this.chatBody = document.getElementById('chatBody');
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
   addMessage(message) {
-    console.log('sending message');
     this.props.addMessage(message);
+    this.chatBody.scrollTop = chatBody.scrollHeight;
   }
 
   render() {
-    console.log(this.state);
     return (
-      <div className="chatBody">
+      <div id="chatBody" className="chatBody">
         {this.props.messages.map(function(message) {
           return <p className="chatMessage"> {message} </p>;
         }).reverse()}
