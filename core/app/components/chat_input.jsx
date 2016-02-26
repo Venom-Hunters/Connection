@@ -1,5 +1,8 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
+import {bindActionCreators} from "redux"
+
+import {sendMessage} from "../actions/index";
 
 class ChatInput extends Component {
 
@@ -16,24 +19,24 @@ class ChatInput extends Component {
   }
 
   onInputChange(event) {
-    this.setState({term: event.target.value});
+    this.setState({message: event.target.value});
     console.log(event.target.value);
   }
 
   handleKeyPress(event) {
     if (event.key === "Enter") {
-      return this.onFormSubmit
+      this.onFormSubmit();
     }
   }
 
   onFormSubmit(event) {
-    event.preventDefault();
+    this.props.sendMessage(this.state.message);
   }
 
 
   render() {
     return (
-      <form onSubmit={this.onFormSubmit} onclassName="pure-form">
+      <form onSubmit={this.onFormSubmit} className="pure-form">
           <textarea onKeyPress={this.handleKeyPress} onChange={this.onInputChange} placeholder="Message Here ..." className="pure-u-1"></textarea>
       </form>
     );
@@ -46,4 +49,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default ChatInput;
+export default connect(null, mapDispatchToProps)(ChatInput);

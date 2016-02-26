@@ -87,10 +87,19 @@ export function getActiveTeamChats(teamId) {
   };
 }
 
-export function (message) {
+export function sendMessage (message) {
   socket.emit(SEND_MESSAGE, message);
+  console.log("mark suck a chorizo delicioso");
   return {
     type: SEND_MESSAGE,
     playload: message
-  }
+  };
+}
+
+export function getMessage (message) {
+  socket.emit(GET_MESSAGE, message);
+  return {
+    type: GET_MESSAGE,
+    playload: message
+  };
 }
