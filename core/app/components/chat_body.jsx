@@ -16,6 +16,8 @@ class ChatBody extends Component {
 
     this.socket = io();
 
+
+
     this.socket.on("SEND_MESSAGE", function(message) {
       this.addMessage(message);
     }.bind(this));
@@ -27,13 +29,19 @@ class ChatBody extends Component {
     this.socket.off("SEND_MESSAGE");
   }
 
+  componentDidMount() {
+    this.chatBody = document.getElementById('chatBody');
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
   addMessage(message) {
     this.props.addMessage(message);
+    this.chatBody.scrollTop = chatBody.scrollHeight;
   }
 
   render() {
     return (
-      <div className="chatBody">
+      <div id="chatBody" className="chatBody">
         {this.props.messages.map(function(message) {
           return <p className="chatMessage"> {message} </p>;
         }).reverse()}
