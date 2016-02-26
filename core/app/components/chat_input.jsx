@@ -33,11 +33,10 @@ class ChatInput extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onFormSubmit} onclassName="pure-form pure-g">
-        <textarea onKeyPress={this.handleKeyPress} onChange={this.onInputChange} placeholder="Message Here ..." className="pure-u-21-24"></textarea>
-        <button type="submit" className="pure-button pure-button-primary">Submit</button>
+      <form onSubmit={this.onFormSubmit} onclassName="pure-form">
+          <textarea onKeyPress={this.handleKeyPress} onChange={this.onInputChange} placeholder="Message Here ..." className="pure-u-1"></textarea>
       </form>
-    )
+    );
   }
 }
 

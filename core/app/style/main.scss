@@ -65,17 +65,13 @@ html, body {
 	border-bottom: 1px solid white;
 }
 
-.chat {
-	flex: 1;
-	height: 100%;
-}
-
 textarea{
 	resize: none;
+	box-sizing: border-box;
 }
 
 .chatBody{
-	height: 100%;
+	height: 81vh;
 	overflow: auto;
   border: 1px #DFDFDF solid;
   background-color: #DFDFDF;
