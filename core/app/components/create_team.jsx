@@ -89,15 +89,16 @@ class CreateTeamBox extends Component {
   }
 
   onSubmit(props) {
-    
+    var newMemberArray = this.state.memberArray.map((member) => {
+      return member._id;
+    })
     var newTeam = {
       teamName: props.teamName,
-      teamMembers: this.state.memberArray
+      members: newMemberArray
     }
-    console.log(newTeam);
-   /* this.props.createTeam(newTeam).then( () => {
+    this.props.createTeam(newTeam).then( () => {
       this.context.router.push("/main");
-    });*/
+    });
   }
 
 
@@ -115,7 +116,7 @@ class CreateTeamBox extends Component {
           <fieldset>
             <div className="pure-control-group">
               <label htmlFor="teamName">Team Name:</label>
-              <input id="teamName" type="text" placeholder="Team Name..." {...teamName} />
+              <input id="teamName" type="text" placeholder="Team Name..." {...teamName} required/>
             </div>
             <div className="pure-controls">
               <button type="submit" className="pure-button pure-button-primary">Create Team</button>

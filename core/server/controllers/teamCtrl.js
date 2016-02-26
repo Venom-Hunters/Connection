@@ -8,7 +8,7 @@ module.exports = {
 		newTeam.members = req.body.members;
 		newTeam.teamLead = req.user._id;
 		newTeam.creationDate = new Date();
-		newTeam.regToken = req.body.regToken;
+		/*newTeam.regToken = req.body.regToken;*/
 		newTeam.save(function(err, result) {
 			if (err) return sres.sendStatus(500);
 			else return res.send(result);

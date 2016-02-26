@@ -36,19 +36,21 @@ class SideBar extends Component{
 			return;
 		}*/
 		return (
-			<div>
 				<div className="activeTeam"><i onClick={this.routeToAddMember.bind()} className="zmdi zmdi-plus-circle-o addTeamMember"></i> Active Team
 				</div>
-				<div className="otherTeams"><i onClick={this.routeToAddMember.bind()} className="zmdi zmdi-plus-circle-o addTeamMember"></i> Other Teams
-				</div>
-			</div>
 		)
 	}
 
 	renderTeamList() {
-
+		if (!this.props.teams) {
+			return;
+		}
 		return this.props.teams.map((team) => {
-
+			return (
+				<div className="otherTeams"><i onClick={this.routeToAddMember.bind()} className="zmdi zmdi-plus-circle-o addTeamMember"></i> {team.teamName}
+				</div>
+			);
+			
 		})
 	}
 
@@ -65,9 +67,8 @@ class SideBar extends Component{
 			<div className="teamSidebar">
 				<div className="teamHeader"><div>Teams:</div><i onClick={this.routeToCreateTeam.bind()} className="zmdi zmdi-plus-circle-o" style={{position: 'relative', bottom:'-3px'}}></i></div>
 				{this.renderActiveTeam()}
-
+				{this.renderTeamList()}
 			</div>
-			//remember to place {this.renderTeamList()} in
 			//active team - expanded with team members (red if not online, green if online)
 			//all other teams - not expanded
 		);
