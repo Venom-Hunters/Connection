@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import { connect } from 'react-redux';
-import { getUserTeams, setActiveTeam, getActiveTeamChats } from '../actions/index';
-import {colors}  from '../constants/color_scheme';
-import { Link, browserHistory } from 'react-router';
+import React, {Component} from "react";
+import { connect } from "react-redux";
+import { getUserTeams, setActiveTeam, getActiveTeamChats } from "../actions/index";
+import {colors}  from "../constants/color_scheme";
+import { Link, browserHistory } from "react-router";
 
 class SideBar extends Component{
 
@@ -24,7 +24,7 @@ class SideBar extends Component{
 	}
 
 	routeToCreateNewTeam() {
-		browserHistory.push('/main/createNewTeam')
+		browserHistory.push("/main/createNewTeam")
 	}
 
 	renderActiveTeam() {
