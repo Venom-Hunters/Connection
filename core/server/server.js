@@ -102,7 +102,7 @@ app.get("/auth/logout", userCtrl.logout);
 //user endpoints
 app.put("/user/update", userCtrl.updateUserProfile);
 app.get("/user/getUser", userCtrl.getUser);
-app.get("/user/getTeams/:userId", userCtrl.getTeams);
+app.get("/user/getTeams", userCtrl.getTeams);
 app.delete("/user/delete/:userId", userCtrl.deleteUser);
 //tested through user
 
@@ -114,7 +114,7 @@ app.delete("/chat/:teamId", chatCtrl.deleteTeamSessionChats);
 
 //team endpoints
 
-app.post('/team/create', teamCtrl.create);
+app.post('/team/create', teamCtrl.create, userCtrl.getTeams);
 app.delete('/team/delete/:teamId', teamCtrl.deleteTeam);
 app.put('/team/updateTeamProfile/:teamId', teamCtrl.updateTeamProfile);
 app.get('/team/getTeamInfo/:teamId', teamCtrl.getTeamInfo);
