@@ -56,7 +56,7 @@ class SideBar extends Component{
 		return (
 			<div className="pure-u-1-5 sideBar">
 				<h3 className="teamHeader">
-					Teams <Link to="/main/createNewTeam" className="zmdi zmdi-plus-circle-o"></Link>
+					Teams <Link to="/main/formsAndSuch/createTeamView" className="zmdi zmdi-plus-circle-o"></Link>
 				</h3>
 				{this.renderTeamList()}
 			</div>

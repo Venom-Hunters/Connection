@@ -113,12 +113,14 @@ app.get("/chat/:teamId", chatCtrl.readAllChatsInTeam);
 app.delete("/chat/:teamId", chatCtrl.deleteTeamSessionChats);
 
 //team endpoints
-app.post("/team/create", teamCtrl.create);
-app.delete("/team/delete/:teamId", teamCtrl.deleteTeam);
-app.put("/team/updateTeamProfile/:teamId", teamCtrl.updateTeamProfile);
-app.get("/team/getTeamInfo/:teamId", teamCtrl.getTeamInfo);
-app.put("/team/addMember/:teamId", teamCtrl.addMember);
-app.put("/team/removeMember/:teamId", teamCtrl.removeMember);
+
+app.post('/team/create', teamCtrl.create);
+app.delete('/team/delete/:teamId', teamCtrl.deleteTeam);
+app.put('/team/updateTeamProfile/:teamId', teamCtrl.updateTeamProfile);
+app.get('/team/getTeamInfo/:teamId', teamCtrl.getTeamInfo);
+app.put('/team/addMember/:teamId', teamCtrl.addMember);
+app.put('/team/removeMember/:teamId', teamCtrl.removeMember);
+app.post('/team/potentialMembers', userCtrl.potentialMembers);
 
 app.get(/^(?!.*(images))/, function (req, res) {
  res.sendFile(path.resolve("./public/index.html"));

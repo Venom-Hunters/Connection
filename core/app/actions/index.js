@@ -11,9 +11,14 @@ export const GET_USER_TEAMS = "GET_USER_TEAMS";
 export const SET_ACTIVE_TEAM = "SET_ACTIVE_TEAM";
 export const GET_ACTIVE_TEAM_CHATS = "GET_ACTIVE_TEAM_CHATS";
 
+
 export const SEND_MESSAGE = "SEND_MESSAGE";
 export const ADD_MESSAGE = "ADD_MESSAGE";
 export const GET_MESSAGE = "GET_MESSAGE";
+
+export const CREATE_TEAM = 'CREATE_TEAM';
+export const FIND_POTENTIAL_MEMBER = 'FIND_POTENTIAL_MEMBER';
+export const ADD_TEAM_MEMBER = 'ADD_TEAM_MEMBER';
 
 
 const ROOT_URL = "http://localhost:8888";
@@ -89,6 +94,7 @@ export function getActiveTeamChats(teamId) {
   };
 }
 
+
 export function sendMessage (message) {
   var socket = io();
   socket.emit(SEND_MESSAGE, message);
@@ -103,5 +109,33 @@ export function addMessage (message) {
   return {
     type: ADD_MESSAGE,
     payload: message
+  };
+}
+
+export function createTeam(newTeam) {
+  const request = axios.post(`${ROOT_URL}/team/create`, newTeam);
+
+  return {
+    type: CREATE_TEAM,
+    payload: request
+  };
+}
+
+export function findPotentialMembers(member) {
+  const request = axios.post(`${ROOT_URL}/team/potentialMembers`, member);
+
+  return {
+    type: FIND_POTENTIAL_MEMBER,
+    payload: request
+  };
+}
+
+export function addTeamMember(teamId, newMember) {
+  const request = axios.post(`${ROOT_URL}/team/addMember/${teamId}`, newMember);
+
+  return {
+    type: ADD_TEAM_MEMBER,
+    payload: request
+
   };
 }
