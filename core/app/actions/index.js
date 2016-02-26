@@ -10,6 +10,10 @@ export const GET_USER_TEAMS = "GET_USER_TEAMS";
 export const SET_ACTIVE_TEAM = "SET_ACTIVE_TEAM";
 export const GET_ACTIVE_TEAM_CHATS = "GET_ACTIVE_TEAM_CHATS";
 
+export const SEND_MESSAGE = "SEND_MESSAGE";
+export const GET_MESSAGE = "GET_MESSAGE";
+
+
 const ROOT_URL = "http://localhost:8888";
 
 export function login(props) {
@@ -81,4 +85,12 @@ export function getActiveTeamChats(teamId) {
     type: GET_ACTIVE_TEAM_CHATS,
     payload: request
   };
+}
+
+export function (message) {
+  socket.emit(SEND_MESSAGE, message);
+  return {
+    type: SEND_MESSAGE,
+    playload: message
+  }
 }
