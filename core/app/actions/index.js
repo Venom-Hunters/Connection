@@ -105,7 +105,6 @@ export function sendMessage (message) {
 }
 
 export function addMessage (message) {
-  console.log('in addmessage');
   return {
     type: ADD_MESSAGE,
     payload: message

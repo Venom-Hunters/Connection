@@ -28,12 +28,10 @@ class ChatBody extends Component {
   }
 
   addMessage(message) {
-    console.log('sending message');
     this.props.addMessage(message);
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="chatBody">
         {this.props.messages.map(function(message) {
