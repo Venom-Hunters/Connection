@@ -16,7 +16,6 @@ module.exports = {
 			            if (err) {
 			                return res.status(500).send();
 			            } else {
-							console.log(result);
 			            	return next();
 			            }
 			        });
@@ -58,12 +57,17 @@ module.exports = {
 			});
 		} else res.status(401).send();
 	},
-	getTeams: function(req,res,next) {
+	getTeams: function(req, res, next) {
+		if (req.user) {
 		Team.find({$or: [{'members': req.user._id}, {'teamLead': req.user._id}]}, function(err, teams) {
 			if (err) res.sendStatus(500);
 			else if (!teams) res.sendStatus(404);
 			else res.send(teams);
-		})
+		});
+	} else {
+		res.sendStatus(500);
+	}
+
 	},
 	potentialMembers: function(req, res, next) {
 		if (!req.body.searchParams) {
@@ -73,7 +77,7 @@ module.exports = {
 			if (err) res.sendStatus(500);
 			else if (result.length === 0) res.sendStatus(404);
 			else res.send(result);
-		})
+		});
 	},
 	logout: function(req, res, next) {
 		User.findById(req.user._id, function(err, user) {

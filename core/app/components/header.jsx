@@ -11,7 +11,7 @@ class HeaderBar extends Component {
 	}
 
 	renderLogoutButton(user) {
-		if (user) {
+		if (user && user.userName) {
 			return (
 	    	<li className="pure-menu-item">
 					<Link className="pure-menu-link" onClick={this.props.userLogout} to="/">Logout</Link>
@@ -26,7 +26,7 @@ class HeaderBar extends Component {
 				<div className="pure-menu pure-menu-horizontal">
 					<ul className="pure-menu-list">
 						<li className="pure-menu-item">
-						{this.props.user ? <Link className="pure-menu-link" to="/"> {this.props.user.userName} </Link> : <Link className="pure-menu-link" to="/"> Login </Link>}
+						{this.props.user && this.props.user.userName ? <Link className="pure-menu-link" to="/"> {this.props.user.userName} </Link> : <Link className="pure-menu-link" to="/"> Login </Link>}
 						</li>
 	        	<li className="pure-menu-item">
 							<Link className="pure-menu-link" to="/main">Main</Link>

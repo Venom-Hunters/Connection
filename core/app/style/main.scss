@@ -11,36 +11,11 @@ a {
 	text-decoration: none;
 }
 
-/* Registration */
-
-.pure-button-primary, .pure-button-secondary {
-  margin-right: 1em;
+.root {
+	height: 100%;
 }
 
-.zmdi {
-	cursor: pointer;
-}
-
-.registration {
-  margin: 2em auto;
-}
-
-.logo {
-	width: 60px;
-}
-
-.userCtrls {
-	flex: 1;
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-}
-
-.header {
-	flex: 1;
-	flex-grow: 0;
-	height: 36px;
-}
+/* MainContainer: Contains Header, SideBar and Content */
 
 .mainContainer {
 	height: 100%;
@@ -48,14 +23,47 @@ a {
 	flex-flow: column;
 }
 
-.root {
-	height: 100%;
+/* Registration */
+
+.pure-button-primary, .pure-button-secondary {
+  margin-right: 1em;
 }
+
+.registration {
+  margin: 2em auto;
+	position: relative;
+	top: 40%;
+	transform: translateY(-50%);
+}
+
+.registration fieldset {
+	width: 550px;
+}
+
+/* Header Menu */
+
+.header {
+	flex: 1;
+	flex-grow: 0;
+	height: 36px;
+}
+
+/* Content Area */
+
+.content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Main View */
 
 .mainView {
 	flex: 1;
 	display: flex;
 }
+
+/* Side bar */
 
 .sideBar {
 	flex: 1;
@@ -66,18 +74,22 @@ a {
 	border-radius: 5px;
 }
 
-.content {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
+.teamHeader a {
+	color: #F99;
 }
+
+.teamHeader a:hover {
+	color: #F00;
+	transition: color 0.25s ease;
+}
+
 
 .teamHeader {
 	display: flex;
 	justify-content: space-between;
 	font-size: 1.5em;
 	padding: 5px 7px;
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid #AAA;
 }
 
 .activeTeam {
@@ -95,6 +107,8 @@ a {
 	border-bottom: 1px solid white;
 }
 
+/* Create Team View */
+
 .addTeamMember:hover:after {
 	color: white;
 	background-color: rgba(0,0,0,0.7);
@@ -105,6 +119,16 @@ a {
 	padding: 3px;
 	border-radius: 2px;
 }
+
+.teamStuff {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 10px;
+}
+
+
+/* Chat View */
 
 textarea {
 	box-sizing: border-box;
@@ -123,7 +147,7 @@ textarea {
 	font-size: 1.1em;
 	display: block;
 	padding: 1em;
-	overflow: scroll;
+	overflow-y: auto;
   background-color: #FFF;
 }
 
@@ -132,6 +156,7 @@ textarea {
 	flex: 1;
 	max-height: 200px;
 	min-height: 200px;
+	margin-bottom: 2em;
 	box-sizing: border-box;
 	padding: 1em;
 	border: none;
@@ -141,11 +166,4 @@ textarea {
 .chatInputTextarea {
 	display: flex;
 	flex: 1;
-}
-
-.teamStuff {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding: 10px;
 }

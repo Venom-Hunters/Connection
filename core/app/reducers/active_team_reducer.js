@@ -7,7 +7,7 @@ export default function(state = null, action = "") {
     		return Object.assign({}, state, action.payload.data.lastTeamViewed);
     	} else return null;
     	break;
-      
+
     case(SET_ACTIVE_TEAM):
       return Object.assign({}, state, action.payload.data);
     default:

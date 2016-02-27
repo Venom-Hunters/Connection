@@ -5,20 +5,23 @@ import {colors}  from "../constants/color_scheme";
 import { Link, browserHistory } from "react-router";
 
 class SideBar extends Component{
-	constructor(props) {
-		super(props);
-		this.renderActiveTeam = this.renderActiveTeam.bind(this);
-		this.renderOtherTeamList = this.renderOtherTeamList.bind(this);
-	}
 
 	componentWillMount() {
 		this.props.getUserTeams();
 	}
 
-	activeTeamClick(team, event) {
-		this.props.setActiveTeam(team);
-		this.props.getActiveTeamChats(team._id);
+	checkActiveTeam(teamId) {
+		if (teamId === this.props.activeTeam) {
+			return false;
+		}
+	}
 
+	activeTeamClick() {
+		console.log(this.props);
+		// if(this.checkActiveTeam(this.props.team._id)){
+		// 	this.props.setActiveTeam(this.props.team);
+		// 	this.props.getActiveTeamChats(this.props.team._id);
+		// }
 	}
 
 	routeToCreateNewTeam() {
@@ -26,32 +29,28 @@ class SideBar extends Component{
 	}
 
 	renderActiveTeam() {
-		if (!this.props.activeTeam) {
-			return;
-		};
 		return (
-			<div className="activeTeam" style={{cursor: 'pointer'}}>{this.props.activeTeam.teamName}</div>
+			<div>
+				<div className="activeTeam">
+					Active Team
+				</div>
+				<div className="otherTeams">
+					Other Teams
+				</div>
+			</div>
 		);
 	}
 
-	renderOtherTeamList() {
-		if(!this.props.teams) {
-			return <div>Join a team!</div>;
+	renderTeamList() {
+		if (this.props.teams && this.props.teams.length) {
+				return this.props.teams.map((team) => {
+				});
+		} else {
+				return (
+					<div style={{textAlign: "center"}}> You're not on any team! <br /> Create or join one.</div>
+				);
 		}
-		return this.props.teams.map((team) => {
-			if (!this.props.activeTeam) {
-				return(
-					<div onClick={this.activeTeamClick.bind(this, team)} key={team._id} className="otherTeams" style={{cursor: 'pointer'}}>{team.teamName}</div>
-				);
-			} else if (this.props.activeTeam && this.props.activeTeam._id !== team._id) {
-				return(
-					<div onClick={this.activeTeamClick.bind(this, team)} key={team._id} className="otherTeams" style={{cursor: 'pointer'}}>{team.teamName}</div>
-				);
-			} else {
-				return;
-			}
-			
-		})
+
 	}
 
 	render() {
@@ -60,9 +59,9 @@ class SideBar extends Component{
 				<h3 className="teamHeader">
 					Teams <Link to="/main/formsAndSuch/createTeamView" className="zmdi zmdi-plus-circle-o"></Link>
 				</h3>
-				{this.renderActiveTeam()}
-				{this.renderOtherTeamList()}
+				{this.renderTeamList()}
 			</div>
+			//remember to place {this.renderTeamList()} in
 			//active team - expanded with team members (red if not online, green if online)
 			//all other teams - not expanded
 		);
@@ -71,9 +70,8 @@ class SideBar extends Component{
 
 function mapStateToProps(state) {
 	return {
-		lastTeamViewed: state.user.lastTeamViewed,
-		teams: state.user.teams,
-		activeTeam: state.activeTeam
+		teams: state.teams,
+		activeTeam: state.activeTeam,
 	};
 }
 
