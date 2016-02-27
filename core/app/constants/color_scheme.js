@@ -1,5 +1,3 @@
-
-
 export const colors = {
 	purple: "#963eca",
 	orange: "#f37528",

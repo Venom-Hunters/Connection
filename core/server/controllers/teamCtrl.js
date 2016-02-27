@@ -10,8 +10,8 @@ module.exports = {
 		newTeam.creationDate = new Date();
 		/*newTeam.regToken = req.body.regToken;*/
 		newTeam.save(function(err, result) {
-			if (err) return sres.sendStatus(500);
-			else return res.send(result);
+			if (err) return res.sendStatus(500);
+			else return next();
 		});
 		/*
 		Hash regToken?

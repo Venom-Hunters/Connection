@@ -3,7 +3,6 @@ var Team = require("./../models/teamModel");
 
 module.exports = {
 	create: function(req, res, next) {
-		console.log()
 	    User.findOne({"email": req.body.email}, function(err, user) {
 	        if (user) {
 	            return res.status(403).send("Email already exists. Please use a different email.");
@@ -16,7 +15,10 @@ module.exports = {
 			        newUser.save(function(err, result) {
 			            if (err) {
 			                return res.status(500).send();
-			            } else return next();
+			            } else {
+							console.log(result);
+			            	return next();
+			            }
 			        });
 			    });
 			}
@@ -57,7 +59,11 @@ module.exports = {
 		} else res.status(401).send();
 	},
 	getTeams: function(req,res,next) {
-
+		Team.find({$or: [{'members': req.user._id}, {'teamLead': req.user._id}]}, function(err, teams) {
+			if (err) res.sendStatus(500);
+			else if (!teams) res.sendStatus(404);
+			else res.send(teams);
+		})
 	},
 	potentialMembers: function(req, res, next) {
 		if (!req.body.searchParams) {

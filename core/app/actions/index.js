@@ -68,8 +68,8 @@ export function updateUserProfile(userProfile) {
   };
 }
 
-export function getUserTeams(userId) {
-  const request = axios.get(`${ROOT_URL}/user/getTeams/${userId}`);
+export function getUserTeams() {
+  const request = axios.get(`${ROOT_URL}/user/getTeams`);
 
   return {
     type: GET_USER_TEAMS,
@@ -105,7 +105,6 @@ export function sendMessage (message) {
 }
 
 export function addMessage (message) {
-  console.log('in addmessage');
   return {
     type: ADD_MESSAGE,
     payload: message
@@ -114,9 +113,9 @@ export function addMessage (message) {
 
 export function createTeam(newTeam) {
   const request = axios.post(`${ROOT_URL}/team/create`, newTeam);
-
+  
   return {
-    type: CREATE_TEAM,
+    type: GET_USER_TEAMS,
     payload: request
   };
 }
