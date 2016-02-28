@@ -1,18 +1,30 @@
 var Team = require("./../models/teamModel");
 
 module.exports = {
-	
+
 	create: function(req, res, next) {
 		var newTeam = new Team();
 		newTeam.teamName = req.body.teamName;
-		newTeam.members = req.body.members;
+		newTeam.members = [req.user._id];
 		newTeam.teamLead = req.user._id;
 		newTeam.creationDate = new Date();
 		/*newTeam.regToken = req.body.regToken;*/
 		newTeam.save(function(err, result) {
-			if (err) return res.sendStatus(500);
-			else return next();
+		if (err) { return res.sendStatus(500); }
+		var active = result;
+		Team.find({
+			members: req.user._id
+		})
+		.sort('-teamName')
+		.populate('members teamLead')
+		.exec(function(err, results) {
+			return res.send({
+				active: active,
+				all: results
+			});
 		});
+		});
+
 		/*
 		Hash regToken?
 		newTeam.regToken = newTeam.generateHash(req.body.regToken).then(function(response) {
@@ -22,15 +34,30 @@ module.exports = {
 				else res.send(result);
 			})
 		})	*/
-		
+
 	},
+
+	getTeams: function(req, res, next) {
+		if (req.user) {
+		Team.find({$or: [{'members': req.user._id}, {'teamLead': req.user._id}]}, function(err, teams) {
+			if (err) res.sendStatus(500);
+			else if (!teams) res.sendStatus(404);
+			else res.send(teams);
+		}).populate('members teamLead');
+	} else {
+		res.sendStatus(500);
+	}
+
+	},
+
 	deleteTeam: function(req, res, next) {
 		Team.findOneAndRemove({_id: req.params.teamId}, function(err, result) {
 			if (err) return res.sendStatus(500);
 			else if (!result) return res.sendStatus(404);
 			else return res.send(result);
-		})
+		});
 	},
+
 	updateTeamProfile: function(req, res, next) {
 		Team.findById(req.params.teamId, function(err, team) {
 			if (err) return res.sendStatus(500);
@@ -38,10 +65,10 @@ module.exports = {
 				team.teamName = req.body.teamName;
 				team.save(function(err, result) {
 					if (err) return res.sendStatus(500);
-					else return res.send(result);	
-				})
+					else return res.send(result);
+				});
 			}
-		})
+		});
 	},
 	getTeamInfo: function(req, res, next) {
 		Team
@@ -50,7 +77,7 @@ module.exports = {
 			.exec(function(err, team) {
 				if (err) return res.sendStatus(500);
 				else return res.send(team);
-			})
+			});
 	},
 	addMember: function(req, res, next) {
 		Team.findById(req.params.teamId, function(err, team) {
@@ -65,11 +92,11 @@ module.exports = {
 				team.members.push(req.body.userId);
 				team.save(function(err, result) {
 					if (err) return res.sendStatus(500);
-					else return res.send(result);	
-				})
-				
+					else return res.send(result);
+				});
+
 			}
-		})
+		});
 	},
 	removeMember: function(req, res, next) {
 		Team.findById(req.params.teamId, function(err, team) {

@@ -101,7 +101,8 @@ app.get("/auth/logout", userCtrl.logout);
 //user endpoints
 app.put("/user/update", userCtrl.updateUserProfile);
 app.get("/user/getUser", userCtrl.getUser);
-app.get("/user/getTeams", userCtrl.getTeams);
+app.post('/user/search', userCtrl.search);
+
 app.delete("/user/delete/:userId", userCtrl.deleteUser);
 //tested through user
 
@@ -113,13 +114,14 @@ app.delete("/chat/:teamId", chatCtrl.deleteTeamSessionChats);
 
 //team endpoints
 
-app.post('/team/create', teamCtrl.create, userCtrl.getTeams);
+app.post('/team/create', teamCtrl.create);
+app.get("/team/getTeams", teamCtrl.getTeams);
 app.delete('/team/delete/:teamId', teamCtrl.deleteTeam);
 app.put('/team/updateTeamProfile/:teamId', teamCtrl.updateTeamProfile);
 app.get('/team/getTeamInfo/:teamId', teamCtrl.getTeamInfo);
 app.put('/team/addMember/:teamId', teamCtrl.addMember);
 app.put('/team/removeMember/:teamId', teamCtrl.removeMember);
-app.post('/team/potentialMembers', userCtrl.potentialMembers);
+
 
 app.get(/^(?!.*(images))/, function (req, res) {
  res.sendFile(path.resolve("./public/index.html"));

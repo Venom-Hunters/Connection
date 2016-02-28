@@ -5,19 +5,18 @@ export const USER_LOGIN = "USER_LOGIN";
 export const USER_REGISTER = "USER_REGISTER";
 export const USER_LOGOUT = "USER_LOGOUT";
 export const USER_GET = "USER_GET";
+export const USER_SEARCH = "USER_SEARCH";
 
 export const UPDATE_USER_PROFILE = "UPDATE_USER_PROFILE";
 export const GET_USER_TEAMS = "GET_USER_TEAMS";
 export const SET_ACTIVE_TEAM = "SET_ACTIVE_TEAM";
 export const GET_ACTIVE_TEAM_CHATS = "GET_ACTIVE_TEAM_CHATS";
 
-
 export const SEND_MESSAGE = "SEND_MESSAGE";
 export const ADD_MESSAGE = "ADD_MESSAGE";
 export const GET_MESSAGE = "GET_MESSAGE";
 
 export const CREATE_TEAM = 'CREATE_TEAM';
-export const FIND_POTENTIAL_MEMBER = 'FIND_POTENTIAL_MEMBER';
 export const ADD_TEAM_MEMBER = 'ADD_TEAM_MEMBER';
 
 
@@ -69,7 +68,7 @@ export function updateUserProfile(userProfile) {
 }
 
 export function getUserTeams() {
-  const request = axios.get(`${ROOT_URL}/user/getTeams`);
+  const request = axios.get(`${ROOT_URL}/team/getTeams`);
 
   return {
     type: GET_USER_TEAMS,
@@ -113,18 +112,21 @@ export function addMessage (message) {
 
 export function createTeam(newTeam) {
   const request = axios.post(`${ROOT_URL}/team/create`, newTeam);
-  
+
   return {
-    type: GET_USER_TEAMS,
+    type: CREATE_TEAM,
     payload: request
   };
 }
 
-export function findPotentialMembers(member) {
-  const request = axios.post(`${ROOT_URL}/team/potentialMembers`, member);
+export function searchUsers(searchTerm) {
+
+  const request = axios.post(`${ROOT_URL}/user/search`, {
+    searchTerm: searchTerm
+  });
 
   return {
-    type: FIND_POTENTIAL_MEMBER,
+    type: USER_SEARCH,
     payload: request
   };
 }

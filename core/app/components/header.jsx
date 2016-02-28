@@ -29,7 +29,7 @@ class HeaderBar extends Component {
 						{this.props.user && this.props.user.userName ? <Link className="pure-menu-link" to="/"> {this.props.user.userName} </Link> : <Link className="pure-menu-link" to="/"> Login </Link>}
 						</li>
 	        	<li className="pure-menu-item">
-							<Link className="pure-menu-link" to="/main">Main</Link>
+							<Link className="pure-menu-link" to="/home">Home</Link>
 						</li>
 					  { this.renderLogoutButton(this.props.user) }
 	    		</ul>

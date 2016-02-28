@@ -4,18 +4,11 @@ import { reduxForm } from "redux-form";
 import { addTeamMember } from "../actions/index";
 
 class AddMemberBox extends Component {
-
-  onSubmit(props) {
-   /* this.props.register(props).then( () => {
-      this.context.router.push("main");
-    });*/
-  }
-
   render() {
     const { fields: { newMember }, handleSubmit } = this.props;
 
     return(
-      <div className="teamStuff">
+      <div className="teamContent">
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))} className="pure-form pure-form-aligned">
           <fieldset>
             <div className="pure-control-group">
@@ -25,7 +18,7 @@ class AddMemberBox extends Component {
 
             <div className="pure-controls">
               <button type="submit" className="pure-button pure-button-primary">Add Member</button>
-              <Link to="/main" className="pure-button pure-button-secondary">Cancel</Link>
+              <Link to="/home" className="pure-button pure-button-secondary">Cancel</Link>
             </div>
           </fieldset>
         </form>

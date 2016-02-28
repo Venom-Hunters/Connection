@@ -3,7 +3,8 @@ import {
    USER_REGISTER,
    GET_USER_TEAMS,
    USER_GET,
-   USER_LOGOUT } from "../actions/index";
+   USER_LOGOUT,
+   USER_SEARCH  } from "../actions/index";
 
 export default function(state = null, action = "") {
   switch(action.type) {
@@ -23,6 +24,8 @@ export default function(state = null, action = "") {
    	  return Object.assign({}, state, {teams: action.payload.data} );
     case(USER_LOGOUT):
       return null;
+		case(USER_SEARCH):
+			return Object.assign({}, state, {searchResults: action.payload.data} );
     default:
       return state;
     }
