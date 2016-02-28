@@ -18,7 +18,6 @@ class SideBar extends Component{
 	}
 
 	componentWillReceiveProps(props) {
-
 		this.setState({
 			teams: props.teams.all,
 			activeTeam: props.teams.active
@@ -37,15 +36,16 @@ class SideBar extends Component{
 		if (team && team.members && team.members.length) {
 			return (
 				<div>
-					<h3 className="activeTeamName"> {team.teamName} </h3>
+					<div className="activeTeamName">
+						<span className="activeTeamHeader"> <Link to="/home">{team.teamName} </Link> </span>
+						<Link to="/team/invite" className="zmdi zmdi-account-add zmdi-hc-2x activeTeamInviteIcon"></Link>
+					</div>
+
 						<ul className="activeTeamMember">
 						{team.members.map( (member) => {
-							return <li> {member.userName} </li>;
+							return <li key={member._id}> {member.userName} </li>;
 						})}
 						</ul>
-						<div className="activeTeamInvite">
-							<Link to="/team/invite">Invite a user</Link>
-						</div>
 				</div>
 			);
 		}
@@ -69,7 +69,7 @@ class SideBar extends Component{
 							if (this.state.activeTeam && (team._id === this.state.activeTeam._id)) {
 								return;
 							}
-							return <li key={team._id} className="team"> <a onClick={this.clickTeam.bind(this, team)}> {team.teamName} </a> </li>;
+							return <li key={team._id} className="team"> <Link to="/home" onClick={this.clickTeam.bind(this, team)}> {team.teamName} </Link> </li>;
 						}).reverse()}
 					</ul>
 				);
