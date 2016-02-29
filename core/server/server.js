@@ -8,6 +8,8 @@ var express = require("express"),
 	localStrategy = require("passport-local"),
   path = require("path");
 
+var MongoStore = require('connect-mongo')(session);
+
 var	chatCtrl = require("./controllers/chatCtrl"),
   userCtrl = require("./controllers/userCtrl"),
 	teamCtrl = require("./controllers/teamCtrl"),
@@ -69,29 +71,27 @@ io.on("connection", function(socket) {
   });
 });
 
-// io.on("SEND_MESSAGE", function(socket) {
-//
-// });
-
 app.use(bodyParser.json());
 app.use(cors());
 
 app.use(express.static("./public"));
 
-app.use(session({
-	secret: config.secret,
-	saveUninitialized: config.saveUninitialized,
-	resave: config.resave
-}));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
 var mongoUri = config.mongoUri;
+
 mongoose.connect(mongoUri);
 mongoose.connection.once("open", function() {
   console.log("Connected to MongoDB");
 });
+
+app.use(session({
+	secret: config.secret,
+	saveUninitialized: config.saveUninitialized,
+	resave: config.resave,
+  store: new MongoStore({ mongooseConnection: mongoose.connection })
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 //auth endpoints
 app.post("/auth/login", passport.authenticate("local", {failureRedirect: "/login" }), userCtrl.getUser);
