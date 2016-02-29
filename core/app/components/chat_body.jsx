@@ -17,11 +17,12 @@ class ChatBody extends Component {
     this.socket = io();
 
 
-
-    this.socket.on("SEND_MESSAGE", function(message) {
+  console.log("setting up socket listen");
+    this.socket.on("RECEIVE_MESSAGE", function(message) {
+      console.log('message',message);
       this.addMessage(message);
     }.bind(this));
-
+  console.log(this.socket);
   }
 
   componentWillUnmount()

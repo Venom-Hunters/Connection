@@ -65,9 +65,18 @@ var server = require("http").Server(app);
 var io = require("socket.io")(server);
 
 io.on("connection", function(socket) {
-  socket.join('team-test');
+    var activeTeam;
+	socket.on('JOIN_ROOM', function(joinTeam) {
+		console.log(joinTeam);
+		activeTeam = joinTeam.toString();
+		socket.join(activeTeam);
+	})
+
   socket.on('SEND_MESSAGE', function(payload) {
-    io.to("team-test").emit('SEND_MESSAGE', payload);
+
+  	console.log('payload', payload);
+	console.log(activeTeam);
+    socket.server.to(activeTeam).emit('RECEIVE_MESSAGE', payload);
   });
 });
 

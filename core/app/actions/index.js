@@ -13,6 +13,7 @@ export const SET_ACTIVE_TEAM = "SET_ACTIVE_TEAM";
 export const GET_ACTIVE_TEAM_CHATS = "GET_ACTIVE_TEAM_CHATS";
 
 export const SEND_MESSAGE = "SEND_MESSAGE";
+export const JOIN_ROOM = "JOIN_ROOM";
 export const ADD_MESSAGE = "ADD_MESSAGE";
 export const GET_MESSAGE = "GET_MESSAGE";
 
@@ -21,7 +22,7 @@ export const ADD_TEAM_MEMBERS = 'ADD_TEAM_MEMBERS';
 
 
 const ROOT_URL = "http://localhost:8888";
-
+const socket = io();
 export function login(props) {
   const request = axios.post(`${ROOT_URL}/auth/login`, props);
 
@@ -77,6 +78,9 @@ export function getUserTeams() {
 }
 
 export function setActiveTeam(team) {
+  socket.emit('JOIN_ROOM', team._id)
+  socket.on('RECEIVE_MESSAGE', ()=>console.log("cheese is awesome!"));
+  console.log(socket);
   return {
     type: SET_ACTIVE_TEAM,
     payload: team
@@ -95,7 +99,7 @@ export function getActiveTeamChats(teamId) {
 
 
 export function sendMessage (message) {
-  var socket = io();
+  
   socket.emit(SEND_MESSAGE, message);
   return {
     type: SEND_MESSAGE,

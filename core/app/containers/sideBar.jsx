@@ -18,8 +18,6 @@ class SideBar extends Component{
 	}
 
 	componentWillReceiveProps(props) {
-		console.log('New Props');
-		console.log(props);
 		this.setState({
 			teams: props.teams.all,
 			activeTeam: props.activeTeam
@@ -56,7 +54,6 @@ class SideBar extends Component{
 
 	renderTeamList() {
 		if (this.state.teams && this.state.teams.length) {
-			console.log(this.state.activeTeam);
 				return (
 					<ul className="teamList">
 						{this.state.teams.map((team) => {
