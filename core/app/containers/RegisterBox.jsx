@@ -8,7 +8,7 @@ class RegisterBox extends Component {
 
   onSubmit(props) {
     this.props.register(props).then( () => {
-      this.context.router.push("main");
+      this.context.router.push("/home");
     });
   }
 

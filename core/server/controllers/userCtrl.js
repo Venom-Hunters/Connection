@@ -57,43 +57,34 @@ module.exports = {
 			});
 		} else res.status(401).send();
 	},
-	getTeams: function(req, res, next) {
-		if (req.user) {
-		Team.find({$or: [{'members': req.user._id}, {'teamLead': req.user._id}]}, function(err, teams) {
-			if (err) res.sendStatus(500);
-			else if (!teams) res.sendStatus(404);
-			else res.send(teams);
-		});
-	} else {
-		res.sendStatus(500);
-	}
-
-	},
-	potentialMembers: function(req, res, next) {
-		if (!req.body.searchParams) {
+	search: function(req, res, next) {
+		if (!req.body.searchTerm) {
 			return res.send([]);
 		}
-		User.find({$or:[{'userName': {'$regex': req.body.searchParams, '$options': 'i'}}, {'email': {'$regex': req.body.searchParams, '$options': 'i'}}]}, function(err, result) {
+		User.find({$or:[{'userName': {'$regex': req.body.searchTerm, '$options': 'i'}}, {'email': {'$regex': req.body.searchTerm, '$options': 'i'}}]}, function(err, result) {
 			if (err) res.sendStatus(500);
-			else if (result.length === 0) res.sendStatus(404);
-			else res.send(result);
+			else if (!result.length) {
+				res.sendStatus(404);
+			}
+			else {
+			res.send(result);
+		}
 		});
 	},
-	logout: function(req, res, next) {
-		User.findById(req.user._id, function(err, user) {
-			if(err) return res.sendStatus(500);
-			else {
-				user.loggedIn = false;
-				user.save(function(err, result) {
-					if (err) return res.sendStatus(500);
-					else {
-						req.session.destroy();
-						req.logout();
-						return res.send(result);
-					}
-				});
-			}
-		});
-	}
-
+	logout : function(req, res, next) {
+	  if (req.user) {User.findById(req.user._id, function(err, user) {
+	      if (err)
+	        return res.sendStatus(500);
+	      else {
+	        user.loggedIn = false;
+	        user.save(function(err, result) {
+	          if (err)
+	            return res.sendStatus(500);
+	          else {req.session.destroy();
+	            req.logout();
+	            return res.send(result);}
+	        });
+	      }
+	    });} else {res.sendStatus(500);}
 }
+};

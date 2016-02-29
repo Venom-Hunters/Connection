@@ -4,6 +4,7 @@ html, body {
 	padding: 0;
 	margin: 0;
 	height: 100%;
+	font-family: 'Oxygen', sans-serif;
 }
 
 a {
@@ -26,7 +27,11 @@ a {
 /* Registration */
 
 .pure-button-primary, .pure-button-secondary {
-  margin-right: 1em;
+  margin-right: 0.5em;
+}
+
+input {
+	margin-right: 1em;
 }
 
 .registration {
@@ -46,6 +51,8 @@ a {
 	flex: 1;
 	flex-grow: 0;
 	height: 36px;
+	padding: 1em 1em 0 0;
+	border-bottom: 1px solid #D5D5D5;
 }
 
 /* Content Area */
@@ -72,6 +79,7 @@ a {
 	max-width: 300px;
 	color: black;
 	border-radius: 5px;
+	overflow-y: auto;
 }
 
 .teamHeader a {
@@ -83,21 +91,70 @@ a {
 	transition: color 0.25s ease;
 }
 
-
 .teamHeader {
 	display: flex;
 	justify-content: space-between;
 	font-size: 1.5em;
-	padding: 5px 7px;
 	border-bottom: 1px solid #AAA;
 }
 
-.activeTeam {
-	position: relative;
-	font-style: italic;
+.pure-button {
+	vertical-align: inherit;
+}
+
+.teamList {
+	list-style: none;
+	padding-left: 1em;
+}
+
+.team {
+	cursor: pointer;
+}
+
+.activeTeamHeader {
+	font-size: 1.2em;
+	font-weight: bold;
 	color: red;
-	padding: 5px 7px;
-	border-bottom: 1px solid white;
+}
+
+.activeTeamName {
+	margin: 0;
+	color: red;
+	text-align: left;
+	display: flex;
+	height: 2em;
+	justify-content: space-between;
+	margin-bottom: 0.25em;
+	border-bottom: 1px solid #DDD;
+}
+
+.activeTeamInviteIcon
+{
+	color: #FBB;
+}
+
+.activeTeamInviteIcon:hover {
+	color: red;
+	transition: color 0.5s ease;
+}
+
+.activeTeam {
+	padding: 1em 0;
+}
+
+.activeTeamMember {
+	list-style: none;
+	color: black;
+}
+
+.activeTeamInvite {
+	font-size: 0.8em;
+	color: #AAA;
+	text-align: right;
+}
+
+.activeTeamInvite a {
+	cursor: pointer;
 }
 
 .otherTeams {
@@ -120,11 +177,22 @@ a {
 	border-radius: 2px;
 }
 
-.teamStuff {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding: 10px;
+.teamContent {
+	padding: 1.5em 1em;
+	width: 100%;
+}
+
+/* Invite Team View */
+
+.searchResult {
+	cursor: pointer;
+	color: #44F;
+}
+
+.memberSearchField {
+	width: 100%;
+	max-width: 300px;
+
 }
 
 

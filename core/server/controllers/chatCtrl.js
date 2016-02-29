@@ -16,7 +16,6 @@ module.exports = {
 	readAllChatsInTeam: function(req, res, next) {
 		Chat
 		.find({teamId: req.params.teamId}).populate("userId")
-		.sort("-timeStamp")
 		.exec(function(err, result) {
 			if (err) res.sendStatus(500);
 			else res.send(result);
