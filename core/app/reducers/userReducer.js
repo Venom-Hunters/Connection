@@ -24,7 +24,7 @@ export default function(state = {}, action = "") {
    	case(GET_USER_TEAMS):
    	  return Object.assign({}, state, {teams: action.payload.data} );
     case(USER_LOGOUT):
-      return null;
+      return {};
 		case(USER_SEARCH):
 			return Object.assign({}, state, {searchResults: action.payload.data} );
     case(INITIATE_SOCKET):

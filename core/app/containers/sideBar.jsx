@@ -19,9 +19,6 @@ class SideBar extends Component{
 	}
 
 	componentWillReceiveProps(props) {
-		if (props.activeTeam._id !== this.props.activeTeam._id){
-			this.props.socket.off(this.props.activeTeam._id);
-		}
 		this.setState({
 			teams: props.teams.all,
 			activeTeam: props.activeTeam

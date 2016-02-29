@@ -31,7 +31,11 @@ class ChatInput extends Component {
   }
 
   onFormSubmit(event) {
-    this.props.socket.emit('SEND_MESSAGE', this.state.message);
+    let messageObj = {
+      teamId: this.props.activeTeam,
+      message: this.state.message
+    }
+    this.props.socket.emit('SEND_MESSAGE', messageObj);
     /*this.props.sendMessage(this.state.message);*/
   }
 
@@ -48,7 +52,8 @@ class ChatInput extends Component {
 
 function mapStateToProps(state) {
   return {
-    socket: state.user.socket
+    socket: state.user.socket, 
+    activeTeam: state.teams.active
   }
 }
 

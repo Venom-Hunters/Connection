@@ -24,11 +24,6 @@ class ChatBody extends Component {
   console.log(this.socket);
   }
 
-  componentWillUnmount()
-  {
-    this.props.socket.off("RECEIVE_MESSAGE");
-  }
-
   componentDidMount() {
     this.chatBody = document.getElementById('chatBody');
     chatBody.scrollTop = chatBody.scrollHeight;

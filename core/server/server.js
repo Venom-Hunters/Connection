@@ -11,7 +11,7 @@ var express = require("express"),
 var MongoStore = require('connect-mongo')(session);
 
 var	chatCtrl = require("./controllers/chatCtrl"),
-  userCtrl = require("./controllers/userCtrl"),
+    userCtrl = require("./controllers/userCtrl"),
 	teamCtrl = require("./controllers/teamCtrl"),
 	User = require("./models/userModel"),
 	config = require("./config");
@@ -75,7 +75,8 @@ io.on("connection", function(socket) {
 	})
 
   socket.on('SEND_MESSAGE', function(payload) {
-    socket.server.to(activeTeam).emit('RECEIVE_MESSAGE', payload);
+  	console.log('messageObj', payload);
+    socket.server.to(activeTeam).emit('RECEIVE_MESSAGE', payload.message);
   });
 });
 
