@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, PropTypes } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { userLogout, updateUserProfile } from "../actions/index";
@@ -16,10 +16,16 @@ class HeaderBar extends Component {
 		if (user && user.userName) {
 			return (
 	    	<li className="pure-menu-item">
-					<Link className="pure-menu-link" onClick={this.props.userLogout} to="/">Logout</Link>
+					<a className="pure-menu-link" onClick={this.userLogout.bind(this)}>Logout</a>
 				</li>
 			);
 		}
+	}
+
+	userLogout() {
+		this.props.userLogout().then(() => {
+				this.context.router.push("/");
+		});
 	}
 
 	render() {
@@ -42,6 +48,9 @@ class HeaderBar extends Component {
 	}
 }
 
+HeaderBar.contextTypes = {
+  router: PropTypes.object
+};
 
 
 function mapStateToProps(state) {
