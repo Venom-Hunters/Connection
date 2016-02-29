@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router";
-import { createTeam, searchUsers } from "../actions/index";
+import { createTeam, searchUsers, addTeamMembers } from "../actions/index";
 
 class InviteTeamBox extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      activeTeam: {},
+      activeTeam: this.props.activeTeam,
       searchTerm: "",
       searchResults: [],
       membersToAdd: []
@@ -17,6 +17,7 @@ class InviteTeamBox extends Component {
     this.onChange = this.onChange.bind(this);
     this.renderMembersToAdd = this.renderMembersToAdd.bind(this);
     this.removeSearchResult = this.removeSearchResult.bind(this);
+    this.addMembers = this.addMembers.bind(this);
   }
 
   componentDidMount() {
@@ -24,7 +25,8 @@ class InviteTeamBox extends Component {
   }
 
   componentWillReceiveProps(props) {
-    this.setState({ searchResults: props.searchResults
+    this.setState({ searchResults: props.searchResults,
+      activeTeam: props.activeTeam
     });
   }
 
@@ -46,6 +48,16 @@ class InviteTeamBox extends Component {
 
       </div>
     );
+  }
+
+  addMembers() {
+
+    console.log('AddMembers State');
+    console.log(this.state);
+    console.log('Addmembers Props');
+    console.log(this.props);
+    this.props.addTeamMembers(this.state.activeTeam._id, this.state.membersToAdd);
+    this.clearSearch();
   }
 
   clearSearch() {
@@ -81,7 +93,7 @@ class InviteTeamBox extends Component {
         );
       }.bind(this))}
       </ul>
-      <button style={{marginLeft: 1 + "em", display: "inline-block"}} className="pure-button pure-button-primary">Add</button>
+      <button onClick={this.addMembers} style={{marginLeft: 1 + "em", display: "inline-block"}} className="pure-button pure-button-primary">Add</button>
       </div>
     );
     }
@@ -113,8 +125,7 @@ addSearchResult (member) {
   if (!duplicate) {
     this.setState({
       membersToAdd: this.state.membersToAdd.concat([member]),
-      searchTerm: "",
-      searchResults: []
+      searchTerm: ""
     });
     document.getElementById('searchField').focus();
   }
@@ -141,4 +152,4 @@ function mapStateToProps(state) {
   return {activeTeam: state.teams.active, searchResults: state.userSearch};
 }
 
-export default connect(mapStateToProps, { createTeam, searchUsers })(InviteTeamBox);
+export default connect(mapStateToProps, { createTeam, searchUsers, addTeamMembers })(InviteTeamBox);

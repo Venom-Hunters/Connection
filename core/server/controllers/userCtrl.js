@@ -71,20 +71,20 @@ module.exports = {
 		}
 		});
 	},
-	logout: function(req, res, next) {
-		User.findById(req.user._id, function(err, user) {
-			if(err) return res.sendStatus(500);
-			else {
-				user.loggedIn = false;
-				user.save(function(err, result) {
-					if (err) return res.sendStatus(500);
-					else {
-						req.session.destroy();
-						req.logout();
-						return res.send(result);
-					}
-				});
-			}
-		});
-	}
+	logout : function(req, res, next) {
+	  if (req.user) {User.findById(req.user._id, function(err, user) {
+	      if (err)
+	        return res.sendStatus(500);
+	      else {
+	        user.loggedIn = false;
+	        user.save(function(err, result) {
+	          if (err)
+	            return res.sendStatus(500);
+	          else {req.session.destroy();
+	            req.logout();
+	            return res.send(result);}
+	        });
+	      }
+	    });} else {res.sendStatus(500);}
+}
 };

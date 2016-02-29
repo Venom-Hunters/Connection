@@ -18,9 +18,11 @@ class SideBar extends Component{
 	}
 
 	componentWillReceiveProps(props) {
+		console.log('New Props');
+		console.log(props);
 		this.setState({
 			teams: props.teams.all,
-			activeTeam: props.teams.active
+			activeTeam: props.activeTeam
 		});
 	}
 
@@ -54,17 +56,19 @@ class SideBar extends Component{
 
 	renderTeamList() {
 		if (this.state.teams && this.state.teams.length) {
+			console.log(this.state.activeTeam);
 				return (
 					<ul className="teamList">
 						{this.state.teams.map((team) => {
 							if (this.state.activeTeam && (team._id === this.state.activeTeam._id)) {
 								return (
 									<li key={team._id} className="activeTeam">
-										{this.renderActiveTeam(team)}
+										{this.renderActiveTeam(this.state.activeTeam)}
 									</li>
 								);
 							}
 						})}
+
 						{this.state.teams.map((team) => {
 							if (this.state.activeTeam && (team._id === this.state.activeTeam._id)) {
 								return;

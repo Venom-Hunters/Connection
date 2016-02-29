@@ -17,7 +17,7 @@ export const ADD_MESSAGE = "ADD_MESSAGE";
 export const GET_MESSAGE = "GET_MESSAGE";
 
 export const CREATE_TEAM = 'CREATE_TEAM';
-export const ADD_TEAM_MEMBER = 'ADD_TEAM_MEMBER';
+export const ADD_TEAM_MEMBERS = 'ADD_TEAM_MEMBERS';
 
 
 const ROOT_URL = "http://localhost:8888";
@@ -131,11 +131,11 @@ export function searchUsers(searchTerm) {
   };
 }
 
-export function addTeamMember(teamId, newMember) {
-  const request = axios.post(`${ROOT_URL}/team/addMember/${teamId}`, newMember);
+export function addTeamMembers(teamId, newMembers) {
+  const request = axios.post(`${ROOT_URL}/team/addMembers/${teamId}`, newMembers);
 
   return {
-    type: ADD_TEAM_MEMBER,
+    type: ADD_TEAM_MEMBERS,
     payload: request
 
   };

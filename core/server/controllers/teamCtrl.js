@@ -1,8 +1,15 @@
 var Team = require("./../models/teamModel");
 
+var mongoose = require('mongoose');
+var ObjectId = mongoose.Types.ObjectId;
+
 module.exports = {
 
 	create: function(req, res, next) {
+		if (req.user && req.user._id)
+		{
+
+
 		var newTeam = new Team();
 		newTeam.teamName = req.body.teamName;
 		newTeam.members = [req.user._id];
@@ -11,18 +18,22 @@ module.exports = {
 		/*newTeam.regToken = req.body.regToken;*/
 		newTeam.save(function(err, result) {
 		if (err) { return res.sendStatus(500); }
-		var active = result;
-		Team.find({
-			members: req.user._id
-		})
-		.sort('-teamName')
-		.populate('members teamLead')
-		.exec(function(err, results) {
-			return res.send({
-				active: active,
-				all: results
-			});
-		});
+
+		Team.findOne({_id: result._id}, function(err, result) {
+			if(err) { res.sendStatus(500); }
+				var active = result;
+				Team.find({
+					members: req.user._id
+				})
+				.sort('-teamName')
+				.populate('members teamLead')
+				.exec(function(err, results) {
+					return res.send({
+						active: active,
+						all: results
+					});
+				});
+		}).populate('members teamLead');
 		});
 
 		/*
@@ -34,7 +45,9 @@ module.exports = {
 				else res.send(result);
 			})
 		})	*/
-
+	} else {
+		res.sendStatus(500);
+	}
 	},
 
 	getTeams: function(req, res, next) {
@@ -79,22 +92,38 @@ module.exports = {
 				else return res.send(team);
 			});
 	},
-	addMember: function(req, res, next) {
+	addMembers: function(req, res, next) {
+		var membersToAdd = [];
 		Team.findById(req.params.teamId, function(err, team) {
 			if (err) return res.sendStatus(500);
 			else {
-				for (var i = 0; i < team.members.length; i++) {
-					team.members[i] = team.members[i].toString();
-					if (team.members[i] === req.body.userId) {
-						return res.status(403).send("Member already in team.");
+				var proposedMembers = req.body;
+				proposedMembers.forEach(function(proposedMember) {
+					var duplicate = false;
+					for (var i = 0; i < team.members.length; i++) {
+						if (team.members[i]) {
+							team.members[i] = team.members[i].toString();
+							if (team.members[i] === proposedMember._id) {
+								duplicate = true;
+							}
+						}
 					}
-				}
-				team.members.push(req.body.userId);
+					if (!duplicate) {
+						membersToAdd.push(ObjectId(proposedMember._id));
+					}
+				});
+				team.members = team.members.concat(membersToAdd);
 				team.save(function(err, result) {
 					if (err) return res.sendStatus(500);
-					else return res.send(result);
+					else {
+						Team.findOne({_id: team._id})
+						.populate('teamLead members')
+						.exec(function(err, results) {
+							if (err) { return res.sendStatus(500);}
+							res.send(results);
+						});
+					}
 				});
-
 			}
 		});
 	},

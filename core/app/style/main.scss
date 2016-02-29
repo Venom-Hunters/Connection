@@ -51,10 +51,8 @@ input {
 	flex: 1;
 	flex-grow: 0;
 	height: 36px;
-}
-
-.pure-menu-list {
-	float: right;
+	padding: 1em 1em 0 0;
+	border-bottom: 1px solid #D5D5D5;
 }
 
 /* Content Area */

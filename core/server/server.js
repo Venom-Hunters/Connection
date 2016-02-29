@@ -119,7 +119,7 @@ app.get("/team/getTeams", teamCtrl.getTeams);
 app.delete('/team/delete/:teamId', teamCtrl.deleteTeam);
 app.put('/team/updateTeamProfile/:teamId', teamCtrl.updateTeamProfile);
 app.get('/team/getTeamInfo/:teamId', teamCtrl.getTeamInfo);
-app.put('/team/addMember/:teamId', teamCtrl.addMember);
+app.post('/team/addMembers/:teamId', teamCtrl.addMembers);
 app.put('/team/removeMember/:teamId', teamCtrl.removeMember);
 
 
