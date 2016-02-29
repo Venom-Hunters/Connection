@@ -6,6 +6,7 @@ export const USER_REGISTER = "USER_REGISTER";
 export const USER_LOGOUT = "USER_LOGOUT";
 export const USER_GET = "USER_GET";
 export const USER_SEARCH = "USER_SEARCH";
+export const INITIATE_SOCKET = 'INITIATE_SOCKET';
 
 export const UPDATE_USER_PROFILE = "UPDATE_USER_PROFILE";
 export const GET_USER_TEAMS = "GET_USER_TEAMS";
@@ -21,14 +22,23 @@ export const CREATE_TEAM = 'CREATE_TEAM';
 export const ADD_TEAM_MEMBERS = 'ADD_TEAM_MEMBERS';
 
 
-const ROOT_URL = "http://localhost:8888";
-const socket = io();
+const ROOT_URL = "http://192.168.1.188:8888";
+
 export function login(props) {
   const request = axios.post(`${ROOT_URL}/auth/login`, props);
 
   return {
     type: USER_LOGIN,
     payload: request
+  };
+}
+
+export function initiateSocket() {
+  let socket = io();
+
+  return {
+    type: INITIATE_SOCKET,
+    payload: socket
   };
 }
 
@@ -78,9 +88,7 @@ export function getUserTeams() {
 }
 
 export function setActiveTeam(team) {
-  socket.emit('JOIN_ROOM', team._id)
-  socket.on('RECEIVE_MESSAGE', ()=>console.log("cheese is awesome!"));
-  console.log(socket);
+
   return {
     type: SET_ACTIVE_TEAM,
     payload: team

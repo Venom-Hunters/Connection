@@ -14,11 +14,10 @@ class ChatBody extends Component {
       messages: []
     };
 
-    this.socket = io();
 
 
   console.log("setting up socket listen");
-    this.socket.on("RECEIVE_MESSAGE", function(message) {
+    this.props.socket.on("RECEIVE_MESSAGE", function(message) {
       console.log('message',message);
       this.addMessage(message);
     }.bind(this));
@@ -27,7 +26,7 @@ class ChatBody extends Component {
 
   componentWillUnmount()
   {
-    this.socket.off("SEND_MESSAGE");
+    this.props.socket.off("RECEIVE_MESSAGE");
   }
 
   componentDidMount() {
@@ -52,7 +51,7 @@ class ChatBody extends Component {
 }
 
 function mapStateToProps(state) {
-  return { messages: state.chatMessages };
+  return { messages: state.chatMessages, socket: state.user.socket, activeTeam: state.teams.active };
 }
 
 function mapDispatchToProps(dispatch) {

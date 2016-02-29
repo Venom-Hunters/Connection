@@ -31,7 +31,8 @@ class ChatInput extends Component {
   }
 
   onFormSubmit(event) {
-    this.props.sendMessage(this.state.message);
+    this.props.socket.emit('SEND_MESSAGE', this.state.message);
+    /*this.props.sendMessage(this.state.message);*/
   }
 
   render() {
@@ -45,10 +46,16 @@ class ChatInput extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    socket: state.user.socket
+  }
+}
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     sendMessage
   }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(ChatInput);
+export default connect(mapStateToProps, mapDispatchToProps)(ChatInput);

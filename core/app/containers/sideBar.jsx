@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
-import { getUserTeams, setActiveTeam, getActiveTeamChats } from "../actions/index";
+import { getUserTeams, setActiveTeam, getActiveTeamChats, initiateSocket } from "../actions/index";
 import {colors}  from "../constants/color_scheme";
 import { Link, browserHistory } from "react-router";
 
@@ -14,22 +14,31 @@ class SideBar extends Component{
 	}
 
 	componentWillMount() {
+		this.props.initiateSocket();
 		this.props.getUserTeams();
 	}
 
 	componentWillReceiveProps(props) {
+		if (props.activeTeam._id !== this.props.activeTeam._id){
+			this.props.socket.off(this.props.activeTeam._id);
+		}
 		this.setState({
 			teams: props.teams.all,
 			activeTeam: props.activeTeam
 		});
+
 	}
 
 
 	clickTeam(team) {
+		this.props.socket.emit('LEAVE_ROOM', this.props.activeTeam._id);
 		this.setState({
 			activeTeam: team
 		});
 		this.props.setActiveTeam(team);
+		this.props.socket.emit('JOIN_ROOM', team._id);
+
+		
 	}
 
 	renderActiveTeam(team) {
@@ -89,9 +98,6 @@ class SideBar extends Component{
 				</h3>
 				{this.renderTeamList()}
 			</div>
-			//remember to place {this.renderTeamList()} in
-			//active team - expanded with team members (red if not online, green if online)
-			//all other teams - not expanded
 		);
 	}
 }
@@ -99,8 +105,9 @@ class SideBar extends Component{
 function mapStateToProps(state) {
 	return {
 		teams: state.teams,
-		activeTeam: state.teams.active
+		activeTeam: state.teams.active,
+		socket: state.user.socket
 	};
 }
 
-export default connect(mapStateToProps, { getUserTeams, setActiveTeam, getActiveTeamChats })(SideBar);
+export default connect(mapStateToProps, { getUserTeams, setActiveTeam, getActiveTeamChats, initiateSocket })(SideBar);
