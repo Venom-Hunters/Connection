@@ -82,7 +82,7 @@ module.exports = {
 		User.find({$or:[{'userName': {'$regex': req.body.searchTerm, '$options': 'i'}}, {'email': {'$regex': req.body.searchTerm, '$options': 'i'}}]}, function(err, result) {
 			if (err) return res.sendStatus(500);
 			else if (!result.length) {
-				return res.sendStatus(404);
+				return res.sendStatus(200);
 			}
 			else {
 				return res.send(result);
