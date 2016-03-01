@@ -1,12 +1,11 @@
 import axios from "axios";
 
-
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_REGISTER = "USER_REGISTER";
 export const USER_LOGOUT = "USER_LOGOUT";
 export const USER_GET = "USER_GET";
 export const USER_SEARCH = "USER_SEARCH";
-export const INITIATE_SOCKET = 'INITIATE_SOCKET';
+export const INITIATE_SOCKET = "INITIATE_SOCKET";
 
 export const UPDATE_USER_PROFILE = "UPDATE_USER_PROFILE";
 export const GET_USER_TEAMS = "GET_USER_TEAMS";
@@ -18,8 +17,8 @@ export const JOIN_ROOM = "JOIN_ROOM";
 export const ADD_MESSAGE = "ADD_MESSAGE";
 export const GET_MESSAGE = "GET_MESSAGE";
 
-export const CREATE_TEAM = 'CREATE_TEAM';
-export const ADD_TEAM_MEMBERS = 'ADD_TEAM_MEMBERS';
+export const CREATE_TEAM = "CREATE_TEAM";
+export const ADD_TEAM_MEMBERS = "ADD_TEAM_MEMBERS";
 
 
 const ROOT_URL = "http://localhost:8888";
@@ -88,6 +87,7 @@ export function getUserTeams() {
 }
 
 export function setActiveTeam(team) {
+  const request = axios.put(`${ROOT_URL}/user/updateActiveTeam`, team);
 
   return {
     type: SET_ACTIVE_TEAM,
@@ -105,6 +105,7 @@ export function getActiveTeamChats(teamId) {
 }
 
 export function addMessage (message) {
+
   return {
     type: ADD_MESSAGE,
     payload: message

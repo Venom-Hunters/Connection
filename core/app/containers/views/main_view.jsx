@@ -1,7 +1,7 @@
 import ChatBox from "../chatBox";
-import React, {Component} from "react";
 import SideBar from "../sideBar";
-import {Connect} from "react-router";
+
+import React, {Component} from "react";
 
 export default class MainView extends Component {
   render() {

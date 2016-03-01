@@ -7,7 +7,9 @@ import { login } from "../actions/";
 class LoginBox extends Component {
   onSubmit(props) {
     this.props.login(props).then( () => {
-      this.context.router.push("/home");
+      if (this.props.user && this.props.user._id) {
+          this.context.router.push("/home");
+      }
     });
   }
 
@@ -16,6 +18,7 @@ class LoginBox extends Component {
 
     return(
       <div className="registration">
+
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}  className="pure-form pure-form-aligned">
           <fieldset>
             <div className="pure-control-group">
@@ -50,8 +53,15 @@ function validate(values) {
   return errors;
 }
 
+function mapStateToProps(state) {
+  return {
+    user: state.user
+  };
+
+}
+
 export default reduxForm({
   form: "LoginForm",
   fields: ["email", "password"],
   validate
-}, null, { login })( LoginBox );
+}, mapStateToProps, { login })( LoginBox );

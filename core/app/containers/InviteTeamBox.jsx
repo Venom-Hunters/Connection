@@ -34,6 +34,8 @@ class InviteTeamBox extends Component {
 
   componentWillUnmount() {
     this.props.searchUsers('');
+    document.getElementById("searchField").focus();
+
   }
 
   componentWillReceiveProps(props) {
@@ -142,7 +144,6 @@ class InviteTeamBox extends Component {
     
     this.setState({membersToAdd: newMembersToAdd});
   }
-
 
   addSearchResult (member) {
     var duplicate = false;

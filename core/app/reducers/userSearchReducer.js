@@ -1,4 +1,4 @@
-import { USER_SEARCH } from '../actions/index';
+import { USER_SEARCH } from "../actions/index";
 
 export default function(state = [], action = "") {
 	switch(action.type) {

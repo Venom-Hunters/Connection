@@ -2,10 +2,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
-import {addMessage, getActiveTeamChats} from "../actions/index";
-
-
-
+import {getActiveTeamChats} from "../actions/index";
 
 class ChatBody extends Component {
   constructor(props){
@@ -13,28 +10,28 @@ class ChatBody extends Component {
     this.state = {
       messages: []
     };
+  }
 
-    this.props.socket.on("RECEIVE_MESSAGE", function(message) {
-      this.addMessage(message);
-    }.bind(this));
+  componentDidMount() {
+    if (this.props.activeTeam && this.props.activeTeam._id) {
+      this.props.socket.emit('JOIN_ROOM', this.props.activeTeam._id);
+    }
   }
 
   componentDidUpdate() {
     this.chatBody = document.getElementById('chatBody');
-
     chatBody.scrollTop = chatBody.scrollHeight;
   }
 
+
   componentWillReceiveProps(props) {
-    
-    if(this.props.activeTeam && (this.props.activeTeam._id !== props.activeTeam._id)) {
+    if (!this.props.activeTeam && (props.activeTeam && props.activeTeam._id)) {
+      this.props.socket.emit('JOIN_ROOM', props.activeTeam._id);
       this.props.getActiveTeamChats(props.activeTeam._id);
+    } else if(this.props.activeTeam && (this.props.activeTeam._id !== props.activeTeam._id)) {
+      this.props.getActiveTeamChats(props.activeTeam._id);
+      this.props.socket.emit('JOIN_ROOM', props.activeTeam._id);
     }
-
-  }
-
-  addMessage(message) {
-    this.props.addMessage(message);
   }
 
   render() {
@@ -51,7 +48,7 @@ class ChatBody extends Component {
           <div>Loading Messages...</div>
         );
     }
-    
+
   }
 }
 
@@ -60,7 +57,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators ({ addMessage, getActiveTeamChats }, dispatch);
+  return bindActionCreators ({ getActiveTeamChats }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatBody);

@@ -1,6 +1,6 @@
 var Team = require("./../models/teamModel");
 
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 var ObjectId = mongoose.Types.ObjectId;
 
 module.exports = {
@@ -64,7 +64,6 @@ module.exports = {
 		} else {
 			res.sendStatus(500);
 		}
-
 	},
 
 	deleteTeam: function(req, res, next) {
@@ -124,7 +123,7 @@ module.exports = {
 					if (err) return res.sendStatus(500);
 					else {
 						Team.findOne({_id: team._id})
-						.populate('teamLead members')
+						.populate("teamLead members")
 						.exec(function(err, results) {
 							if (err) { return res.sendStatus(500);}
 							res.send(results);

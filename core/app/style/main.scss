@@ -4,7 +4,7 @@ html, body {
 	padding: 0;
 	margin: 0;
 	height: 100%;
-	font-family: 'Oxygen', sans-serif;
+	font-family: "Oxygen", sans-serif;
 }
 
 a {
@@ -48,10 +48,8 @@ input {
 /* Header Menu */
 
 .header {
-	flex: 1;
-	flex-grow: 0;
-	height: 36px;
-	padding: 1em 1em 0 0;
+	padding-top: 2px;
+	padding-left: 2px;
 	border-bottom: 1px solid #D5D5D5;
 }
 
@@ -231,7 +229,7 @@ input {
 .addTeamMember:hover:after {
 	color: white;
 	background-color: rgba(0,0,0,0.7);
-	content: 'Add Team Member';
+	content: "Add Team Member";
 	position: absolute;
  	bottom: 3px;
  	right: 10px;

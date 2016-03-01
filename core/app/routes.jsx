@@ -5,8 +5,8 @@ import MainView from "./containers/views/main_view";
 import LoginView from "./containers/views/login_view";
 import RegistrationView from "./containers/views/register_view";
 import ChatView from "./containers/views/chat_view";
-import CreateTeamBox from './containers/CreateTeamBox';
-import InviteTeamBox from './containers/InviteTeamBox';
+import CreateTeamBox from "./containers/CreateTeamBox";
+import InviteTeamBox from "./containers/InviteTeamBox";
 
 export default (
   <Route path="/" component={App}>

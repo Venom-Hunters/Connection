@@ -1,5 +1,5 @@
 var Chat = require("./../models/chatModel");
-var q = require('q');
+var q = require("q");
 
 module.exports = {
 
@@ -18,9 +18,9 @@ module.exports = {
 	},
 	readAllChatsInTeam: function(req, res, next) {
 		Chat
-		.find({'teamId': req.params.teamId})
+		.find({"teamId": req.params.teamId})
 		.populate("userId")
-		.sort('-timeStamp')
+		.sort("-timeStamp")
 		.exec(function(err, result) {
 			if (err) return res.sendStatus(500);
 			else return res.send(result);
