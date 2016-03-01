@@ -51,11 +51,6 @@ class InviteTeamBox extends Component {
   }
 
   addMembers() {
-
-    console.log("AddMembers State");
-    console.log(this.state);
-    console.log("Addmembers Props");
-    console.log(this.props);
     this.props.addTeamMembers(this.state.activeTeam._id, this.state.membersToAdd);
     this.clearSearch();
   }

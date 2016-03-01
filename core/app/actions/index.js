@@ -87,6 +87,7 @@ export function getUserTeams() {
 }
 
 export function setActiveTeam(team) {
+  const request = axios.put(`${ROOT_URL}/user/updateActiveTeam`, team);
 
   return {
     type: SET_ACTIVE_TEAM,
@@ -104,6 +105,7 @@ export function getActiveTeamChats(teamId) {
 }
 
 export function addMessage (message) {
+
   return {
     type: ADD_MESSAGE,
     payload: message

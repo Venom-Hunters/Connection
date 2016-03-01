@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
-import { getUserTeams, setActiveTeam, initiateSocket, getUser, getActiveTeamChats } from "../actions/index";
+import { getUserTeams, setActiveTeam, getUser, getActiveTeamChats } from "../actions/index";
 import {colors}  from "../constants/color_scheme";
 import { Link, browserHistory } from "react-router";
 
@@ -14,12 +14,8 @@ class SideBar extends Component{
 	}
 
 	componentWillMount() {
-		this.props.initiateSocket();
 		this.props.getUserTeams();
-		this.props.getUser().then(() => {
-			this.props.getActiveTeamChats(this.props.activeTeam._id)
-			this.props.socket.emit("JOIN_ROOM", this.props.activeTeam._id);
-		});
+		this.props.getUser();
 	}
 
 	componentWillReceiveProps(props) {
@@ -31,21 +27,17 @@ class SideBar extends Component{
 
 
 	clickTeam(team) {
-		this.props.socket.emit("LEAVE_ROOM", this.props.activeTeam._id);
 		this.setState({
 			activeTeam: team
 		});
 		this.props.setActiveTeam(team);
-		this.props.socket.emit("JOIN_ROOM", team._id);
-
-		
 	}
 
 	renderActiveTeam(team) {
 		if (team && team.members && team.members.length) {
 			return (
 				<div>
-					
+
 					<div className="activeTeamName">
 						<span className="activeTeamHeader"> <Link to="/home">{team.teamName} </Link> </span>
 						<div className="dropDownMenu">
@@ -54,7 +46,7 @@ class SideBar extends Component{
 								<div className="menuIcon"><span className="menuIconInfo" style={{bottom: '2px'}}>Manage Members</span><Link to="/team/invite" className="zmdi zmdi-account zmdi-hc-2x" style={{fontSize: '2.2em'}}></Link></div>
 								<div className="menuIcon"><span className="menuIconInfo">Manage Team</span><Link to="/team/invite" className="zmdi zmdi-edit zmdi-hc-2x"></Link></div>
 								<div className="menuIcon"><span className="menuIconInfo">Save Chats</span><Link to="/team/invite" className="zmdi zmdi-file zmdi-hc-2x"></Link></div>
-								
+
 							</div>
 						</div>
 					</div>
@@ -68,12 +60,6 @@ class SideBar extends Component{
 			);
 		}
 	}
-
-	/*<span className="hoverable">
-		<i className="zmdi zmdi-chevron-down normal"></i>
-		<i className="zmdi zmdi-chevron-up hover"></i>
-	</span>
-	<Link to="/team/invite" className="zmdi zmdi-account-add zmdi-hc-2x activeTeamInviteIcon"></Link>*/
 
 	renderTeamList() {
 		if (this.props.teams && this.props.teams.length) {
@@ -125,4 +111,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps, { getUserTeams, setActiveTeam, initiateSocket, getUser, getActiveTeamChats })(SideBar);
+export default connect(mapStateToProps, { getUserTeams, setActiveTeam, getUser, getActiveTeamChats })(SideBar);
