@@ -18,7 +18,7 @@ class SideBar extends Component{
 		this.props.getUserTeams();
 		this.props.getUser().then(() => {
 			this.props.getActiveTeamChats(this.props.activeTeam._id)
-			this.props.socket.emit('JOIN_ROOM', this.props.activeTeam._id);
+			this.props.socket.emit("JOIN_ROOM", this.props.activeTeam._id);
 		});
 	}
 
@@ -31,12 +31,12 @@ class SideBar extends Component{
 
 
 	clickTeam(team) {
-		this.props.socket.emit('LEAVE_ROOM', this.props.activeTeam._id);
+		this.props.socket.emit("LEAVE_ROOM", this.props.activeTeam._id);
 		this.setState({
 			activeTeam: team
 		});
 		this.props.setActiveTeam(team);
-		this.props.socket.emit('JOIN_ROOM', team._id);
+		this.props.socket.emit("JOIN_ROOM", team._id);
 
 		
 	}
@@ -85,7 +85,7 @@ class SideBar extends Component{
 				);
 		} else {
 				return (
-					<div style={{textAlign: "center"}}> You're not on any team! <br /> Create or join one.</div>
+					<div style={{textAlign: "center"}}> You"re not on any team! <br /> Create or join one.</div>
 				);
 		}
 	}

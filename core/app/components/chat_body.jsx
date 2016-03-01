@@ -20,7 +20,7 @@ class ChatBody extends Component {
   }
 
   componentDidUpdate() {
-    this.chatBody = document.getElementById('chatBody');
+    this.chatBody = document.getElementById("chatBody");
 
     chatBody.scrollTop = chatBody.scrollHeight;
   }
