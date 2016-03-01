@@ -48,11 +48,8 @@ class SideBar extends Component{
 					
 					<div className="activeTeamName">
 						<span className="activeTeamHeader"> <Link to="/home">{team.teamName} </Link> </span>
-						<span className="hoverable">
-							<i className="zmdi zmdi-chevron-down normal"></i>
-							<i className="zmdi zmdi-chevron-up hover"></i>
-						</span>
-						<Link to="/team/invite" className="zmdi zmdi-account-add zmdi-hc-2x activeTeamInviteIcon"></Link>
+
+						<Link to="/team/invite" className="zmdi zmdi-menu zmdi-hc-2x menuIcon"></Link>
 					</div>
 
 						<ul className="activeTeamMember">
@@ -65,6 +62,11 @@ class SideBar extends Component{
 		}
 	}
 
+	/*<span className="hoverable">
+		<i className="zmdi zmdi-chevron-down normal"></i>
+		<i className="zmdi zmdi-chevron-up hover"></i>
+	</span>
+	<Link to="/team/invite" className="zmdi zmdi-account-add zmdi-hc-2x activeTeamInviteIcon"></Link>*/
 
 	renderTeamList() {
 		if (this.props.teams && this.props.teams.length) {

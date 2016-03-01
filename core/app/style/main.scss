@@ -128,12 +128,11 @@ input {
 	border-bottom: 1px solid #DDD;
 }
 
-.activeTeamInviteIcon
-{
+.menuIcon {
 	color: #FBB;
 }
 
-.activeTeamInviteIcon:hover {
+.menuIcon:hover {
 	color: red;
 	transition: color 0.5s ease;
 }
