@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
-import { getUserTeams, setActiveTeam, initiateSocket, getUser, getActiveTeamChats } from "../actions/index";
+import { getUserTeams, setActiveTeam, getUser, getActiveTeamChats } from "../actions/index";
 import {colors}  from "../constants/color_scheme";
 import { Link, browserHistory } from "react-router";
 
@@ -14,12 +14,8 @@ class SideBar extends Component{
 	}
 
 	componentWillMount() {
-		this.props.initiateSocket();
 		this.props.getUserTeams();
-		this.props.getUser().then(() => {
-			this.props.getActiveTeamChats(this.props.activeTeam._id)
-			this.props.socket.emit('JOIN_ROOM', this.props.activeTeam._id);
-		});
+		this.props.getUser();
 	}
 
 	componentWillReceiveProps(props) {
@@ -31,14 +27,10 @@ class SideBar extends Component{
 
 
 	clickTeam(team) {
-		this.props.socket.emit('LEAVE_ROOM', this.props.activeTeam._id);
 		this.setState({
 			activeTeam: team
 		});
 		this.props.setActiveTeam(team);
-		this.props.socket.emit('JOIN_ROOM', team._id);
-
-		
 	}
 
 	renderActiveTeam(team) {
@@ -59,7 +51,6 @@ class SideBar extends Component{
 			);
 		}
 	}
-
 
 	renderTeamList() {
 		if (this.props.teams && this.props.teams.length) {
@@ -111,4 +102,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps, { getUserTeams, setActiveTeam, initiateSocket, getUser, getActiveTeamChats })(SideBar);
+export default connect(mapStateToProps, { getUserTeams, setActiveTeam, getUser, getActiveTeamChats })(SideBar);

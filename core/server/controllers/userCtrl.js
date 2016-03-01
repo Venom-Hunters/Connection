@@ -3,7 +3,6 @@ var Team = require("./../models/teamModel");
 
 module.exports = {
 	create: function(req, res, next) {
-		console.log('create user', req.body);
 	    User.findOne({"email": req.body.email}, function(err, user) {
 	        if (user) {
 	            return res.status(403).send("Email already exists. Please use a different email.");
@@ -18,7 +17,6 @@ module.exports = {
 			            	console.log('err', err);
 			                return res.status(500).send();
 			            } else {
-			            	console.log('saved', result);
 			            	return next();
 			            }
 			        });
@@ -41,6 +39,19 @@ module.exports = {
 			}
 		});
 	},
+updateActiveTeam : function(req, res, next) {
+  if (req.user && req.user._id) {
+		User.findById(req.user._id, function(err, user) {
+      if (err)
+        return res.status(500).send(err);
+      user.lastTeamViewed = req.body;
+      user.save(function(err, user) {
+        if (err) return res.status(500).send(err);
+				return res.send();
+      });
+    });
+	}
+},
 	deleteUser: function(req, res, next) {
 		User.findOneAndRemove({_id: req.params.userId}, function(err, result) {
 			if(err) return res.status(500).send(err);
@@ -55,13 +66,10 @@ module.exports = {
 					return res.status(401).send();
 				}
 				else {
-					var options = {
-
-					}
 					User.populate(user, {path: 'lastTeamViewed.members', model: 'users'}, function(err, result) {
 						if (err) return res.sendStatus(500);
 						else return res.send(user);
-					})
+					});
 				}
 			});
 		} else res.status(401).send();

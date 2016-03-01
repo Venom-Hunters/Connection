@@ -65,20 +65,22 @@ var server = require("http").Server(app);
 var io = require("socket.io")(server);
 
 io.on("connection", function(socket) {
-    var activeTeam;
+  var activeTeam;
 	socket.on('JOIN_ROOM', function(joinTeam) {
 		activeTeam = joinTeam.toString();
 		socket.join(activeTeam);
-	})
+	});
+
 	socket.on('LEAVE_ROOM', function(leaveTeam) {
 		socket.leave(leaveTeam);
-	})
+	});
 
   socket.on('SEND_MESSAGE', function(payload) {
   	chatCtrl.create(payload).then(function(result) {
   		socket.server.to(activeTeam).emit('RECEIVE_MESSAGE', result);
   	});
   });
+
 });
 
 app.use(bodyParser.json());
@@ -112,6 +114,7 @@ app.get("/auth/logout", userCtrl.logout);
 app.put("/user/update", userCtrl.updateUserProfile);
 app.get("/user/getUser", userCtrl.getUser);
 app.post('/user/search', userCtrl.search);
+app.put("/user/updateActiveTeam", userCtrl.updateActiveTeam);
 
 app.delete("/user/delete/:userId", userCtrl.deleteUser);
 //tested through user
