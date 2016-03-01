@@ -11,7 +11,6 @@ class HeaderBar extends Component {
 	constructor(props) {
 		super(props);
 		this.renderLogoutButton = this.renderLogoutButton.bind(this);
-
 	}
 
 	renderLogoutButton(user) {
@@ -41,7 +40,7 @@ class HeaderBar extends Component {
 						<li className="pure-menu-item">
 							{this.props.user && this.props.user.userName ? <Link className="pure-menu-link" to="/"> {this.props.user.userName} </Link> : <Link className="pure-menu-link" to="/"> Login </Link>}
 						</li>
-						<li className="pure-menu-item">
+	        	<li className="pure-menu-item">
 							<Link className="pure-menu-link" to="/home">Home</Link>
 						</li>
 						{ this.renderLogoutButton(this.props.user) }

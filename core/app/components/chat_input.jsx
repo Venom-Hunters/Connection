@@ -35,8 +35,8 @@ class ChatInput extends Component {
       teamId: this.props.activeTeam,
       message: this.state.message,
       _id: this.props.user._id
-    }
-    this.props.socket.emit("SEND_MESSAGE", messageObj);
+    };
+    this.props.socket.emit('SEND_MESSAGE', messageObj);
   }
 
   render() {
@@ -52,10 +52,10 @@ class ChatInput extends Component {
 
 function mapStateToProps(state) {
   return {
-    socket: state.user.socket, 
+    socket: state.user.socket,
     activeTeam: state.teams.active,
     user: state.user
-  }
+  };
 }
 
 function mapDispatchToProps(dispatch) {
