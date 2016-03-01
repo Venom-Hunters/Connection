@@ -1,6 +1,6 @@
 var Team = require("./../models/teamModel");
 
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 var ObjectId = mongoose.Types.ObjectId;
 
 module.exports = {
@@ -25,15 +25,15 @@ module.exports = {
 				Team.find({
 					members: req.user._id
 				})
-				.sort('-teamName')
-				.populate('members teamLead')
+				.sort("-teamName")
+				.populate("members teamLead")
 				.exec(function(err, results) {
 					return res.send({
 						active: active,
 						all: results
 					});
 				});
-		}).populate('members teamLead');
+		}).populate("members teamLead");
 		});
 
 		/*
@@ -53,8 +53,8 @@ module.exports = {
 	getTeams: function(req, res, next) {
 		if (req.user) {
 		Team
-		.find({$or: [{'members': req.user._id}, {'teamLead': req.user._id}]})
-		.populate('members teamLead')
+		.find({$or: [{"members": req.user._id}, {"teamLead": req.user._id}]})
+		.populate("members teamLead")
 		.exec(function(err, teams) {
 			if (err) res.sendStatus(500);
 			else if (!teams) res.sendStatus(404);
@@ -120,7 +120,7 @@ module.exports = {
 					if (err) return res.sendStatus(500);
 					else {
 						Team.findOne({_id: team._id})
-						.populate('teamLead members')
+						.populate("teamLead members")
 						.exec(function(err, results) {
 							if (err) { return res.sendStatus(500);}
 							res.send(results);

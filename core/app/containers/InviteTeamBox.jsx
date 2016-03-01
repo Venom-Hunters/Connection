@@ -21,7 +21,7 @@ class InviteTeamBox extends Component {
   }
 
   componentDidMount() {
-    document.getElementById('searchField').focus();
+    document.getElementById("searchField").focus();
   }
 
   componentWillReceiveProps(props) {
@@ -52,9 +52,9 @@ class InviteTeamBox extends Component {
 
   addMembers() {
 
-    console.log('AddMembers State');
+    console.log("AddMembers State");
     console.log(this.state);
-    console.log('Addmembers Props');
+    console.log("Addmembers Props");
     console.log(this.props);
     this.props.addTeamMembers(this.state.activeTeam._id, this.state.membersToAdd);
     this.clearSearch();
@@ -127,7 +127,7 @@ addSearchResult (member) {
       membersToAdd: this.state.membersToAdd.concat([member]),
       searchTerm: ""
     });
-    document.getElementById('searchField').focus();
+    document.getElementById("searchField").focus();
   }
 }
 

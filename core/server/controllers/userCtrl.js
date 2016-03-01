@@ -3,7 +3,7 @@ var Team = require("./../models/teamModel");
 
 module.exports = {
 	create: function(req, res, next) {
-		console.log('create user', req.body);
+		console.log("create user", req.body);
 	    User.findOne({"email": req.body.email}, function(err, user) {
 	        if (user) {
 	            return res.status(403).send("Email already exists. Please use a different email.");
@@ -15,10 +15,10 @@ module.exports = {
 			        newUser.password = response;
 			        newUser.save(function(err, result) {
 			            if (err) {
-			            	console.log('err', err);
+			            	console.log("err", err);
 			                return res.status(500).send();
 			            } else {
-			            	console.log('saved', result);
+			            	console.log("saved", result);
 			            	return next();
 			            }
 			        });
@@ -58,7 +58,7 @@ module.exports = {
 					var options = {
 
 					}
-					User.populate(user, {path: 'lastTeamViewed.members', model: 'users'}, function(err, result) {
+					User.populate(user, {path: "lastTeamViewed.members", model: "users"}, function(err, result) {
 						if (err) return res.sendStatus(500);
 						else return res.send(user);
 					})
@@ -70,7 +70,7 @@ module.exports = {
 		if (!req.body.searchTerm) {
 			return res.send([]);
 		}
-		User.find({$or:[{'userName': {'$regex': req.body.searchTerm, '$options': 'i'}}, {'email': {'$regex': req.body.searchTerm, '$options': 'i'}}]}, function(err, result) {
+		User.find({$or:[{"userName": {"$regex": req.body.searchTerm, "$options": "i"}}, {"email": {"$regex": req.body.searchTerm, "$options": "i"}}]}, function(err, result) {
 			if (err) res.sendStatus(500);
 			else if (!result.length) {
 				res.sendStatus(404);

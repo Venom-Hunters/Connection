@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { userLogout, updateUserProfile } from "../actions/index";
 import { Link } from "react-router";
+
+import Avatar from "./avatar";
+import { userLogout, updateUserProfile } from "../actions/index";
 
 class HeaderBar extends Component {
 
@@ -31,8 +33,11 @@ class HeaderBar extends Component {
 	render() {
 		return (
 			<div className="header">
-				<div className="pure-menu pure-menu-horizontal" style={{float: "right"}}>
+				<div className="pure-menu pure-menu-horizontal">
 					<ul className="pure-menu-list">
+						<li  className="pure-menu-item">
+							{this.props.user && this.props.user.userName ? <Avatar email={this.props.user.email} className="pure-menu-link"/> : ""}
+						</li>
 						{ this.renderLogoutButton(this.props.user) }
 	        	<li className="pure-menu-item">
 							<Link className="pure-menu-link" to="/home">Home</Link>

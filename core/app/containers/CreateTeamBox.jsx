@@ -16,7 +16,7 @@ class CreateTeamBox extends Component {
   }
 
   componentDidMount() {
-    document.getElementById('teamName').focus();
+    document.getElementById("teamName").focus();
   }
 
   render() {

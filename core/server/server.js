@@ -8,7 +8,7 @@ var express = require("express"),
 	localStrategy = require("passport-local"),
   path = require("path");
 
-var MongoStore = require('connect-mongo')(session);
+var MongoStore = require("connect-mongo")(session);
 
 var	chatCtrl = require("./controllers/chatCtrl"),
     userCtrl = require("./controllers/userCtrl"),
@@ -66,17 +66,17 @@ var io = require("socket.io")(server);
 
 io.on("connection", function(socket) {
     var activeTeam;
-	socket.on('JOIN_ROOM', function(joinTeam) {
+	socket.on("JOIN_ROOM", function(joinTeam) {
 		activeTeam = joinTeam.toString();
 		socket.join(activeTeam);
 	})
-	socket.on('LEAVE_ROOM', function(leaveTeam) {
+	socket.on("LEAVE_ROOM", function(leaveTeam) {
 		socket.leave(leaveTeam);
 	})
 
-  socket.on('SEND_MESSAGE', function(payload) {
+  socket.on("SEND_MESSAGE", function(payload) {
   	chatCtrl.create(payload).then(function(result) {
-  		socket.server.to(activeTeam).emit('RECEIVE_MESSAGE', result);
+  		socket.server.to(activeTeam).emit("RECEIVE_MESSAGE", result);
   	});
   });
 });
@@ -111,7 +111,7 @@ app.get("/auth/logout", userCtrl.logout);
 //user endpoints
 app.put("/user/update", userCtrl.updateUserProfile);
 app.get("/user/getUser", userCtrl.getUser);
-app.post('/user/search', userCtrl.search);
+app.post("/user/search", userCtrl.search);
 
 app.delete("/user/delete/:userId", userCtrl.deleteUser);
 //tested through user
@@ -123,13 +123,13 @@ app.get("/chat/:teamId", chatCtrl.readAllChatsInTeam);
 app.delete("/chat/:teamId", chatCtrl.deleteTeamSessionChats);
 
 //team endpoints
-app.post('/team/create', teamCtrl.create);
+app.post("/team/create", teamCtrl.create);
 app.get("/team/getTeams", teamCtrl.getTeams);
-app.delete('/team/delete/:teamId', teamCtrl.deleteTeam);
-app.put('/team/updateTeamProfile/:teamId', teamCtrl.updateTeamProfile);
-app.get('/team/getTeamInfo/:teamId', teamCtrl.getTeamInfo);
-app.post('/team/addMembers/:teamId', teamCtrl.addMembers);
-app.put('/team/removeMember/:teamId', teamCtrl.removeMember);
+app.delete("/team/delete/:teamId", teamCtrl.deleteTeam);
+app.put("/team/updateTeamProfile/:teamId", teamCtrl.updateTeamProfile);
+app.get("/team/getTeamInfo/:teamId", teamCtrl.getTeamInfo);
+app.post("/team/addMembers/:teamId", teamCtrl.addMembers);
+app.put("/team/removeMember/:teamId", teamCtrl.removeMember);
 
 
 app.get(/^(?!.*(images))/, function (req, res) {

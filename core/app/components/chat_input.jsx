@@ -36,7 +36,7 @@ class ChatInput extends Component {
       message: this.state.message,
       _id: this.props.user._id
     }
-    this.props.socket.emit('SEND_MESSAGE', messageObj);
+    this.props.socket.emit("SEND_MESSAGE", messageObj);
   }
 
   render() {

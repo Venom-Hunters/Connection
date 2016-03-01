@@ -16,6 +16,7 @@ class LoginBox extends Component {
 
     return(
       <div className="registration">
+
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}  className="pure-form pure-form-aligned">
           <fieldset>
             <div className="pure-control-group">
