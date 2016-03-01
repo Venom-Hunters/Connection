@@ -66,14 +66,7 @@ updateActiveTeam : function(req, res, next) {
 					return res.status(401).send();
 				}
 				else {
-<<<<<<< HEAD
-					var options = {
-
-					}
-					User.populate(user, {path: "lastTeamViewed.members", model: "users"}, function(err, result) {
-=======
 					User.populate(user, {path: 'lastTeamViewed.members', model: 'users'}, function(err, result) {
->>>>>>> 580b052525bcc0310d2861f12353ff3250702246
 						if (err) return res.sendStatus(500);
 						else return res.send(user);
 					});
@@ -88,7 +81,7 @@ updateActiveTeam : function(req, res, next) {
 		User.find({$or:[{"userName": {"$regex": req.body.searchTerm, "$options": "i"}}, {"email": {"$regex": req.body.searchTerm, "$options": "i"}}]}, function(err, result) {
 			if (err) res.sendStatus(500);
 			else if (!result.length) {
-				res.sendStatus(404);
+				res.sendStatus(200);
 			}
 			else {
 			res.send(result);

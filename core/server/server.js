@@ -113,12 +113,8 @@ app.get("/auth/logout", userCtrl.logout);
 //user endpoints
 app.put("/user/update", userCtrl.updateUserProfile);
 app.get("/user/getUser", userCtrl.getUser);
-<<<<<<< HEAD
-app.post("/user/search", userCtrl.search);
-=======
 app.post('/user/search', userCtrl.search);
 app.put("/user/updateActiveTeam", userCtrl.updateActiveTeam);
->>>>>>> 580b052525bcc0310d2861f12353ff3250702246
 
 app.delete("/user/delete/:userId", userCtrl.deleteUser);
 //tested through user

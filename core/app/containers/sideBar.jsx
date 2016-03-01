@@ -27,20 +27,10 @@ class SideBar extends Component{
 
 
 	clickTeam(team) {
-<<<<<<< HEAD
-		this.props.socket.emit("LEAVE_ROOM", this.props.activeTeam._id);
-=======
->>>>>>> 580b052525bcc0310d2861f12353ff3250702246
 		this.setState({
 			activeTeam: team
 		});
 		this.props.setActiveTeam(team);
-<<<<<<< HEAD
-		this.props.socket.emit("JOIN_ROOM", team._id);
-
-
-=======
->>>>>>> 580b052525bcc0310d2861f12353ff3250702246
 	}
 
 	renderActiveTeam(team) {
