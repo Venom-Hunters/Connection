@@ -116,6 +116,7 @@ input {
 }
 
 .activeTeamName {
+	position: relative;
 	margin: 0;
 	color: red;
 	text-align: left;
@@ -126,15 +127,76 @@ input {
 	border-bottom: 1px solid #DDD;
 }
 
-.activeTeamInviteIcon
-{
+.dropDownMenu {
+	position: relative;
+	bottom: -3px;
 	color: #FBB;
 }
 
-.activeTeamInviteIcon:hover {
+.dropDownMenu:hover {
 	color: red;
 	transition: color 0.5s ease;
 }
+
+.dropDownContent {
+	display: none;
+	position: absolute;
+	margin: 0 auto;
+}
+
+.dropDownContent .menuIcon {
+	position: relative;
+	bottom: 0;
+	display: block;
+	color: #FBB;
+}
+
+.dropDownContent .menuIcon:hover {
+	color: red;
+	transition: color 0.5s ease;	
+}
+
+.dropDownContent .menuIconInfo {
+	display: none;
+	position: absolute;
+	right: 100%;
+	bottom: 0;
+	font-weight: 100;
+	color: red;
+	white-space: nowrap;
+	background-color: rgba(255, 255, 255, 0.9);
+	margin-right: 4px;
+	padding: 0 3px;
+}
+
+.dropDownMenu:hover .dropDownContent {
+	display: block;
+}
+
+.dropDownContent .menuIcon:hover .menuIconInfo {
+	display: inline;
+}
+
+/* .hoverable {
+	cursor: pointer;
+
+}
+
+.normal {
+	display: inline;
+}
+
+.hover {
+	display: none;
+}
+
+.hoverable:hover .normal {
+	display: none;
+}
+
+.hoverable:hover .hover {
+	display: inline;
+} */
 
 .activeTeam {
 	padding: 1em 0;
