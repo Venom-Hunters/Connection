@@ -39,19 +39,19 @@ module.exports = {
 			}
 		});
 	},
-updateActiveTeam : function(req, res, next) {
-  if (req.user && req.user._id) {
-		User.findById(req.user._id, function(err, user) {
-      if (err)
-        return res.status(500).send(err);
-      user.lastTeamViewed = req.body;
-      user.save(function(err, user) {
-        if (err) return res.status(500).send(err);
-				return res.send();
-      });
-    });
-	}
-},
+	updateActiveTeam : function(req, res, next) {
+	  if (req.user && req.user._id) {
+			User.findById(req.user._id, function(err, user) {
+	      if (err)
+	        return res.status(500).send(err);
+	      user.lastTeamViewed = req.body;
+	      user.save(function(err, user) {
+	        if (err) return res.status(500).send(err);
+					return res.send();
+	      });
+	    });
+		}
+	},
 	deleteUser: function(req, res, next) {
 		User.findOneAndRemove({_id: req.params.userId}, function(err, result) {
 			if(err) return res.status(500).send(err);
@@ -66,7 +66,8 @@ updateActiveTeam : function(req, res, next) {
 					return res.status(401).send();
 				}
 				else {
-					User.populate(user, {path: 'lastTeamViewed.members', model: 'users'}, function(err, result) {
+					User.populate(user, {path: 'lastTeamViewed.members lastTeamViewed.teamLead', model: 'users'}, function(err, result) {
+
 						if (err) return res.sendStatus(500);
 						else return res.send(user);
 					});
@@ -78,14 +79,14 @@ updateActiveTeam : function(req, res, next) {
 		if (!req.body.searchTerm) {
 			return res.send([]);
 		}
-		User.find({$or:[{"userName": {"$regex": req.body.searchTerm, "$options": "i"}}, {"email": {"$regex": req.body.searchTerm, "$options": "i"}}]}, function(err, result) {
-			if (err) res.sendStatus(500);
+		User.find({$or:[{'userName': {'$regex': req.body.searchTerm, '$options': 'i'}}, {'email': {'$regex': req.body.searchTerm, '$options': 'i'}}]}, function(err, result) {
+			if (err) return res.sendStatus(500);
 			else if (!result.length) {
-				res.sendStatus(200);
+				return res.sendStatus(404);
 			}
 			else {
-			res.send(result);
-		}
+				return res.send(result);
+			}
 		});
 	},
 	logout : function(req, res, next) {
@@ -103,5 +104,5 @@ updateActiveTeam : function(req, res, next) {
 	        });
 	      }
 	    });} else {res.sendStatus(500);}
-}
+	}
 };

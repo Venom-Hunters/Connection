@@ -40,6 +40,10 @@ class SideBar extends Component{
 
 					<div className="activeTeamName">
 						<span className="activeTeamHeader"> <Link to="/home">{team.teamName} </Link> </span>
+<<<<<<< HEAD
+						{this.renderTeamLeadControls()}
+						
+=======
 						<div className="dropDownMenu">
 							<i className="zmdi zmdi-menu zmdi-hc-2x" style={{fontSize: '1.4em'}}></i>
 							<div className="dropDownContent">
@@ -49,6 +53,7 @@ class SideBar extends Component{
 
 							</div>
 						</div>
+>>>>>>> master
 					</div>
 
 						<ul className="activeTeamMember">
@@ -60,6 +65,29 @@ class SideBar extends Component{
 			);
 		}
 	}
+
+	renderTeamLeadControls() {
+		if (this.props.user._id === this.props.activeTeam.teamLead._id) {
+			return (
+				<div className="dropDownMenu">
+					<i className="zmdi zmdi-menu zmdi-hc-2x" style={{fontSize: '1.4em'}}></i>
+					<div className="dropDownContent">
+						<div className="menuIcon"><span className="menuIconInfo" style={{bottom: '2px'}}>Manage Members</span><Link to="/team/invite" className="zmdi zmdi-account zmdi-hc-2x" style={{fontSize: '2.2em'}}></Link></div>
+						<div className="menuIcon"><span className="menuIconInfo">Edit Team</span><Link to="/team/invite" className="zmdi zmdi-edit zmdi-hc-2x"></Link></div>
+						<div className="menuIcon"><span className="menuIconInfo">Save Chats</span><Link to="/team/invite" className="zmdi zmdi-file zmdi-hc-2x"></Link></div>
+					</div>
+				</div>
+			);
+		} else {
+			return;
+		}
+	}
+
+	/*<span className="hoverable">
+		<i className="zmdi zmdi-chevron-down normal"></i>
+		<i className="zmdi zmdi-chevron-up hover"></i>
+	</span>
+	<Link to="/team/invite" className="zmdi zmdi-account-add zmdi-hc-2x activeTeamInviteIcon"></Link>*/
 
 	renderTeamList() {
 		if (this.props.teams && this.props.teams.length) {
