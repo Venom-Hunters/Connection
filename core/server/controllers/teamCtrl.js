@@ -52,11 +52,14 @@ module.exports = {
 
 	getTeams: function(req, res, next) {
 		if (req.user) {
-		Team.find({$or: [{'members': req.user._id}, {'teamLead': req.user._id}]}, function(err, teams) {
+		Team
+		.find({$or: [{'members': req.user._id}, {'teamLead': req.user._id}]})
+		.populate('members teamLead')
+		.exec(function(err, teams) {
 			if (err) res.sendStatus(500);
 			else if (!teams) res.sendStatus(404);
 			else res.send(teams);
-		}).populate('members teamLead');
+		});
 	} else {
 		res.sendStatus(500);
 	}

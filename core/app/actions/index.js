@@ -6,6 +6,7 @@ export const USER_REGISTER = "USER_REGISTER";
 export const USER_LOGOUT = "USER_LOGOUT";
 export const USER_GET = "USER_GET";
 export const USER_SEARCH = "USER_SEARCH";
+export const INITIATE_SOCKET = 'INITIATE_SOCKET';
 
 export const UPDATE_USER_PROFILE = "UPDATE_USER_PROFILE";
 export const GET_USER_TEAMS = "GET_USER_TEAMS";
@@ -13,6 +14,7 @@ export const SET_ACTIVE_TEAM = "SET_ACTIVE_TEAM";
 export const GET_ACTIVE_TEAM_CHATS = "GET_ACTIVE_TEAM_CHATS";
 
 export const SEND_MESSAGE = "SEND_MESSAGE";
+export const JOIN_ROOM = "JOIN_ROOM";
 export const ADD_MESSAGE = "ADD_MESSAGE";
 export const GET_MESSAGE = "GET_MESSAGE";
 
@@ -28,6 +30,15 @@ export function login(props) {
   return {
     type: USER_LOGIN,
     payload: request
+  };
+}
+
+export function initiateSocket() {
+  let socket = io();
+
+  return {
+    type: INITIATE_SOCKET,
+    payload: socket
   };
 }
 
@@ -77,12 +88,12 @@ export function getUserTeams() {
 }
 
 export function setActiveTeam(team) {
+
   return {
     type: SET_ACTIVE_TEAM,
     payload: team
   };
 }
-
 
 export function getActiveTeamChats(teamId) {
   const request = axios.get(`${ROOT_URL}/chat/${teamId}`);
@@ -90,16 +101,6 @@ export function getActiveTeamChats(teamId) {
   return {
     type: GET_ACTIVE_TEAM_CHATS,
     payload: request
-  };
-}
-
-
-export function sendMessage (message) {
-  var socket = io();
-  socket.emit(SEND_MESSAGE, message);
-  return {
-    type: SEND_MESSAGE,
-    playload: message
   };
 }
 

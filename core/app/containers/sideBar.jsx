@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
-import { getUserTeams, setActiveTeam, getActiveTeamChats } from "../actions/index";
+import { getUserTeams, setActiveTeam, initiateSocket, getUser, getActiveTeamChats } from "../actions/index";
 import {colors}  from "../constants/color_scheme";
 import { Link, browserHistory } from "react-router";
 
@@ -14,12 +14,15 @@ class SideBar extends Component{
 	}
 
 	componentWillMount() {
+		this.props.initiateSocket();
 		this.props.getUserTeams();
+		this.props.getUser().then(() => {
+			this.props.getActiveTeamChats(this.props.activeTeam._id)
+			this.props.socket.emit('JOIN_ROOM', this.props.activeTeam._id);
+		});
 	}
 
 	componentWillReceiveProps(props) {
-		console.log('New Props');
-		console.log(props);
 		this.setState({
 			teams: props.teams.all,
 			activeTeam: props.activeTeam
@@ -28,10 +31,14 @@ class SideBar extends Component{
 
 
 	clickTeam(team) {
+		this.props.socket.emit('LEAVE_ROOM', this.props.activeTeam._id);
 		this.setState({
 			activeTeam: team
 		});
 		this.props.setActiveTeam(team);
+		this.props.socket.emit('JOIN_ROOM', team._id);
+
+		
 	}
 
 	renderActiveTeam(team) {
@@ -55,11 +62,10 @@ class SideBar extends Component{
 
 
 	renderTeamList() {
-		if (this.state.teams && this.state.teams.length) {
-			console.log(this.state.activeTeam);
+		if (this.props.teams && this.props.teams.length) {
 				return (
 					<ul className="teamList">
-						{this.state.teams.map((team) => {
+						{this.props.teams.map((team) => {
 							if (this.state.activeTeam && (team._id === this.state.activeTeam._id)) {
 								return (
 									<li key={team._id} className="activeTeam">
@@ -69,7 +75,7 @@ class SideBar extends Component{
 							}
 						})}
 
-						{this.state.teams.map((team) => {
+						{this.props.teams.map((team) => {
 							if (this.state.activeTeam && (team._id === this.state.activeTeam._id)) {
 								return;
 							}
@@ -92,18 +98,17 @@ class SideBar extends Component{
 				</h3>
 				{this.renderTeamList()}
 			</div>
-			//remember to place {this.renderTeamList()} in
-			//active team - expanded with team members (red if not online, green if online)
-			//all other teams - not expanded
 		);
 	}
 }
 
 function mapStateToProps(state) {
 	return {
-		teams: state.teams,
-		activeTeam: state.teams.active
+		teams: state.teams.all,
+		activeTeam: state.teams.active,
+		socket: state.user.socket,
+		user: state.user
 	};
 }
 
-export default connect(mapStateToProps, { getUserTeams, setActiveTeam, getActiveTeamChats })(SideBar);
+export default connect(mapStateToProps, { getUserTeams, setActiveTeam, initiateSocket, getUser, getActiveTeamChats })(SideBar);

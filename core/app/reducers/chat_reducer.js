@@ -1,10 +1,10 @@
-import { ADD_MESSAGE, GET_MESSAGES } from "../actions/index";
+import { ADD_MESSAGE, GET_ACTIVE_TEAM_CHATS } from "../actions/index";
 
 export default function(state = [], action = "") {
   switch(action.type) {
     case(ADD_MESSAGE):
       return [action.payload, ...state];
-    case(GET_MESSAGES):
+    case(GET_ACTIVE_TEAM_CHATS):
       return action.payload.data;
     default:
       return state;

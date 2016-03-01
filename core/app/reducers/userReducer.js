@@ -4,9 +4,10 @@ import {
    GET_USER_TEAMS,
    USER_GET,
    USER_LOGOUT,
-   USER_SEARCH  } from "../actions/index";
+   USER_SEARCH,
+   INITIATE_SOCKET  } from "../actions/index";
 
-export default function(state = null, action = "") {
+export default function(state = {}, action = "") {
   switch(action.type) {
     case(USER_GET):
       if (action.payload.status === 200)
@@ -23,9 +24,11 @@ export default function(state = null, action = "") {
    	case(GET_USER_TEAMS):
    	  return Object.assign({}, state, {teams: action.payload.data} );
     case(USER_LOGOUT):
-      return null;
+      return {};
 		case(USER_SEARCH):
 			return Object.assign({}, state, {searchResults: action.payload.data} );
+    case(INITIATE_SOCKET):
+      return Object.assign({}, state, action.payload.data, {socket: action.payload} );
     default:
       return state;
     }

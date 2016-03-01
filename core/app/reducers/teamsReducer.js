@@ -3,14 +3,16 @@ import {
   CREATE_TEAM,
   GET_USER_TEAMS,
   SET_ACTIVE_TEAM,
-  ADD_TEAM_MEMBERS
+  ADD_TEAM_MEMBERS,
+  USER_GET
 } from "../actions/index";
 
 export default function(state = {all: [], active: {}}, action = "") {
   switch(action.type) {
-    case(USER_LOGIN):
-  		return Object.assign({}, state, {
-        active: action.payload.data.lastTeamViewed });
+    case(USER_GET):
+      return Object.assign({}, state, {
+        active: action.payload.data.lastTeamViewed
+      });
 
     case(CREATE_TEAM):
       return action.payload.data;

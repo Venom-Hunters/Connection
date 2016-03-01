@@ -11,7 +11,7 @@ var express = require("express"),
 var MongoStore = require('connect-mongo')(session);
 
 var	chatCtrl = require("./controllers/chatCtrl"),
-  userCtrl = require("./controllers/userCtrl"),
+    userCtrl = require("./controllers/userCtrl"),
 	teamCtrl = require("./controllers/teamCtrl"),
 	User = require("./models/userModel"),
 	config = require("./config");
@@ -65,9 +65,19 @@ var server = require("http").Server(app);
 var io = require("socket.io")(server);
 
 io.on("connection", function(socket) {
-  socket.join('team-test');
+    var activeTeam;
+	socket.on('JOIN_ROOM', function(joinTeam) {
+		activeTeam = joinTeam.toString();
+		socket.join(activeTeam);
+	})
+	socket.on('LEAVE_ROOM', function(leaveTeam) {
+		socket.leave(leaveTeam);
+	})
+
   socket.on('SEND_MESSAGE', function(payload) {
-    io.to("team-test").emit('SEND_MESSAGE', payload);
+  	chatCtrl.create(payload).then(function(result) {
+  		socket.server.to(activeTeam).emit('RECEIVE_MESSAGE', result);
+  	});
   });
 });
 
@@ -113,7 +123,6 @@ app.get("/chat/:teamId", chatCtrl.readAllChatsInTeam);
 app.delete("/chat/:teamId", chatCtrl.deleteTeamSessionChats);
 
 //team endpoints
-
 app.post('/team/create', teamCtrl.create);
 app.get("/team/getTeams", teamCtrl.getTeams);
 app.delete('/team/delete/:teamId', teamCtrl.deleteTeam);
