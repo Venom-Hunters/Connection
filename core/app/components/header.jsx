@@ -38,7 +38,7 @@ class HeaderBar extends Component {
 							{this.props.user && this.props.user.userName ? <Avatar email={this.props.user.email} className="pure-menu-link"/> : ""}
 						</li>
 						<li className="pure-menu-item">
-							{this.props.user && this.props.user.userName ? <Link className="pure-menu-link" to="/"> {this.props.user.userName} </Link> : <Link className="pure-menu-link" to="/"> Login </Link>}
+							{this.props.user && this.props.user.userName ? <Link className="pure-menu-link" to="/"> {this.props.user.userName} </Link> : ""}
 						</li>
 	        	<li className="pure-menu-item">
 							<Link className="pure-menu-link" to="/home">Home</Link>
