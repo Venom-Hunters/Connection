@@ -45,9 +45,18 @@ class SideBar extends Component{
 		if (team && team.members && team.members.length) {
 			return (
 				<div>
+					
 					<div className="activeTeamName">
 						<span className="activeTeamHeader"> <Link to="/home">{team.teamName} </Link> </span>
-						<Link to="/team/invite" className="zmdi zmdi-account-add zmdi-hc-2x activeTeamInviteIcon"></Link>
+						<div className="dropDownMenu">
+							<i className="zmdi zmdi-menu zmdi-hc-2x" style={{fontSize: '1.4em'}}></i>
+							<div className="dropDownContent">
+								<div className="menuIcon"><span className="menuIconInfo" style={{bottom: '2px'}}>Manage Members</span><Link to="/team/invite" className="zmdi zmdi-account zmdi-hc-2x" style={{fontSize: '2.2em'}}></Link></div>
+								<div className="menuIcon"><span className="menuIconInfo">Manage Team</span><Link to="/team/invite" className="zmdi zmdi-edit zmdi-hc-2x"></Link></div>
+								<div className="menuIcon"><span className="menuIconInfo">Save Chats</span><Link to="/team/invite" className="zmdi zmdi-file zmdi-hc-2x"></Link></div>
+								
+							</div>
+						</div>
 					</div>
 
 						<ul className="activeTeamMember">
@@ -60,6 +69,11 @@ class SideBar extends Component{
 		}
 	}
 
+	/*<span className="hoverable">
+		<i className="zmdi zmdi-chevron-down normal"></i>
+		<i className="zmdi zmdi-chevron-up hover"></i>
+	</span>
+	<Link to="/team/invite" className="zmdi zmdi-account-add zmdi-hc-2x activeTeamInviteIcon"></Link>*/
 
 	renderTeamList() {
 		if (this.props.teams && this.props.teams.length) {
