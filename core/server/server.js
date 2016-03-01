@@ -75,7 +75,7 @@ io.on("connection", function(socket) {
 	})
 
   socket.on('SEND_MESSAGE', function(payload) {
-  	console.log('messageObj', payload);
+  	chatCtrl.create(payload);
     socket.server.to(activeTeam).emit('RECEIVE_MESSAGE', payload.message);
   });
 });
@@ -122,7 +122,6 @@ app.get("/chat/:teamId", chatCtrl.readAllChatsInTeam);
 app.delete("/chat/:teamId", chatCtrl.deleteTeamSessionChats);
 
 //team endpoints
-
 app.post('/team/create', teamCtrl.create);
 app.get("/team/getTeams", teamCtrl.getTeams);
 app.delete('/team/delete/:teamId', teamCtrl.deleteTeam);

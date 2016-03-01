@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
-import {addMessage} from "../actions/index";
+import {addMessage, getActiveTeamChats} from "../actions/index";
 
 
 
@@ -14,19 +14,26 @@ class ChatBody extends Component {
       messages: []
     };
 
-
-
-  console.log("setting up socket listen");
     this.props.socket.on("RECEIVE_MESSAGE", function(message) {
-      console.log('message',message);
       this.addMessage(message);
     }.bind(this));
-  console.log(this.socket);
+  }
+
+  componentWillMount() {
+    if (this.props.activeTeam) {
+      this.props.getActiveTeamChats(this.props.activeTeam._id);
+    }
   }
 
   componentDidMount() {
     this.chatBody = document.getElementById('chatBody');
     chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  componentWillReceiveProps(props) {
+    if(this.props.activeTeam._id !== props.activeTeam._id) {
+      this.props.getActiveTeamChats(props.activeTeam._id);
+    }
   }
 
   addMessage(message) {
@@ -38,7 +45,7 @@ class ChatBody extends Component {
     return (
       <div id="chatBody" className="chatBody">
         {this.props.messages.map(function(message) {
-          return <p className="chatMessage"> {message} </p>;
+          return <p className="chatMessage"> {message.message} </p>;
         }).reverse()}
       </div>
     );
@@ -50,7 +57,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators ({addMessage}, dispatch);
+  return bindActionCreators ({ addMessage, getActiveTeamChats }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatBody);

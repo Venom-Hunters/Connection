@@ -55,7 +55,13 @@ module.exports = {
 					return res.status(401).send();
 				}
 				else {
-					return res.send(user);
+					var options = {
+
+					}
+					User.populate(user, {path: 'lastTeamViewed.members', model: 'users'}, function(err, result) {
+						if (err) return res.sendStatus(500);
+						else return res.send(user);
+					})
 				}
 			});
 		} else res.status(401).send();

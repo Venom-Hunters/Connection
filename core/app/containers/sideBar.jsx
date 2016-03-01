@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
-import { getUserTeams, setActiveTeam, getActiveTeamChats, initiateSocket } from "../actions/index";
+import { getUserTeams, setActiveTeam, initiateSocket, getUser } from "../actions/index";
 import {colors}  from "../constants/color_scheme";
 import { Link, browserHistory } from "react-router";
 
@@ -16,13 +16,16 @@ class SideBar extends Component{
 	componentWillMount() {
 		this.props.initiateSocket();
 		this.props.getUserTeams();
+		this.props.getUser();
 	}
 
 	componentWillReceiveProps(props) {
+		
 		this.setState({
 			teams: props.teams.all,
 			activeTeam: props.activeTeam
 		});
+
 
 	}
 
@@ -59,10 +62,11 @@ class SideBar extends Component{
 
 
 	renderTeamList() {
-		if (this.state.teams && this.state.teams.length) {
+		console.log('active team',this.state.activeTeam);
+		if (this.props.teams && this.props.teams.length) {
 				return (
 					<ul className="teamList">
-						{this.state.teams.map((team) => {
+						{this.props.teams.map((team) => {
 							if (this.state.activeTeam && (team._id === this.state.activeTeam._id)) {
 								return (
 									<li key={team._id} className="activeTeam">
@@ -72,7 +76,7 @@ class SideBar extends Component{
 							}
 						})}
 
-						{this.state.teams.map((team) => {
+						{this.props.teams.map((team) => {
 							if (this.state.activeTeam && (team._id === this.state.activeTeam._id)) {
 								return;
 							}
@@ -101,10 +105,11 @@ class SideBar extends Component{
 
 function mapStateToProps(state) {
 	return {
-		teams: state.teams,
+		teams: state.teams.all,
 		activeTeam: state.teams.active,
-		socket: state.user.socket
+		socket: state.user.socket,
+		user: state.user
 	};
 }
 
-export default connect(mapStateToProps, { getUserTeams, setActiveTeam, getActiveTeamChats, initiateSocket })(SideBar);
+export default connect(mapStateToProps, { getUserTeams, setActiveTeam, initiateSocket, getUser })(SideBar);

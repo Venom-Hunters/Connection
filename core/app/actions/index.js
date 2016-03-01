@@ -95,23 +95,12 @@ export function setActiveTeam(team) {
   };
 }
 
-
 export function getActiveTeamChats(teamId) {
   const request = axios.get(`${ROOT_URL}/chat/${teamId}`);
 
   return {
     type: GET_ACTIVE_TEAM_CHATS,
     payload: request
-  };
-}
-
-
-export function sendMessage (message) {
-  
-  socket.emit(SEND_MESSAGE, message);
-  return {
-    type: SEND_MESSAGE,
-    playload: message
   };
 }
 
