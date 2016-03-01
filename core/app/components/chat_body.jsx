@@ -19,11 +19,11 @@ class ChatBody extends Component {
     }.bind(this));
   }
 
-  componentWillMount() {
+/*  componentWillMount() {
     if (this.props.activeTeam) {
       this.props.getActiveTeamChats(this.props.activeTeam._id);
     }
-  }
+  }*/
 
   componentDidMount() {
     this.chatBody = document.getElementById('chatBody');
@@ -31,24 +31,33 @@ class ChatBody extends Component {
   }
 
   componentWillReceiveProps(props) {
-    if(this.props.activeTeam._id !== props.activeTeam._id) {
+    
+    if(this.props.activeTeam && (this.props.activeTeam._id !== props.activeTeam._id)) {
       this.props.getActiveTeamChats(props.activeTeam._id);
     }
+    chatBody.scrollTop = chatBody.scrollHeight;
   }
 
   addMessage(message) {
     this.props.addMessage(message);
-    this.chatBody.scrollTop = chatBody.scrollHeight;
+    chatBody.scrollTop = chatBody.scrollHeight;
   }
 
   render() {
-    return (
-      <div id="chatBody" className="chatBody">
-        {this.props.messages.map(function(message) {
-          return <p className="chatMessage"> {message.message} </p>;
-        }).reverse()}
-      </div>
-    );
+    if (this.props.messages) {
+        return (
+          <div id="chatBody" className="chatBody">
+            {this.props.messages.map(function(message) {
+              return <p key={message._id} className="chatMessage"> {message.message} </p>;
+            }).reverse()}
+          </div>
+        );
+    } else {
+        return (
+          <div>Loading Messages...</div>
+        );
+    }
+    
   }
 }
 

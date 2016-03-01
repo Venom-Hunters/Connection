@@ -10,7 +10,6 @@ import {
 export default function(state = {all: [], active: {}}, action = "") {
   switch(action.type) {
     case(USER_GET):
-    console.log('get user', action.payload.data);
       return Object.assign({}, state, {
         active: action.payload.data.lastTeamViewed
       });
@@ -29,7 +28,6 @@ export default function(state = {all: [], active: {}}, action = "") {
       });
 
     case(SET_ACTIVE_TEAM):
-        console.log('team reducer', action.payload);
       return Object.assign({}, state, {
         active: action.payload
       });
