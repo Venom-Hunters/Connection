@@ -19,14 +19,9 @@ class ChatBody extends Component {
     }.bind(this));
   }
 
-/*  componentWillMount() {
-    if (this.props.activeTeam) {
-      this.props.getActiveTeamChats(this.props.activeTeam._id);
-    }
-  }*/
-
-  componentDidMount() {
+  componentDidUpdate() {
     this.chatBody = document.getElementById('chatBody');
+
     chatBody.scrollTop = chatBody.scrollHeight;
   }
 
@@ -35,12 +30,11 @@ class ChatBody extends Component {
     if(this.props.activeTeam && (this.props.activeTeam._id !== props.activeTeam._id)) {
       this.props.getActiveTeamChats(props.activeTeam._id);
     }
-    chatBody.scrollTop = chatBody.scrollHeight;
+
   }
 
   addMessage(message) {
     this.props.addMessage(message);
-    chatBody.scrollTop = chatBody.scrollHeight;
   }
 
   render() {

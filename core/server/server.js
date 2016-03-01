@@ -67,12 +67,10 @@ var io = require("socket.io")(server);
 io.on("connection", function(socket) {
     var activeTeam;
 	socket.on('JOIN_ROOM', function(joinTeam) {
-		console.log('connected to room: ', joinTeam);
 		activeTeam = joinTeam.toString();
 		socket.join(activeTeam);
 	})
 	socket.on('LEAVE_ROOM', function(leaveTeam) {
-		console.log('leaving room: ', leaveTeam);
 		socket.leave(leaveTeam);
 	})
 
