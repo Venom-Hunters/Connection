@@ -45,8 +45,13 @@ class SideBar extends Component{
 		if (team && team.members && team.members.length) {
 			return (
 				<div>
+					
 					<div className="activeTeamName">
 						<span className="activeTeamHeader"> <Link to="/home">{team.teamName} </Link> </span>
+						<span className="hoverable">
+							<i className="zmdi zmdi-chevron-down normal"></i>
+							<i className="zmdi zmdi-chevron-up hover"></i>
+						</span>
 						<Link to="/team/invite" className="zmdi zmdi-account-add zmdi-hc-2x activeTeamInviteIcon"></Link>
 					</div>
 
