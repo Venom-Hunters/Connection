@@ -58,7 +58,7 @@ module.exports = {
 					var options = {
 
 					}
-					User.populate(user, {path: 'lastTeamViewed.members', model: 'users'}, function(err, result) {
+					User.populate(user, {path: 'lastTeamViewed.members lastTeamViewed.teamLead', model: 'users'}, function(err, result) {
 						if (err) return res.sendStatus(500);
 						else return res.send(user);
 					})
@@ -71,13 +71,13 @@ module.exports = {
 			return res.send([]);
 		}
 		User.find({$or:[{'userName': {'$regex': req.body.searchTerm, '$options': 'i'}}, {'email': {'$regex': req.body.searchTerm, '$options': 'i'}}]}, function(err, result) {
-			if (err) res.sendStatus(500);
+			if (err) return res.sendStatus(500);
 			else if (!result.length) {
-				res.sendStatus(404);
+				return res.sendStatus(404);
 			}
 			else {
-			res.send(result);
-		}
+				return res.send(result);
+			}
 		});
 	},
 	logout : function(req, res, next) {
