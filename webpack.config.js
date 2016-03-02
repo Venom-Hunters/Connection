@@ -15,16 +15,16 @@ module.exports = {
   module: {
     preLoaders: [{
       test: /(\.js$)/,
-      exclude: /(node_modules|server)/,
+      exclude: /(node_modules|server|signalmaster)/,
       loader: "jshint-loader"
     }],
     loaders: [{
       test: /(\.jsx$|\.js$)/,
-      exclude: /(node_modules|server)/,
+      exclude: /(node_modules|server|signalmaster)/,
       loaders: ["babel-loader"]
     }, {
       test: /\.scss$/,
-      exclude: /(node_modules|server)/,
+      exclude: /(node_modules|server|signalmaster)/,
       loader: "style-loader!css-loader!sass-loader"
     }]
   },

@@ -6,10 +6,16 @@ var express = require("express"),
 	session = require("express-session"),
 	passport = require("passport"),
 	localStrategy = require("passport-local"),
+  fs = require("fs"),
   path = require("path");
 
+var https = require("https");
 var MongoStore = require("connect-mongo")(session);
 
+var options = {
+  key: fs.readFileSync(path.resolve(__dirname, "server.key")).toString(),
+  cert: fs.readFileSync(path.resolve(__dirname, "server.crt")).toString()
+};
 var	chatCtrl = require("./controllers/chatCtrl"),
     userCtrl = require("./controllers/userCtrl"),
 	teamCtrl = require("./controllers/teamCtrl"),
@@ -61,7 +67,8 @@ function ensureAuthenticated(req, res, next) {
 }
 
 var app = express();
-var server = require("http").Server(app);
+var server = require("https").Server(options, app);
+
 var io = require("socket.io")(server);
 
 io.on("connection", function(socket) {

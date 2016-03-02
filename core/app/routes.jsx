@@ -7,11 +7,13 @@ import RegistrationView from "./containers/views/register_view";
 import ChatView from "./containers/views/chat_view";
 import CreateTeamBox from "./containers/CreateTeamBox";
 import InviteTeamBox from "./containers/InviteTeamBox";
+import ReyRTC from "./components/rtc";
 
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={LoginView} />
     <Route path="register" component={RegistrationView} />
+    <Route path="rtc" component={ReyRTC} />
     <Route path="home" component={MainView}>
   		<IndexRoute component={ChatView} />
   		<Route path="/team/create" component={CreateTeamBox} />
