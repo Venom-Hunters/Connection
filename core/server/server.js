@@ -71,22 +71,16 @@ io.use(function(socket, next) {
 io.on("connection", function(socket) {
 
   var activeTeam;
-	socket.on('JOIN_ROOM', function(joinTeam) {
-		activeTeam = joinTeam.toString();
-		socket.join(activeTeam);
-	});
-
-	socket.on('LEAVE_ROOM', function(leaveTeam) {
-		socket.leave(leaveTeam);
+	socket.on('JOIN_ROOMS', function(teamsToJoin) {
+    teamsToJoin.forEach(function(team) {
+      socket.join(team._id);
+    });
 	});
 
   socket.on("SEND_MESSAGE", function(payload) {
-  	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
-  		return io.sockets.connected[item].request.session.passport.user;
-  	});
-  	console.log(socketsArray);
+
   	chatCtrl.create(payload).then(function(result) {
-  		socket.server.to(activeTeam).emit("RECEIVE_MESSAGE", result);
+  		socket.server.to(payload.teamId._id).emit("RECEIVE_MESSAGE", result);
   	});
   });
 

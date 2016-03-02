@@ -27,6 +27,7 @@ export const CLEAR_MEMBERS_TO_UPDATE = 'CLEAR_MEMBERS_TO_UPDATE';
 
 const ROOT_URL = "http://192.168.1.188:8888";
 
+
 export function login(props) {
   const request = axios.post(`${ROOT_URL}/auth/login`, props);
 
@@ -109,7 +110,6 @@ export function getActiveTeamChats(teamId) {
 }
 
 export function addMessage (message) {
-
   return {
     type: ADD_MESSAGE,
     payload: message
