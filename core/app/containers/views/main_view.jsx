@@ -33,7 +33,7 @@ class MainView extends Component {
         </div>
       );
     } else {
-      return <div>"Not logged in"</div>;
+      return <div></div>;
     }
   }
 }
