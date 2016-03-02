@@ -14,8 +14,11 @@ class SideBar extends Component{
 	}
 
 	componentWillMount() {
-		this.props.getUserTeams();
-		this.props.getUser();
+		this.props.getUser().then( () => {
+			this.props.getUserTeams().then( () => {
+				console.log(this.props.socket.emit('JOIN_ROOMS', this.props.teams));
+			});
+		});
 	}
 
 	componentWillReceiveProps(props) {
@@ -23,6 +26,21 @@ class SideBar extends Component{
 			teams: props.teams.all,
 			activeTeam: props.activeTeam
 		});
+
+		if (this.props.messages && this.props.messages.length && props.messages && props.messages.length)
+		{
+			let newMessage = props.messages[0];
+			if (this.props.messages[0]._id !== newMessage._id) {
+				if (newMessage.teamId._id !== this.props.activeTeam._id) {
+					var activeTeam = document.getElementById('team_' + newMessage.teamId._id);
+					if (activeTeam) {
+						activeTeam.className = "teamActivity";
+					}
+
+				}
+			}
+		}
+
 	}
 
 
@@ -79,7 +97,7 @@ class SideBar extends Component{
 			return (
 				<span style={{fontStyle: 'italic'}}>- Lead</span>
 			);
-			
+
 		} else {
 			return;
 		}
@@ -100,10 +118,11 @@ class SideBar extends Component{
 						})}
 
 						{this.props.teams.map((team) => {
+
 							if (this.state.activeTeam && (team._id === this.state.activeTeam._id)) {
 								return;
 							}
-							return <li key={team._id} className="team"> <Link to="/team/chat" onClick={this.clickTeam.bind(this, team)}> {team.teamName} </Link> </li>;
+							return <li id={'team_' + team._id} key={team._id} className="team"> <Link to="/team/chat" onClick={this.clickTeam.bind(this, team)}> {team.teamName} </Link> </li>;
 						}).reverse()}
 					</ul>
 				);
@@ -129,6 +148,7 @@ class SideBar extends Component{
 function mapStateToProps(state) {
 	return {
 		teams: state.teams.all,
+		messages: state.chatMessages,
 		activeTeam: state.teams.active,
 		socket: state.user.socket,
 		user: state.user

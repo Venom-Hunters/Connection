@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-
 import {getActiveTeamChats} from "../actions/index";
 
 class ChatBody extends Component {
@@ -14,7 +13,6 @@ class ChatBody extends Component {
 
   componentDidMount() {
     if (this.props.activeTeam && this.props.activeTeam._id) {
-      this.props.socket.emit('JOIN_ROOM', this.props.activeTeam._id);
       this.props.getActiveTeamChats(this.props.activeTeam._id);
     }
   }
@@ -27,11 +25,9 @@ class ChatBody extends Component {
 
   componentWillReceiveProps(props) {
     if (!this.props.activeTeam && (props.activeTeam && props.activeTeam._id)) {
-      this.props.socket.emit('JOIN_ROOM', props.activeTeam._id);
       this.props.getActiveTeamChats(props.activeTeam._id);
     } else if(this.props.activeTeam && (this.props.activeTeam._id !== props.activeTeam._id)) {
       this.props.getActiveTeamChats(props.activeTeam._id);
-      this.props.socket.emit('JOIN_ROOM', props.activeTeam._id);
     }
   }
 
@@ -40,10 +36,15 @@ class ChatBody extends Component {
         return (
           <div id="chatBody" className="chatBody">
             {this.props.messages.map(function(message) {
-              return ( <p key={message._id} className="chatMessage">
-              [{new Date(message.timeStamp).toString()}] {message.userId.userName} : {message.message} </p>
-            );
-            }).reverse()}
+              var date = new Date(message.timeStamp);
+
+              if ((message.teamId === this.props.activeTeam._id) || (message.teamId._id === this.props.activeTeam._id))
+              {
+                return ( <p key={message._id} className="chatMessage">
+                [{date.toLocaleTimeString('en-US')}] {message.userId.userName} : {message.message} </p>
+              );
+            }
+          }.bind(this)).reverse()}
           </div>
         );
     } else {
