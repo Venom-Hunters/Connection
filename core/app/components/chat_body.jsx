@@ -15,6 +15,7 @@ class ChatBody extends Component {
   componentDidMount() {
     if (this.props.activeTeam && this.props.activeTeam._id) {
       this.props.socket.emit('JOIN_ROOM', this.props.activeTeam._id);
+      this.props.getActiveTeamChats(this.props.activeTeam._id);
     }
   }
 
@@ -39,7 +40,9 @@ class ChatBody extends Component {
         return (
           <div id="chatBody" className="chatBody">
             {this.props.messages.map(function(message) {
-              return <p key={message._id} className="chatMessage"> {message.message} </p>;
+              return ( <p key={message._id} className="chatMessage">
+              [{new Date(message.timeStamp).toString()}] {message.userId.userName} : {message.message} </p>
+            );
             }).reverse()}
           </div>
         );

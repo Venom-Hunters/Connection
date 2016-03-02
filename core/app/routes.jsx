@@ -6,16 +6,19 @@ import LoginView from "./containers/views/login_view";
 import RegistrationView from "./containers/views/register_view";
 import ChatView from "./containers/views/chat_view";
 import CreateTeamBox from "./containers/CreateTeamBox";
+import ManageTeamBox from "./containers/ManageTeamBox";
 import InviteTeamBox from "./containers/InviteTeamBox";
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={LoginView} />
-    <Route path="home" component={MainView}>
-  		<IndexRoute component={ChatView} />
+    <IndexRoute component={MainView} />
+    <Route path="/team" component={MainView}>
+  		<Route path="/team/chat" component={ChatView} />
   		<Route path="/team/create" component={CreateTeamBox} />
-      <Route path="/team/invite" component={InviteTeamBox} />
+  		<Route path="/team/manage" component={ManageTeamBox} />
+      	<Route path="/team/invite" component={InviteTeamBox} />
     </Route>
+    <Route path="login" component={LoginView} />
     <Route path="register" component={RegistrationView} />
   </Route>
 );

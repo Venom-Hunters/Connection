@@ -34,15 +34,31 @@ input {
 	margin-right: 1em;
 }
 
+.registrationErrorMessage {
+	text-align: center;
+	margin: 0 auto;
+	color: red;
+	font-weight: bold;
+	padding: 1em;
+}
+
+.registrationContainer {
+	height: 100%;
+	margin: 0 auto;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
 .registration {
-  margin: 2em auto;
+  margin: 0 auto;
 	position: relative;
 	top: 40%;
 	transform: translateY(-50%);
 }
 
 .registration fieldset {
-	width: 550px;
+	width: 500px;
 }
 
 /* Header Menu */
@@ -51,6 +67,14 @@ input {
 	padding-top: 2px;
 	padding-left: 2px;
 	border-bottom: 1px solid #D5D5D5;
+}
+
+.gravatarIcon {
+	padding: 0.5em;
+}
+
+.gravatarIcon > img {
+	border-radius: 5px;
 }
 
 /* Content Area */
@@ -153,7 +177,7 @@ input {
 
 .dropDownContent .menuIcon:hover {
 	color: red;
-	transition: color 0.5s ease;	
+	transition: color 0.5s ease;
 }
 
 .dropDownContent .menuIconInfo {
@@ -164,9 +188,9 @@ input {
 	font-weight: 100;
 	color: red;
 	white-space: nowrap;
-	background-color: rgba(255, 255, 255, 0.9);
+	background-color: rgba(255, 255, 255, 1);
 	margin-right: 4px;
-	padding: 0 3px;
+	padding: 0 7px;
 }
 
 .dropDownMenu:hover .dropDownContent {

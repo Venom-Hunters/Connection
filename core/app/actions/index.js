@@ -19,6 +19,10 @@ export const GET_MESSAGE = "GET_MESSAGE";
 
 export const CREATE_TEAM = "CREATE_TEAM";
 export const ADD_TEAM_MEMBERS = "ADD_TEAM_MEMBERS";
+export const UPDATE_TEAM_PROFILE = "UPDATE_TEAM_PROFILE";
+export const DELETE_TEAM = 'DELETE_TEAM';
+export const ADD_MEMBERS_TO_UPDATE = 'ADD_MEMBERS_TO_UPDATE';
+export const CLEAR_MEMBERS_TO_UPDATE = 'CLEAR_MEMBERS_TO_UPDATE';
 
 
 const ROOT_URL = "http://localhost:8888";
@@ -121,6 +125,24 @@ export function createTeam(newTeam) {
   };
 }
 
+export function updateTeam(team) {
+  const request = axios.put(`${ROOT_URL}/team/updateTeamProfile/${team._id}`, team);
+
+  return {
+    type: UPDATE_TEAM_PROFILE,
+    payload: request
+  };
+}
+
+export function deleteTeam(teamId) {
+  const request = axios.delete(`${ROOT_URL}/team/delete/${teamId}`);
+
+  return {
+    type: DELETE_TEAM,
+    payload: request
+  };
+}
+
 export function searchUsers(searchTerm) {
 
   const request = axios.post(`${ROOT_URL}/user/search`, {
@@ -130,6 +152,22 @@ export function searchUsers(searchTerm) {
   return {
     type: USER_SEARCH,
     payload: request
+  };
+}
+
+export function addMembersToUpdate(members) {
+
+  return {
+    type: ADD_MEMBERS_TO_UPDATE,
+    payload: members
+  };
+}
+
+export function clearMembersToUpdate() {
+
+  return {
+    type: CLEAR_MEMBERS_TO_UPDATE,
+    payload: []
   };
 }
 

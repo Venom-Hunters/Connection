@@ -20,6 +20,7 @@ class App extends Component {
       }.bind(this));
     } else if (this.props.socket && !props.socket) {
       this.props.socket.off("RECEIVE_MESSAGE");
+
     } else if (!this.props.socket && !props.socket) {
       this.props.initiateSocket();
     }

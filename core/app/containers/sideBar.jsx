@@ -39,17 +39,19 @@ class SideBar extends Component{
 				<div>
 
 					<div className="activeTeamName">
-						<span className="activeTeamHeader"> <Link to="/home">{team.teamName} </Link> </span>
-
+						<span className="activeTeamHeader"> <Link to="/team/chat">{team.teamName} </Link> </span>
 						{this.renderTeamLeadControls()}
-						
 					</div>
+					<ul className="activeTeamMember">
 
-						<ul className="activeTeamMember">
 						{team.members.map( (member) => {
-							return <li key={member._id}> {member.userName} </li>;
+							if (member.loggedIn) {
+								return <li key={member._id}><i className="zmdi zmdi-circle" style={{color: 'rgba(0, 255, 0, 0.8)', fontSize: '.7em'}}></i> {member.userName} {this.renderTeamLead(member)}</li>;
+							} else {
+								return <li key={member._id}><i className="zmdi zmdi-circle" style={{color: 'rgba(255, 10, 10, 0.8)', fontSize: '.7em'}}></i> {member.userName} {this.renderTeamLead(member)}</li>;
+							}
 						})}
-						</ul>
+					</ul>
 				</div>
 			);
 		}
@@ -62,7 +64,7 @@ class SideBar extends Component{
 					<i className="zmdi zmdi-menu zmdi-hc-2x" style={{fontSize: '1.4em'}}></i>
 					<div className="dropDownContent">
 						<div className="menuIcon"><span className="menuIconInfo" style={{bottom: '2px'}}>Manage Members</span><Link to="/team/invite" className="zmdi zmdi-account zmdi-hc-2x" style={{fontSize: '2.2em'}}></Link></div>
-						<div className="menuIcon"><span className="menuIconInfo">Edit Team</span><Link to="/team/invite" className="zmdi zmdi-edit zmdi-hc-2x"></Link></div>
+						<div className="menuIcon"><span className="menuIconInfo">Manage Team</span><Link to="/team/manage" className="zmdi zmdi-edit zmdi-hc-2x"></Link></div>
 						<div className="menuIcon"><span className="menuIconInfo">Save Chats</span><Link to="/team/invite" className="zmdi zmdi-file zmdi-hc-2x"></Link></div>
 					</div>
 				</div>
@@ -72,11 +74,16 @@ class SideBar extends Component{
 		}
 	}
 
-	/*<span className="hoverable">
-		<i className="zmdi zmdi-chevron-down normal"></i>
-		<i className="zmdi zmdi-chevron-up hover"></i>
-	</span>
-	<Link to="/team/invite" className="zmdi zmdi-account-add zmdi-hc-2x activeTeamInviteIcon"></Link>*/
+	renderTeamLead(member) {
+		if (member._id === this.props.activeTeam.teamLead._id) {
+			return (
+				<span style={{fontStyle: 'italic'}}>- Lead</span>
+			);
+			
+		} else {
+			return;
+		}
+	}
 
 	renderTeamList() {
 		if (this.props.teams && this.props.teams.length) {
@@ -96,7 +103,7 @@ class SideBar extends Component{
 							if (this.state.activeTeam && (team._id === this.state.activeTeam._id)) {
 								return;
 							}
-							return <li key={team._id} className="team"> <Link to="/home" onClick={this.clickTeam.bind(this, team)}> {team.teamName} </Link> </li>;
+							return <li key={team._id} className="team"> <Link to="/team/chat" onClick={this.clickTeam.bind(this, team)}> {team.teamName} </Link> </li>;
 						}).reverse()}
 					</ul>
 				);
