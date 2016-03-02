@@ -30,6 +30,7 @@ class HeaderBar extends Component {
 	}
 
 	render() {
+		if (this.props.user._id) {
 		return (
 			<div className="header">
 				<div className="pure-menu pure-menu-horizontal">
@@ -48,6 +49,9 @@ class HeaderBar extends Component {
 				</div>
 		</div>
 		);
+	} else {
+		return <div></div>;
+	}
 	}
 }
 
