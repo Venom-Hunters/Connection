@@ -13,29 +13,28 @@ module.exports = {
     contentBase: "public"
   },
   module: {
-    preLoaders: [
-      {
-        test: /(\.js$)/,
-        exclude: /(node_modules|server)/,
-        loader: "jshint-loader"
-      }
-    ],
-    loaders: [
-      {
-        test: /(\.jsx$|\.js$)/,
-        exclude: /(node_modules|server)/,
-        loaders: ["babel-loader"]
-      }, {
-        test: /\.scss$/,
-        exclude: /(node_modules|server)/,
-        loader: "style-loader!css-loader!sass-loader"
-      }
-    ]
+    preLoaders: [{
+      test: /(\.js$)/,
+      exclude: /(node_modules|server)/,
+      loader: "jshint-loader"
+    }],
+    loaders: [{
+      test: /(\.jsx$|\.js$)/,
+      exclude: /(node_modules|server)/,
+      loaders: ["babel-loader"]
+    }, {
+      test: /\.scss$/,
+      exclude: /(node_modules|server)/,
+      loader: "style-loader!css-loader!sass-loader"
+    }]
   },
   resolve: {
     extensions: [
       "", ".js", ".jsx"
     ]
   },
-  watch:true
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ],
+  watch: true
 };
