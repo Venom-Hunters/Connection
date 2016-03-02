@@ -23,7 +23,7 @@ class ManageTeamBox extends Component {
   render() {
     return(
       <div className="teamContent">
-        <h2>Update Team Name</h2>
+        <h2>Manage Team</h2>
         <h4>Current Name: {this.props.activeTeam.teamName}</h4>
         <form onSubmit={this.updateTeam} className="pure-form">
           <fieldset>
