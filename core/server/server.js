@@ -2,10 +2,10 @@ var express = require("express"),
   cors = require("cors"),
   bodyParser = require("body-parser"),
   mongoose = require("mongoose"),
-	cors = require("cors"),
-	session = require("express-session"),
-	passport = require("passport"),
-	localStrategy = require("passport-local"),
+  cors = require("cors"),
+  session = require("express-session"),
+  passport = require("passport"),
+  localStrategy = require("passport-local"),
   path = require("path");
 
 var MongoStore = require("connect-mongo")(session);
@@ -64,7 +64,12 @@ var app = express();
 var server = require("http").Server(app);
 var io = require("socket.io")(server);
 
+io.use(function(socket, next) {
+	sessionMiddleware(socket.request, {}, next);
+});
+
 io.on("connection", function(socket) {
+
   var activeTeam;
 	socket.on('JOIN_ROOM', function(joinTeam) {
 		activeTeam = joinTeam.toString();
@@ -76,6 +81,10 @@ io.on("connection", function(socket) {
 	});
 
   socket.on("SEND_MESSAGE", function(payload) {
+  	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
+  		return io.sockets.connected[item].request.session.passport.user;
+  	});
+  	console.log(socketsArray);
   	chatCtrl.create(payload).then(function(result) {
   		socket.server.to(activeTeam).emit("RECEIVE_MESSAGE", result);
   	});
@@ -95,12 +104,15 @@ mongoose.connection.once("open", function() {
   console.log("Connected to MongoDB");
 });
 
-app.use(session({
+var sessionMiddleware = session({
 	secret: config.secret,
 	saveUninitialized: config.saveUninitialized,
 	resave: config.resave,
   store: new MongoStore({ mongooseConnection: mongoose.connection })
-}));
+})
+
+app.use(sessionMiddleware);
+
 
 app.use(passport.initialize());
 app.use(passport.session());

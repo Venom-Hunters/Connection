@@ -18,6 +18,9 @@ class App extends Component {
       props.socket.on("RECEIVE_MESSAGE", function(message) {
         this.props.addMessage(message);
       }.bind(this));
+      props.socket.on('USER_CAME_ONLINE', function(user) {
+        
+      })
     } else if (this.props.socket && !props.socket) {
       this.props.socket.off("RECEIVE_MESSAGE");
 
