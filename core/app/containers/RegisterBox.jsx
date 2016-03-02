@@ -11,7 +11,7 @@ class RegisterBox extends Component {
       if (response.error) {
         console.log(response);
       } else {
-        this.context.router.push("/home");
+        this.context.router.push("/team/chat");
       }
 
     });
@@ -40,7 +40,7 @@ class RegisterBox extends Component {
             </div>
 
             <div className="pure-controls">
-              <Link to="/" className="pure-button pure-button-secondary">Log in</Link>
+              <Link to="login" className="pure-button pure-button-secondary">Log in</Link>
               <button type="submit" className="pure-button pure-button-primary">Register</button>
             </div>
           </fieldset>

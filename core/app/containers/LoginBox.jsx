@@ -23,7 +23,7 @@ class LoginBox extends Component {
           error: 'Incorrect username and/or password.'
         });
       } else if (this.props.user && this.props.user._id) {
-          this.context.router.push("/home");
+          this.context.router.push("/team/chat");
       }
     });
   }

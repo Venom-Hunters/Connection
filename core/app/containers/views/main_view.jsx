@@ -1,6 +1,10 @@
 import SideBar from "../sideBar";
 import React, {Component, PropTypes} from "react";
-import {connect} from 'react-redux';
+import {bindActionCreators} from "redux";
+
+import { getUser } from '../../actions/index';
+import { connect} from 'react-redux';
+
 import { browserHistory } from 'react-router';
 
 class MainView extends Component {
@@ -10,9 +14,12 @@ class MainView extends Component {
   }
 
   componentDidMount() {
+    this.props.getUser().then(() => {
     if (!this.props.user._id) {
-      browserHistory.push('/');
+      browserHistory.push('/login');
     }
+  });
+
   }
 
   render () {
@@ -26,7 +33,7 @@ class MainView extends Component {
         </div>
       );
     } else {
-      return <div></div>;
+      return <div>"Not logged in"</div>;
     }
   }
 }
@@ -39,4 +46,8 @@ function mapStateToProps(state) {
   return {user: state.user};
 }
 
-export default connect(mapStateToProps)(MainView);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators ({ getUser }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainView);

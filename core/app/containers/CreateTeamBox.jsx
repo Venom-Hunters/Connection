@@ -28,7 +28,7 @@ class CreateTeamBox extends Component {
           <fieldset>
               <input id="teamName" type="text" onChange={this.onChange} value={this.state.teamName} placeholder="Team Name..." required/>
               <button type="submit" className="pure-button pure-button-primary">Create</button>
-              <Link to="/home" className="pure-button pure-button-secondary">Cancel</Link>
+              <Link to="/chat" className="pure-button pure-button-secondary">Cancel</Link>
           </fieldset>
         </form>
 

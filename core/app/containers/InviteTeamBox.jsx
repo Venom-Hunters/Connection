@@ -21,8 +21,6 @@ class InviteTeamBox extends Component {
     this.addMembers = this.addMembers.bind(this);
   }
 
-
-
   componentDidMount() {
     document.getElementById('searchField').focus();
     this.setState({
