@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import _ from 'lodash';
 import { connect } from "react-redux";
-import { Link, browserHistory } from "react-router";
+import { Link } from "react-router";
 import { createTeam, searchUsers, addTeamMembers } from "../actions/index";
 
 class InviteTeamBox extends Component {
@@ -25,7 +25,7 @@ class InviteTeamBox extends Component {
 
   componentDidMount() {
     document.getElementById('searchField').focus();
-    this.setState({ 
+    this.setState({
       searchResults: this.props.searchResults,
       activeTeam: this.props.activeTeam,
       membersToAdd: this.props.activeTeam.members
@@ -39,7 +39,7 @@ class InviteTeamBox extends Component {
   }
 
   componentWillReceiveProps(props) {
-    this.setState({ 
+    this.setState({
       searchResults: props.searchResults,
       activeTeam: props.activeTeam,
       membersToAdd: props.activeTeam.members
@@ -68,7 +68,6 @@ class InviteTeamBox extends Component {
 
   addMembers() {
     this.props.addTeamMembers(this.state.activeTeam._id, this.state.membersToAdd);
-    browserHistory.push('/home');
   }
 
   clearSearch() {
@@ -82,7 +81,7 @@ class InviteTeamBox extends Component {
       for (var i = 0; i < this.props.activeTeam.members.length; i++) {
         activeIdArray.push(this.props.activeTeam.members[i]._id);
       }
-      
+
       return (
         <div>
           <h3> Search Results </h3>
@@ -94,7 +93,7 @@ class InviteTeamBox extends Component {
             } else {
               return;
             }
-          
+
           })}
           </ul>
         </div>
@@ -141,7 +140,7 @@ class InviteTeamBox extends Component {
         newMembersToAdd.splice(index, 1);
       }
     }.bind(this));
-    
+
     this.setState({membersToAdd: newMembersToAdd});
   }
 
