@@ -4,7 +4,9 @@ import {
   GET_USER_TEAMS,
   SET_ACTIVE_TEAM,
   ADD_TEAM_MEMBERS,
-  USER_GET
+  USER_GET,
+  UPDATE_TEAM_PROFILE,
+  DELETE_TEAM
 } from "../actions/index";
 
 export default function(state = {all: [], active: {}}, action = "") {
@@ -30,6 +32,16 @@ export default function(state = {all: [], active: {}}, action = "") {
     case(SET_ACTIVE_TEAM):
       return Object.assign({}, state, {
         active: action.payload
+      });
+
+    case(UPDATE_TEAM_PROFILE):
+      return Object.assign({}, state, {
+        active: action.payload.data
+      });
+
+    case(DELETE_TEAM):
+      return Object.assign({}, state, {
+        active: action.payload.data
       });
 
     default:

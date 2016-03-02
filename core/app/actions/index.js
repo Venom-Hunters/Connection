@@ -19,6 +19,8 @@ export const GET_MESSAGE = "GET_MESSAGE";
 
 export const CREATE_TEAM = "CREATE_TEAM";
 export const ADD_TEAM_MEMBERS = "ADD_TEAM_MEMBERS";
+export const UPDATE_TEAM_PROFILE = "UPDATE_TEAM_PROFILE";
+export const DELETE_TEAM = 'DELETE_TEAM';
 
 
 const ROOT_URL = "http://localhost:8888";
@@ -117,6 +119,24 @@ export function createTeam(newTeam) {
 
   return {
     type: CREATE_TEAM,
+    payload: request
+  };
+}
+
+export function updateTeam(team) {
+  const request = axios.put(`${ROOT_URL}/team/updateTeamProfile/${team._id}`, team);
+
+  return {
+    type: UPDATE_TEAM_PROFILE,
+    payload: request
+  };
+}
+
+export function deleteTeam(teamId) {
+  const request = axios.delete(`${ROOT_URL}/team/delete/${teamId}`);
+
+  return {
+    type: DELETE_TEAM,
     payload: request
   };
 }

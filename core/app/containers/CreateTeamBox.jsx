@@ -23,7 +23,6 @@ class CreateTeamBox extends Component {
     return(
       <div className="teamContent">
         <h2>Create A Team</h2>
-
         <form onSubmit={this.createTeam} className="pure-form">
           <fieldset>
               <input id="teamName" type="text" onChange={this.onChange} value={this.state.teamName} placeholder="Team Name..." required/>
@@ -31,7 +30,6 @@ class CreateTeamBox extends Component {
               <Link to="/home" className="pure-button pure-button-secondary">Cancel</Link>
           </fieldset>
         </form>
-
       </div>
     );
   }
@@ -53,7 +51,7 @@ class CreateTeamBox extends Component {
       teamName: ""
     });
 
-    this.context.router.push("/team/invite");
+    this.context.router.push("/home");
 
   }
 }

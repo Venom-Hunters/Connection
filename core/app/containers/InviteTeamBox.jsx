@@ -128,7 +128,7 @@ class InviteTeamBox extends Component {
       return;
     } else {
       return (
-        <i onClick={this.removeSearchResult.bind(this, member)} className="zmdi zmdi-close-circle" style={{cursor: 'pointer', position: 'absolute', top: '-5px', left: '-5px', color: 'red'}}></i>
+        <i onClick={this.removeSearchResult.bind(this, member)} className="zmdi zmdi-close-circle" style={{cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px', color: 'red'}}></i>
       );
     }
   }

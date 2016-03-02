@@ -1,4 +1,5 @@
 var Team = require("./../models/teamModel");
+var User = require("./../models/userModel");
 
 var mongoose = require("mongoose");
 var ObjectId = mongoose.Types.ObjectId;
@@ -67,10 +68,27 @@ module.exports = {
 	},
 
 	deleteTeam: function(req, res, next) {
-		Team.findOneAndRemove({_id: req.params.teamId}, function(err, result) {
+		Team.findOneAndRemove({_id: req.params.teamId}, function(err, deleteResult) {
 			if (err) return res.sendStatus(500);
-			else if (!result) return res.sendStatus(404);
-			else return res.send(result);
+			else if (!deleteResult) return res.sendStatus(404);
+			else {
+				Team
+				.find({})
+				.populate('members teamLead')
+				.exec(function(err, teamFindResult) {
+					if (err) return res.sendStatus(404);
+					else {
+						User.findById(req.user._id, function(err, user) {
+							if (err) return res.sendStatus(500);
+							else {
+								user.lastTeamViewed = teamFindResult[0]._id;
+								user.save();
+								return res.send(teamFindResult[0]);
+							}
+						})
+					} 						
+				})	
+			}
 		});
 	},
 
@@ -81,7 +99,7 @@ module.exports = {
 				team.teamName = req.body.teamName;
 				team.save(function(err, result) {
 					if (err) return res.sendStatus(500);
-					else return res.send(result);
+					else return next();
 				});
 			}
 		});
