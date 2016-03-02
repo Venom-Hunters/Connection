@@ -5,10 +5,25 @@ import { reduxForm } from "redux-form";
 import { login } from "../actions/";
 
 class LoginBox extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      error: ''
+    };
+  }
+
+
   onSubmit(props) {
-    this.props.login(props).then( () => {
-      if (this.props.user && this.props.user._id) {
-          this.context.router.push("/home");
+    this.props.login(props)
+    .then( (response) => {
+      if (response.error) {
+        this.setState({
+          error: 'Incorrect username and/or password.'
+        });
+      } else if (this.props.user && this.props.user._id) {
+          this.context.router.push("/team/chat");
       }
     });
   }
@@ -17,7 +32,10 @@ class LoginBox extends Component {
     const { fields: { email, password }, handleSubmit } = this.props;
 
     return(
+      <div className="registrationContainer">
       <div className="registration">
+
+        <div className="registrationErrorMessage">{this.state.error ? this.state.error : ""}</div>
 
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}  className="pure-form pure-form-aligned">
           <fieldset>
@@ -38,6 +56,9 @@ class LoginBox extends Component {
 
           </fieldset>
         </form>
+
+      </div>
+
       </div>
     );
   }

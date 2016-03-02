@@ -39,7 +39,7 @@ class SideBar extends Component{
 				<div>
 
 					<div className="activeTeamName">
-						<span className="activeTeamHeader"> <Link to="/home">{team.teamName} </Link> </span>
+						<span className="activeTeamHeader"> <Link to="/team/chat">{team.teamName} </Link> </span>
 						{this.renderTeamLeadControls()}
 					</div>
 					<ul className="activeTeamMember">
@@ -103,7 +103,7 @@ class SideBar extends Component{
 							if (this.state.activeTeam && (team._id === this.state.activeTeam._id)) {
 								return;
 							}
-							return <li key={team._id} className="team"> <Link to="/home" onClick={this.clickTeam.bind(this, team)}> {team.teamName} </Link> </li>;
+							return <li key={team._id} className="team"> <Link to="/team/chat" onClick={this.clickTeam.bind(this, team)}> {team.teamName} </Link> </li>;
 						}).reverse()}
 					</ul>
 				);

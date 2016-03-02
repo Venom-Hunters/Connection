@@ -25,11 +25,12 @@ class HeaderBar extends Component {
 
 	userLogout() {
 		this.props.userLogout().then(() => {
-				this.context.router.push("/");
+				this.context.router.push("/login");
 		});
 	}
 
 	render() {
+		if (this.props.user._id) {
 		return (
 			<div className="header">
 				<div className="pure-menu pure-menu-horizontal">
@@ -40,14 +41,15 @@ class HeaderBar extends Component {
 						<li className="pure-menu-item">
 							{this.props.user && this.props.user.userName ? <Link className="pure-menu-link" to="/"> {this.props.user.userName} </Link> : ""}
 						</li>
-	        	<li className="pure-menu-item">
-							<Link className="pure-menu-link" to="/home">Home</Link>
-						</li>
+
 						{ this.renderLogoutButton(this.props.user) }
 	    		</ul>
 				</div>
 		</div>
 		);
+	} else {
+		return <div></div>;
+	}
 	}
 }
 

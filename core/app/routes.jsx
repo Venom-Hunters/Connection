@@ -11,13 +11,14 @@ import InviteTeamBox from "./containers/InviteTeamBox";
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={LoginView} />
-    <Route path="home" component={MainView}>
-  		<IndexRoute component={ChatView} />
+    <IndexRoute component={MainView} />
+    <Route path="/team" component={MainView}>
+  		<Route path="/team/chat" component={ChatView} />
   		<Route path="/team/create" component={CreateTeamBox} />
   		<Route path="/team/manage" component={ManageTeamBox} />
       	<Route path="/team/invite" component={InviteTeamBox} />
     </Route>
+    <Route path="login" component={LoginView} />
     <Route path="register" component={RegistrationView} />
   </Route>
 );

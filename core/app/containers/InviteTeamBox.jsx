@@ -21,8 +21,6 @@ class InviteTeamBox extends Component {
     this.addMembers = this.addMembers.bind(this);
   }
 
-
-
   componentDidMount() {
     document.getElementById('searchField').focus();
     this.setState({ 
@@ -93,7 +91,7 @@ class InviteTeamBox extends Component {
       for (var i = 0; i < this.state.membersToUpdate.length; i++) {
         activeIdArray.push(this.state.membersToUpdate[i]._id);
       }
-      
+
       return (
         <div>
           <h3> Search Results </h3>
@@ -105,7 +103,7 @@ class InviteTeamBox extends Component {
             } else {
               return;
             }
-          
+
           })}
           </ul>
         </div>
