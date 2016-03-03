@@ -9,18 +9,7 @@ var express = require("express"),
   fs = require("fs"),
   path = require("path");
 
-var https = require("https");
 var MongoStore = require("connect-mongo")(session);
-
-// if (config.server.secure) {
-//     server = require('https').Server({
-//         key: fs.readFileSync(config.server.key),
-//         cert: fs.readFileSync(config.server.cert),
-//         passphrase: config.server.password
-//     }, server_handler);
-// } else {
-//     server = require('http').Server(server_handler);
-// }
 
 var options = {
   key: fs.readFileSync(path.resolve(__dirname, "server.key")).toString(),
@@ -77,9 +66,10 @@ function ensureAuthenticated(req, res, next) {
 }
 
 var app = express();
-var https = require("https").Server(options, app);
 
-var io = require("socket.io")(https);
+var server = require("https").Server(options, app);
+
+var io = require("socket.io")(server);
 
 io.on("connection", function(socket) {
   var activeTeam;
@@ -94,7 +84,7 @@ io.on("connection", function(socket) {
 
   socket.on("SEND_MESSAGE", function(payload) {
   	chatCtrl.create(payload).then(function(result) {
-  		socket.https.to(activeTeam).emit("RECEIVE_MESSAGE", result);
+  		socket.server.to(activeTeam).emit("RECEIVE_MESSAGE", result);
   	});
   });
 
@@ -156,6 +146,6 @@ app.get(/^(?!.*(images))/, function (req, res) {
  res.sendFile(path.resolve("./public/index.html"));
 });
 
-https.listen(config.port, function() {
+server.listen(config.port, function() {
   console.log("port", config.port + "!");
 });
