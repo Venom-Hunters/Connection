@@ -26,7 +26,7 @@ export const ADD_MEMBERS_TO_UPDATE = 'ADD_MEMBERS_TO_UPDATE';
 export const CLEAR_MEMBERS_TO_UPDATE = 'CLEAR_MEMBERS_TO_UPDATE';
 
 
-const ROOT_URL = "http://192.168.1.188:8888";
+const ROOT_URL = window.location.origin;
 
 
 export function login(props) {
