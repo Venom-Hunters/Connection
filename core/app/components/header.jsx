@@ -24,8 +24,9 @@ class HeaderBar extends Component {
 	}
 
 	userLogout() {
+		this.props.socket.emit('I_LOGGED_OFF', this.props.user._id);
 		this.props.userLogout().then(() => {
-				this.context.router.push("/login");
+			this.context.router.push("/login");
 		});
 	}
 
@@ -60,7 +61,8 @@ HeaderBar.contextTypes = {
 
 function mapStateToProps(state) {
 	return {
-		user: state.user
+		user: state.user,
+		socket: state.user.socket
 	};
 }
 
