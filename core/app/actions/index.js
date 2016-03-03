@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const USER_LOGIN = "USER_LOGIN";
+export const ONLINE_USERS = "ONLINE_USERS";
 export const USER_REGISTER = "USER_REGISTER";
 export const USER_LOGOUT = "USER_LOGOUT";
 export const USER_GET = "USER_GET";
@@ -19,9 +20,12 @@ export const GET_MESSAGE = "GET_MESSAGE";
 
 export const CREATE_TEAM = "CREATE_TEAM";
 export const ADD_TEAM_MEMBERS = "ADD_TEAM_MEMBERS";
+export const UPDATE_TEAM_PROFILE = "UPDATE_TEAM_PROFILE";
+export const DELETE_TEAM = 'DELETE_TEAM';
+export const ADD_MEMBERS_TO_UPDATE = 'ADD_MEMBERS_TO_UPDATE';
+export const CLEAR_MEMBERS_TO_UPDATE = 'CLEAR_MEMBERS_TO_UPDATE';
 
-
-const ROOT_URL = "https://localhost:8888";
+const ROOT_URL = window.location.origin;
 
 export function login(props) {
   const request = axios.post(`${ROOT_URL}/auth/login`, props);
@@ -29,6 +33,14 @@ export function login(props) {
   return {
     type: USER_LOGIN,
     payload: request
+  };
+}
+
+export function onlineUsers(users) {
+
+  return {
+    type: ONLINE_USERS,
+    payload: users
   };
 }
 
@@ -105,7 +117,6 @@ export function getActiveTeamChats(teamId) {
 }
 
 export function addMessage (message) {
-
   return {
     type: ADD_MESSAGE,
     payload: message
@@ -121,6 +132,24 @@ export function createTeam(newTeam) {
   };
 }
 
+export function updateTeam(team) {
+  const request = axios.put(`${ROOT_URL}/team/updateTeamProfile/${team._id}`, team);
+
+  return {
+    type: UPDATE_TEAM_PROFILE,
+    payload: request
+  };
+}
+
+export function deleteTeam(teamId) {
+  const request = axios.delete(`${ROOT_URL}/team/delete/${teamId}`);
+
+  return {
+    type: DELETE_TEAM,
+    payload: request
+  };
+}
+
 export function searchUsers(searchTerm) {
 
   const request = axios.post(`${ROOT_URL}/user/search`, {
@@ -130,6 +159,22 @@ export function searchUsers(searchTerm) {
   return {
     type: USER_SEARCH,
     payload: request
+  };
+}
+
+export function addMembersToUpdate(members) {
+
+  return {
+    type: ADD_MEMBERS_TO_UPDATE,
+    payload: members
+  };
+}
+
+export function clearMembersToUpdate() {
+
+  return {
+    type: CLEAR_MEMBERS_TO_UPDATE,
+    payload: []
   };
 }
 

@@ -100,7 +100,9 @@ module.exports = {
 	            return res.sendStatus(500);
 	          else {req.session.destroy();
 	            req.logout();
-	            return res.send(result);}
+	            return res.send(result);
+				/*return next();*/
+	          }
 	        });
 	      }
 	    });} else {res.sendStatus(500);}

@@ -1,18 +1,43 @@
 import SideBar from "../sideBar";
 import React, {Component, PropTypes} from "react";
-import {connect} from 'react-redux';
+import {bindActionCreators} from "redux";
+
+import { getUser, initiateSocket, addMessage, onlineUsers } from '../../actions/index';
+import { connect} from 'react-redux';
+
 import { browserHistory } from 'react-router';
 
 class MainView extends Component {
 
   constructor(props) {
     super(props);
+
+    this.props.initiateSocket();
+  } 
+
+
+  componentWillReceiveProps(props) {
+    if (!this.props.socket && props.socket) {
+      props.socket.on("RECEIVE_MESSAGE", function(message) {
+        props.addMessage(message);
+      }.bind(this));
+      props.socket.on('ONLINE_USERS', function(users) {
+        props.onlineUsers(users);
+      })
+    } else if (this.props.socket && !props.socket) {
+      this.props.socket.off("RECEIVE_MESSAGE");
+    }
   }
 
   componentDidMount() {
+    
+    this.props.getUser().then(() => {
+      this.props.user.socket.emit('I_CAME_ONLINE', this.props.user._id);
     if (!this.props.user._id) {
-      browserHistory.push('/');
+      browserHistory.push('/login');
     }
+  });
+
   }
 
   render () {
@@ -36,7 +61,11 @@ MainView.contextTypes = {
 };
 
 function mapStateToProps(state) {
-  return {user: state.user};
+  return {user: state.user, socket: state.user.socket};
 }
 
-export default connect(mapStateToProps)(MainView);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators ({ getUser, initiateSocket, addMessage, onlineUsers }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainView);

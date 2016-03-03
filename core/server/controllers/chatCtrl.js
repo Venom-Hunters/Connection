@@ -11,8 +11,10 @@ module.exports = {
 		newChat.message = payload.message;
 		newChat.timeStamp = new Date();
 		newChat.save(function(err, result) {
-			if (err) return err;
-			dfd.resolve(result);
+						Chat.findById(result._id, function(err, result) {
+										if (err) return err;
+										dfd.resolve(result);
+						}).populate('teamId userId');
 		});
 		return dfd.promise;
 	},
@@ -32,4 +34,4 @@ module.exports = {
 				else res.send("chats deleted");
 			});
 	}
-}
+};

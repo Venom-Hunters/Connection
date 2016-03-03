@@ -16,7 +16,7 @@ class HeaderBar extends Component {
 	renderLogoutButton(user) {
 		if (user && user.userName) {
 			return (
-	    	<li className="pure-menu-item">
+	    	<li className="pure-menu-item" style={{cursor: 'pointer'}}>
 					<a className="pure-menu-link" onClick={this.userLogout.bind(this)}>Logout</a>
 				</li>
 			);
@@ -25,7 +25,7 @@ class HeaderBar extends Component {
 
 	userLogout() {
 		this.props.userLogout().then(() => {
-				this.context.router.push("/");
+				this.context.router.push("/login");
 		});
 	}
 
@@ -41,9 +41,7 @@ class HeaderBar extends Component {
 						<li className="pure-menu-item">
 							{this.props.user && this.props.user.userName ? <Link className="pure-menu-link" to="/"> {this.props.user.userName} </Link> : ""}
 						</li>
-	        	<li className="pure-menu-item">
-							<Link className="pure-menu-link" to="/home">Home</Link>
-						</li>
+
 						{ this.renderLogoutButton(this.props.user) }
 	    		</ul>
 				</div>

@@ -2,11 +2,11 @@ var express = require("express"),
   cors = require("cors"),
   bodyParser = require("body-parser"),
   mongoose = require("mongoose"),
-	cors = require("cors"),
-	session = require("express-session"),
-	passport = require("passport"),
-	localStrategy = require("passport-local"),
-  fs = require("fs"),
+  cors = require("cors"),
+  session = require("express-session"),
+  passport = require("passport"),
+  localStrategy = require("passport-local"),
+  forceSSL = require('express-force-ssl'),
   path = require("path");
 
 var MongoStore = require("connect-mongo")(session);
@@ -71,29 +71,75 @@ var server = require("https").Server(options, app);
 
 var io = require("socket.io")(server);
 
+io.use(function(socket, next) {
+	sessionMiddleware(socket.request, {}, next);
+});
+
 io.on("connection", function(socket) {
-  var activeTeam;
-	socket.on('JOIN_ROOM', function(joinTeam) {
-		activeTeam = joinTeam.toString();
-		socket.join(activeTeam);
+  	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
+
+  		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
+  			return io.sockets.connected[item].request.session.passport.user._id;
+  		}
+  	});
+  	for (var i = socketsArray.length - 1; i >= 0 ; i--) {
+  		if (!socketsArray[i]) {
+  			socketsArray.splice(i, 1);
+  		}
+  	}
+	socket.emit('ONLINE_USERS', socketsArray);
+
+  	var activeTeam;
+	socket.on('JOIN_ROOMS', function(teamsToJoin) {
+    	teamsToJoin.forEach(function(team) {
+      		socket.join(team._id);
+    	});
 	});
 
-	socket.on('LEAVE_ROOM', function(leaveTeam) {
-		socket.leave(leaveTeam);
+  	socket.on('I_CAME_ONLINE', function(user) {
+  		socket.request.session = {passport:{user:{_id:user}}};
+  	  	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
+
+  	  		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
+  	  			return io.sockets.connected[item].request.session.passport.user._id;
+  	  		}
+  	  	});
+  	  	for (var i = socketsArray.length - 1; i >= 0 ; i--) {
+  	  		if (!socketsArray[i]) {
+  	  			socketsArray.splice(i, 1);
+  	  		}
+  	  	}
+  		io.emit('ONLINE_USERS', socketsArray);
 	});
 
   socket.on("SEND_MESSAGE", function(payload) {
   	chatCtrl.create(payload).then(function(result) {
-  		socket.server.to(activeTeam).emit("RECEIVE_MESSAGE", result);
+  		socket.server.to(payload.teamId._id).emit("RECEIVE_MESSAGE", result);
   	});
   });
+
+  socket.on('disconnect', function() {
+
+  	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
+
+  		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
+  			return io.sockets.connected[item].request.session.passport.user._id;
+  		}
+  	});
+  	for (var i = socketsArray.length - 1; i >= 0 ; i--) {
+  		if (!socketsArray[i]) {
+  			socketsArray.splice(i, 1);
+  		}
+  	}
+	io.emit('ONLINE_USERS', socketsArray);
+});
 
 });
 
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use(express.static("./public"));
+app.use(express.static(path.resolve("public/")));
 
 var mongoUri = config.mongoUri;
 
@@ -102,12 +148,16 @@ mongoose.connection.once("open", function() {
   console.log("Connected to MongoDB");
 });
 
-app.use(session({
+
+var sessionMiddleware = session({
 	secret: config.secret,
 	saveUninitialized: config.saveUninitialized,
 	resave: config.resave,
-  store: new MongoStore({ mongooseConnection: mongoose.connection })
-}));
+  	store: new MongoStore({ mongooseConnection: mongoose.connection })
+});
+
+app.use(sessionMiddleware);
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -136,14 +186,13 @@ app.delete("/chat/:teamId", chatCtrl.deleteTeamSessionChats);
 app.post("/team/create", teamCtrl.create);
 app.get("/team/getTeams", teamCtrl.getTeams);
 app.delete("/team/delete/:teamId", teamCtrl.deleteTeam);
-app.put("/team/updateTeamProfile/:teamId", teamCtrl.updateTeamProfile);
+app.put("/team/updateTeamProfile/:teamId", teamCtrl.updateTeamProfile, teamCtrl.getTeamInfo);
 app.get("/team/getTeamInfo/:teamId", teamCtrl.getTeamInfo);
 app.post("/team/addMembers/:teamId", teamCtrl.addMembers);
 app.put("/team/removeMember/:teamId", teamCtrl.removeMember);
 
-
 app.get(/^(?!.*(images))/, function (req, res) {
- res.sendFile(path.resolve("./public/index.html"));
+ res.sendFile(path.resolve("public/index.html"));
 });
 
 server.listen(config.port, function() {
