@@ -136,7 +136,7 @@ class SideBar extends Component{
 		return (
 			<div className="pure-u-1-5 sideBar">
 				<h3 className="teamHeader">
-					Teams <Link to="/team/create" className="zmdi zmdi-plus-circle-o"></Link>
+					Teams <Link to="/team/create" className="zmdi zmdi-plus-circle-o" style={{position: 'relative', top: '5px'}}></Link>
 				</h3>
 				{this.renderTeamList()}
 			</div>

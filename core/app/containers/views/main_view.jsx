@@ -2,7 +2,7 @@ import SideBar from "../sideBar";
 import React, {Component, PropTypes} from "react";
 import {bindActionCreators} from "redux";
 
-import { getUser, initiateSocket, addMessage, onlineUsers } from '../../actions/index';
+import { getUser, initiateSocket, addMessage, onlineUsers, getUserTeams } from '../../actions/index';
 import { connect} from 'react-redux';
 
 import { browserHistory } from 'react-router';
@@ -23,6 +23,11 @@ class MainView extends Component {
       }.bind(this));
       props.socket.on('ONLINE_USERS', function(users) {
         props.onlineUsers(users);
+      })
+      props.socket.on('UPDATE_TEAMS', function() {
+        console.log('updating teams after team invite');
+        props.getUser();
+        props.getUserTeams();
       })
     } else if (this.props.socket && !props.socket) {
       this.props.socket.off("RECEIVE_MESSAGE");
@@ -65,7 +70,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators ({ getUser, initiateSocket, addMessage, onlineUsers }, dispatch);
+  return bindActionCreators ({ getUser, initiateSocket, addMessage, onlineUsers, getUserTeams }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainView);

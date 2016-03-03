@@ -76,6 +76,14 @@ class InviteTeamBox extends Component {
   addMembers() {
     this.props.addTeamMembers(this.props.activeTeam._id, this.state.membersToUpdate).then(function() {
       this.props.getUserTeams();
+      let oldMemberIdArray = this.props.activeTeam.members.map((member) => {
+        return member._id;
+      })
+      let updatedMemberIdArray = this.state.membersToUpdate.map((member) => {
+        return member._id;
+      })
+      let membersToNotify = _.union(oldMemberIdArray, updatedMemberIdArray);
+      this.props.socket.emit('UPDATE_MEMBERS', membersToNotify);
     }.bind(this));
     browserHistory.push('/team/chat');
   }
@@ -127,7 +135,7 @@ class InviteTeamBox extends Component {
           </ul>
           <div>
             <button onClick={this.addMembers} className="pure-button pure-button-primary" style={{marginRight: '1em'}}>Update</button>
-            <Link to='/home' className="pure-button pure-button-secondary" style={{marginRight: '1em'}}>Cancel</Link>
+            <Link to='/team/chat' className="pure-button pure-button-secondary" style={{marginRight: '1em'}}>Cancel</Link>
           </div>
         </div>
       );

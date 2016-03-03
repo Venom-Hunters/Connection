@@ -1,5 +1,6 @@
 var Team = require("./../models/teamModel");
 var User = require("./../models/userModel");
+var q = require("q");
 
 var mongoose = require("mongoose");
 var ObjectId = mongoose.Types.ObjectId;
@@ -65,6 +66,19 @@ module.exports = {
 		} else {
 			res.sendStatus(500);
 		}
+	},
+
+	getTeamsForSocket: function(userId) {
+		console.log('user in ctrl', userId);
+		var dfd = q.defer();
+		Team
+		.find({$or: [{'members': userId}, {'teamLead': userId}]})
+		.exec(function(err, teams) {
+			if (err) return dfd.resolve(err);
+			else if (!teams) return dfd.resolve([]);
+			else dfd.resolve(teams);
+		});
+		return dfd.promise;
 	},
 
 	deleteTeam: function(req, res, next) {
