@@ -189,5 +189,5 @@ app.get(/^(?!.*(images))/, function (req, res) {
 });
 
 server.listen(config.port, function() {
-  console.log("About to murder Rey on port", config.port + "!");
+  console.log("port", config.port + "!");
 });
