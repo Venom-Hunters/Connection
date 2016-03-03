@@ -6,6 +6,7 @@ var express = require("express"),
   session = require("express-session"),
   passport = require("passport"),
   localStrategy = require("passport-local"),
+  forceSSL = require('express-force-ssl'),
   path = require("path");
 
 var MongoStore = require("connect-mongo")(session);
