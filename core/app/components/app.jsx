@@ -12,20 +12,6 @@ class App extends Component {
 
     
   }
-/*
-  componentWillReceiveProps(props) {
-    console.log('socket',props);
-    if (!this.props.socket && props.socket) {
-      props.socket.on("RECEIVE_MESSAGE", function(message) {
-        props.addMessage(message);
-      }.bind(this));
-      props.socket.on('ONLINE_USERS', function(users) {
-        props.onlineUsers(users);
-      })
-    } else if (this.props.socket && !props.socket) {
-      this.props.socket.off("RECEIVE_MESSAGE");
-    }
-  }*/
 
   showHeader() {
     if (this.props.user && this.props.user._id)
