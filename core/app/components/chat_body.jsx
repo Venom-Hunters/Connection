@@ -38,7 +38,7 @@ class ChatBody extends Component {
             {this.props.messages.map(function(message) {
               var date = new Date(message.timeStamp);
 
-              if ((message.teamId === this.props.activeTeam._id) || (message.teamId._id === this.props.activeTeam._id))
+              if (this.props.activeTeam && ((message.teamId === this.props.activeTeam._id) || (message.teamId._id === this.props.activeTeam._id)))
               {
                 return ( <p key={message._id} className="chatMessage">
                 [{date.toLocaleTimeString('en-US')}] {message.userId.userName} : {message.message} </p>

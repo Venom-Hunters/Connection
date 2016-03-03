@@ -51,7 +51,7 @@ class CreateTeamBox extends Component {
       teamName: ""
     });
 
-    this.context.router.push("/home");
+    this.context.router.push("/team/chat");
 
   }
 }

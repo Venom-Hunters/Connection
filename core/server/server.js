@@ -69,6 +69,7 @@ io.use(function(socket, next) {
 });
 
 io.on("connection", function(socket) {
+	console.log('user connected');
   	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
 
   		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
@@ -80,6 +81,7 @@ io.on("connection", function(socket) {
   			socketsArray.splice(i, 1);
   		}
   	}
+  	console.log(socketsArray);
 	socket.emit('ONLINE_USERS', socketsArray);
 
   	var activeTeam;
@@ -105,14 +107,89 @@ io.on("connection", function(socket) {
   		io.emit('ONLINE_USERS', socketsArray);
 	});
 
+	socket.on('I_LOGGED_OFF', function(user) {
+		var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
+			if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
+				return {
+					sessionId: io.sockets.connected[item].request.session.passport.user._id, 
+					socketId: io.sockets.connected[item].id
+				}
+			}
+		});
+
+		for (var i = socketsArray.length - 1; i >= 0 ; i--) {
+			if (!socketsArray[i].sessionId) {
+				socketsArray.splice(i, 1);
+			}
+		}
+		socketsArray.map(function(socketUser) {
+			if (socketUser.sessionId === user) {
+				io.sockets.connected[socketUser.socketId].disconnect();
+			}
+		})
+		teamCtrl.getTeamsForSocket(user).then(function(userTeams) {
+			var newSocketsArray = Object.keys(io.sockets.connected).map(function(item) {
+				if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
+					return {
+						sessionId: io.sockets.connected[item].request.session.passport.user._id, 
+						socketId: io.sockets.connected[item].id
+					}
+				}
+			});
+
+			for (var i = newSocketsArray.length - 1; i >= 0 ; i--) {
+				if (!newSocketsArray[i].sessionId) {
+					newSocketsArray.splice(i, 1);
+				}
+			}
+			userTeams.map(function(team) {
+				var inSession = false;
+				newSocketsArray.map(function(socketUser) {
+					if (team.members.indexOf(socketUser.sessionId) !== -1) {
+						console.log(socketUser.sessionId, team.members.indexOf(socketUser.sessionId))
+						inSession = true;
+					}
+				})
+				if (inSession === true) {
+					console.log('someone in team session: ', team.teamName);
+				} else {
+					console.log('no one in team session: ', team.teamName);
+				}
+			})
+		});
+
+	})
+
   socket.on("SEND_MESSAGE", function(payload) {
   	chatCtrl.create(payload).then(function(result) {
   		socket.server.to(payload.teamId._id).emit("RECEIVE_MESSAGE", result);
   	});
   });
 
-  socket.on('disconnect', function() {
+  socket.on('UPDATE_MEMBERS', function(memberIdArray) {
+  	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
+  		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
+  			return {
+  				sessionId: io.sockets.connected[item].request.session.passport.user._id, 
+  				socketId: io.sockets.connected[item].id
+  			}
+  		}
+  	});
 
+  	for (var i = socketsArray.length - 1; i >= 0 ; i--) {
+  		if (!socketsArray[i].sessionId) {
+  			socketsArray.splice(i, 1);
+  		}
+  	}
+  	socketsArray.map(function(connectedUser) {
+  		if (memberIdArray.indexOf(connectedUser.sessionId) !== -1) {
+  			io.sockets.connected[connectedUser.socketId].emit('UPDATE_TEAMS');
+  		}
+  	})
+  })
+
+  socket.on('disconnect', function() {
+	console.log('user disconnect');
   	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
 
   		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {

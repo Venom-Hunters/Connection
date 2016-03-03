@@ -28,11 +28,13 @@ class ManageTeamBox extends Component {
         <form onSubmit={this.updateTeam} className="pure-form">
           <fieldset>
               <input id="teamName" type="text" onChange={this.onChange} value={this.state.teamName} placeholder={this.props.activeTeam.teamName + '...'} required/>
+              <div style={{marginTop: '1em'}}>
               <button type="submit" className="pure-button pure-button-primary">Update</button>
-              <Link to="/home" className="pure-button pure-button-secondary">Cancel</Link>
+              <Link to="/team/chat" className="pure-button pure-button-secondary">Cancel</Link>
+              <button onClick={this.deleteTeam} className="pure-button pure-button-error" style={{background: 'rgb(255, 60, 60)'}}>Delete Team</button>
+              </div>
           </fieldset>
         </form>
-        <button onClick={this.deleteTeam} className="pure-button pure-button-error" style={{background: 'rgb(255, 60, 60)'}}>Delete Team</button>
       </div>
     );
   }
@@ -55,14 +57,16 @@ class ManageTeamBox extends Component {
       teamName: ""
     });
 
-    this.context.router.push("/home");
+    this.context.router.push("/team/chat");
 
   }
 
   deleteTeam() {
-    this.props.deleteTeam(this.props.activeTeam._id);
-    this.props.getUserTeams();
-    browserHistory.push('/home');
+    event.preventDefault();
+    this.props.deleteTeam(this.props.activeTeam._id).then(() => {
+      this.props.getUserTeams();
+      browserHistory.push('/team/chat');
+    });
   }
 }
 
