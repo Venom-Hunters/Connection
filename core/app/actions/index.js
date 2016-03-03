@@ -25,7 +25,7 @@ export const ADD_MEMBERS_TO_UPDATE = 'ADD_MEMBERS_TO_UPDATE';
 export const CLEAR_MEMBERS_TO_UPDATE = 'CLEAR_MEMBERS_TO_UPDATE';
 
 
-const ROOT_URL = "http://localhost:8888";
+const ROOT_URL = "http://107.170.206.194";
 
 export function login(props) {
   const request = axios.post(`${ROOT_URL}/auth/login`, props);

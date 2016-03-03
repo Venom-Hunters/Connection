@@ -86,7 +86,7 @@ io.on("connection", function(socket) {
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use(express.static("./public"));
+app.use(express.static("../../public"));
 
 var mongoUri = config.mongoUri;
 
@@ -136,7 +136,7 @@ app.put("/team/removeMember/:teamId", teamCtrl.removeMember);
 
 
 app.get(/^(?!.*(images))/, function (req, res) {
- res.sendFile(path.resolve("./public/index.html"));
+ res.sendFile(path.resolve("../../public/index.html"));
 });
 
 server.listen(config.port, function() {
