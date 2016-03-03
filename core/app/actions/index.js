@@ -26,7 +26,7 @@ export const ADD_MEMBERS_TO_UPDATE = 'ADD_MEMBERS_TO_UPDATE';
 export const CLEAR_MEMBERS_TO_UPDATE = 'CLEAR_MEMBERS_TO_UPDATE';
 
 
-const ROOT_URL = "window.location.origin";
+const ROOT_URL = window.location.origin;
 
 
 export function login(props) {
