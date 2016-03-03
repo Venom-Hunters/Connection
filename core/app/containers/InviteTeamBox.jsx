@@ -196,7 +196,7 @@ InviteTeamBox.contextTypes = {
 };
 
 function mapStateToProps(state) {
-  return {activeTeam: state.teams.active, searchResults: state.userSearch.searchResults, user: state.user, membersToAdd: state.userSearch.membersToAdd};
+  return {activeTeam: state.teams.active, searchResults: state.userSearch.searchResults, user: state.user, membersToAdd: state.userSearch.membersToAdd, socket: state.user.socket};
 }
 
 export default connect(mapStateToProps, { createTeam, searchUsers, addTeamMembers, getUserTeams, addMembersToUpdate, clearMembersToUpdate })(InviteTeamBox);
