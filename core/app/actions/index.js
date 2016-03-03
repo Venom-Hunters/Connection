@@ -27,9 +27,13 @@ export const CLEAR_MEMBERS_TO_UPDATE = 'CLEAR_MEMBERS_TO_UPDATE';
 
 
 
-const ROOT_URL = "http://reylink.com";
 
 
+
+
+
+
+const ROOT_URL = window.location.origin;
 
 
 

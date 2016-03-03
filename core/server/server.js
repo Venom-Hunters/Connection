@@ -70,7 +70,7 @@ io.use(function(socket, next) {
 
 io.on("connection", function(socket) {
   	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
-  		
+
   		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
   			return io.sockets.connected[item].request.session.passport.user._id;
   		}
@@ -92,7 +92,7 @@ io.on("connection", function(socket) {
   	socket.on('I_CAME_ONLINE', function(user) {
   		socket.request.session = {passport:{user:{_id:user}}};
   	  	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
-  	  		
+
   	  		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
   	  			return io.sockets.connected[item].request.session.passport.user._id;
   	  		}
@@ -103,7 +103,7 @@ io.on("connection", function(socket) {
   	  		}
   	  	}
   		io.emit('ONLINE_USERS', socketsArray);
-	})
+	});
 
   socket.on("SEND_MESSAGE", function(payload) {
   	chatCtrl.create(payload).then(function(result) {
@@ -114,7 +114,7 @@ io.on("connection", function(socket) {
   socket.on('disconnect', function() {
 
   	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
-  		
+
   		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
   			return io.sockets.connected[item].request.session.passport.user._id;
   		}
@@ -125,14 +125,18 @@ io.on("connection", function(socket) {
   		}
   	}
 	io.emit('ONLINE_USERS', socketsArray);
-  })
+});
 
 });
 
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use(express.static("../../public"));
+
+
+
+app.use(express.static(path.resolve("public/")));
+
 
 var mongoUri = config.mongoUri;
 
@@ -147,7 +151,7 @@ var sessionMiddleware = session({
 	saveUninitialized: config.saveUninitialized,
 	resave: config.resave,
   	store: new MongoStore({ mongooseConnection: mongoose.connection })
-})
+});
 
 app.use(sessionMiddleware);
 
@@ -184,11 +188,14 @@ app.get("/team/getTeamInfo/:teamId", teamCtrl.getTeamInfo);
 app.post("/team/addMembers/:teamId", teamCtrl.addMembers);
 app.put("/team/removeMember/:teamId", teamCtrl.removeMember);
 
-
 app.get(/^(?!.*(images))/, function (req, res) {
- res.sendFile(path.resolve("../../public/index.html"));
+
+
+
+ res.sendFile(path.resolve("public/index.html"));
+
 });
 
 server.listen(config.port, function() {
-  console.log("About to murder Rey on port", config.port + "!");
+  console.log("port", config.port + "!");
 });
