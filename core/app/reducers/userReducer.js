@@ -18,7 +18,7 @@ export default function(state = {}, action = "") {
       }
       break;
     case(USER_LOGIN):
-      return Object.assign({}, state, action.payload.data );
+      return Object.assign({}, state, action.payload.data);
     case(USER_REGISTER):
    	  return Object.assign({}, state, action.payload.data );
    	case(GET_USER_TEAMS):

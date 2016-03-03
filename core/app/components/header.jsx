@@ -16,7 +16,7 @@ class HeaderBar extends Component {
 	renderLogoutButton(user) {
 		if (user && user.userName) {
 			return (
-	    	<li className="pure-menu-item">
+	    	<li className="pure-menu-item" style={{cursor: 'pointer'}}>
 					<a className="pure-menu-link" onClick={this.userLogout.bind(this)}>Logout</a>
 				</li>
 			);

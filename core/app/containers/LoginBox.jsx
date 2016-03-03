@@ -14,7 +14,6 @@ class LoginBox extends Component {
     };
   }
 
-
   onSubmit(props) {
     this.props.login(props)
     .then( (response) => {

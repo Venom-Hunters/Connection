@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const USER_LOGIN = "USER_LOGIN";
+export const ONLINE_USERS = "ONLINE_USERS";
 export const USER_REGISTER = "USER_REGISTER";
 export const USER_LOGOUT = "USER_LOGOUT";
 export const USER_GET = "USER_GET";
@@ -25,7 +26,8 @@ export const ADD_MEMBERS_TO_UPDATE = 'ADD_MEMBERS_TO_UPDATE';
 export const CLEAR_MEMBERS_TO_UPDATE = 'CLEAR_MEMBERS_TO_UPDATE';
 
 
-const ROOT_URL = "http://localhost:8888";
+const ROOT_URL = "http://192.168.1.188:8888";
+
 
 export function login(props) {
   const request = axios.post(`${ROOT_URL}/auth/login`, props);
@@ -33,6 +35,14 @@ export function login(props) {
   return {
     type: USER_LOGIN,
     payload: request
+  };
+}
+
+export function onlineUsers(users) {
+
+  return {
+    type: ONLINE_USERS,
+    payload: users
   };
 }
 
@@ -109,7 +119,6 @@ export function getActiveTeamChats(teamId) {
 }
 
 export function addMessage (message) {
-
   return {
     type: ADD_MESSAGE,
     payload: message
