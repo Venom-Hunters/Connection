@@ -21,7 +21,7 @@ export const CREATE_TEAM = "CREATE_TEAM";
 export const ADD_TEAM_MEMBERS = "ADD_TEAM_MEMBERS";
 
 
-const ROOT_URL = "http://localhost:8888";
+const ROOT_URL = "https://localhost:8888";
 
 export function login(props) {
   const request = axios.post(`${ROOT_URL}/auth/login`, props);

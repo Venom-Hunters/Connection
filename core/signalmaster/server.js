@@ -27,6 +27,7 @@ sockets(server, config);
 if (config.uid) process.setuid(config.uid);
 
 var httpUrl;
+
 if (config.server.secure) {
     httpUrl = "https://localhost:" + port;
 } else {
