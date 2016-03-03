@@ -76,13 +76,29 @@ io.on("connection", function(socket) {
       socket.join(team._id);
     });
 	});
+  socket.on('I_CAME_ONLINE', function(user) {
+  	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
+  		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
+  			return io.sockets.connected[item].request.session.passport.user._id;
+  		}
+  	});
+  	for (var i = socketsArray.length - 1; i >= 0 ; i--) {
+  		if (!socketsArray[i]) {
+  			socketsArray.splice(i, 1);
+  		}
+  	}
+	socket.emit('ONLINE_USERS', socketsArray);
+  })
 
   socket.on("SEND_MESSAGE", function(payload) {
-
   	chatCtrl.create(payload).then(function(result) {
   		socket.server.to(payload.teamId._id).emit("RECEIVE_MESSAGE", result);
   	});
   });
+
+  socket.on('disconnect', function() {
+  	console.log('user disconnect');
+  })
 
 });
 

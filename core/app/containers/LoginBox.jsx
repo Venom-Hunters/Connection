@@ -14,6 +14,10 @@ class LoginBox extends Component {
     };
   }
 
+  componentWillUnmount() {
+    console.log('received new props');
+  }
+
 
   onSubmit(props) {
     this.props.login(props)
@@ -24,6 +28,7 @@ class LoginBox extends Component {
         });
       } else if (this.props.user && this.props.user._id) {
           this.context.router.push("/team/chat");
+          this.props.user.socket.emit('I_CAME_ONLINE', this.props.user._id);
       }
     });
   }
