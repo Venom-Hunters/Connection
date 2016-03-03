@@ -77,7 +77,7 @@ class InviteTeamBox extends Component {
     this.props.addTeamMembers(this.props.activeTeam._id, this.state.membersToUpdate).then(function() {
       this.props.getUserTeams();
     }.bind(this));
-    browserHistory.push('/home');
+    browserHistory.push('/team/chat');
   }
 
   clearSearch() {

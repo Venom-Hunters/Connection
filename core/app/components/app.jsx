@@ -10,10 +10,11 @@ class App extends Component {
   {
     super(props);
 
-    this.props.initiateSocket();
+    
   }
-
+/*
   componentWillReceiveProps(props) {
+    console.log('socket',props);
     if (!this.props.socket && props.socket) {
       props.socket.on("RECEIVE_MESSAGE", function(message) {
         props.addMessage(message);
@@ -23,11 +24,8 @@ class App extends Component {
       })
     } else if (this.props.socket && !props.socket) {
       this.props.socket.off("RECEIVE_MESSAGE");
-
-    } else if (!this.props.socket && !props.socket) {
-      this.props.initiateSocket();
     }
-  }
+  }*/
 
   showHeader() {
     if (this.props.user && this.props.user._id)

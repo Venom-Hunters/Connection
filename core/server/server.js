@@ -69,15 +69,8 @@ io.use(function(socket, next) {
 });
 
 io.on("connection", function(socket) {
-
-  var activeTeam;
-	socket.on('JOIN_ROOMS', function(teamsToJoin) {
-    teamsToJoin.forEach(function(team) {
-      socket.join(team._id);
-    });
-	});
-  socket.on('I_CAME_ONLINE', function(user) {
   	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
+  		
   		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
   			return io.sockets.connected[item].request.session.passport.user._id;
   		}
@@ -88,7 +81,29 @@ io.on("connection", function(socket) {
   		}
   	}
 	socket.emit('ONLINE_USERS', socketsArray);
-  })
+
+  	var activeTeam;
+	socket.on('JOIN_ROOMS', function(teamsToJoin) {
+    	teamsToJoin.forEach(function(team) {
+      		socket.join(team._id);
+    	});
+	});
+
+  	socket.on('I_CAME_ONLINE', function(user) {
+  		socket.request.session = {passport:{user:{_id:user}}};
+  	  	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
+  	  		
+  	  		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
+  	  			return io.sockets.connected[item].request.session.passport.user._id;
+  	  		}
+  	  	});
+  	  	for (var i = socketsArray.length - 1; i >= 0 ; i--) {
+  	  		if (!socketsArray[i]) {
+  	  			socketsArray.splice(i, 1);
+  	  		}
+  	  	}
+  		io.emit('ONLINE_USERS', socketsArray);
+	})
 
   socket.on("SEND_MESSAGE", function(payload) {
   	chatCtrl.create(payload).then(function(result) {
@@ -97,7 +112,19 @@ io.on("connection", function(socket) {
   });
 
   socket.on('disconnect', function() {
-  	console.log('user disconnect');
+
+  	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
+  		
+  		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
+  			return io.sockets.connected[item].request.session.passport.user._id;
+  		}
+  	});
+  	for (var i = socketsArray.length - 1; i >= 0 ; i--) {
+  		if (!socketsArray[i]) {
+  			socketsArray.splice(i, 1);
+  		}
+  	}
+	io.emit('ONLINE_USERS', socketsArray);
   })
 
 });
@@ -114,11 +141,12 @@ mongoose.connection.once("open", function() {
   console.log("Connected to MongoDB");
 });
 
+
 var sessionMiddleware = session({
 	secret: config.secret,
 	saveUninitialized: config.saveUninitialized,
 	resave: config.resave,
-  store: new MongoStore({ mongooseConnection: mongoose.connection })
+  	store: new MongoStore({ mongooseConnection: mongoose.connection })
 })
 
 app.use(sessionMiddleware);

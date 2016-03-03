@@ -14,10 +14,12 @@ class SideBar extends Component{
 	}
 
 	componentWillMount() {
-		this.props.getUser().then( () => {
-			this.props.getUserTeams();
-		});
-	}
+        this.props.getUser().then( () => {
+            this.props.getUserTeams().then( () => {
+                this.props.socket.emit('JOIN_ROOMS', this.props.teams);
+            });
+        });
+    }
 
 	componentWillReceiveProps(props) {
 		this.setState({
@@ -38,7 +40,6 @@ class SideBar extends Component{
 				}
 			}
 		}
-
 	}
 
 
@@ -61,7 +62,7 @@ class SideBar extends Component{
 					<ul className="activeTeamMember">
 
 						{team.members.map( (member) => {
-							if (member.loggedIn) {
+							if (this.props.onlineUsers.indexOf(member._id) !== -1) {
 								return <li key={member._id}><i className="zmdi zmdi-circle" style={{color: 'rgba(0, 255, 0, 0.8)', fontSize: '.7em'}}></i> {member.userName} {this.renderTeamLead(member)}</li>;
 							} else {
 								return <li key={member._id}><i className="zmdi zmdi-circle" style={{color: 'rgba(255, 10, 10, 0.8)', fontSize: '.7em'}}></i> {member.userName} {this.renderTeamLead(member)}</li>;
@@ -149,7 +150,8 @@ function mapStateToProps(state) {
 		messages: state.chatMessages,
 		activeTeam: state.teams.active,
 		socket: state.user.socket,
-		user: state.user
+		user: state.user,
+		onlineUsers: state.onlineUsers
 	};
 }
 
