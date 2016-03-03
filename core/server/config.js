@@ -1,5 +1,5 @@
 module.exports = {
-  port: process.env.PORT || 8888,
+  port: process.env.PORT || 80,
   mongoUri: "mongodb://localhost/connection",
   secret: "sretnuh-monev",
   saveUninitialized: true,
