@@ -5,6 +5,7 @@ import userReducer from "./userReducer";
 import teamsReducer from "./teamsReducer";
 import chatReducer from "./chat_reducer";
 import userSearchReducer from "./userSearchReducer";
+import onlineUsersReducer from './online_users_reducer';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   teams: teamsReducer,
   userSearch: userSearchReducer,
   chatMessages: chatReducer,
+  onlineUsers: onlineUsersReducer
 });
 
 export default rootReducer;
