@@ -14,7 +14,6 @@ class SideBar extends Component{
 	}
 
 	componentWillMount() {
-		console.log('componentWillMount');
         this.props.getUser().then( () => {
             this.props.getUserTeams().then( () => {
                 this.props.socket.emit('JOIN_ROOMS', this.props.teams);
