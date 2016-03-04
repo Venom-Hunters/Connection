@@ -69,7 +69,6 @@ module.exports = {
 	},
 
 	getTeamsForSocket: function(userId) {
-		console.log('user in ctrl', userId);
 		var dfd = q.defer();
 		Team
 		.find({$or: [{'members': userId}, {'teamLead': userId}]})
@@ -87,10 +86,13 @@ module.exports = {
 			else if (!deleteResult) return res.sendStatus(404);
 			else {
 				Team
-				.find({})
+				.find({'members': req.user._id})
 				.populate('members teamLead')
 				.exec(function(err, teamFindResult) {
 					if (err) return res.sendStatus(404);
+					else if (teamFindResult.length === 0) {
+						return res.send(null);
+					}
 					else {
 						User.findById(req.user._id, function(err, user) {
 							if (err) return res.sendStatus(500);

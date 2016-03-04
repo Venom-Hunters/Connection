@@ -17,6 +17,7 @@ class MainView extends Component {
 
 
   componentWillReceiveProps(props) {
+
     if (!this.props.socket && props.socket) {
       props.socket.on("RECEIVE_MESSAGE", function(message) {
         props.addMessage(message);
@@ -25,7 +26,6 @@ class MainView extends Component {
         props.onlineUsers(users);
       })
       props.socket.on('UPDATE_TEAMS', function() {
-        console.log('updating teams after team invite');
         props.getUser();
         props.getUserTeams();
       })
