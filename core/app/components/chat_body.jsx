@@ -4,7 +4,7 @@ import {bindActionCreators} from "redux";
 import {getActiveTeamChats} from "../actions/index";
 
 class ChatBody extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       messages: []
