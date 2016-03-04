@@ -31,20 +31,24 @@ class ChatBody extends Component {
     }
   }
 
+  renderMessages(){
+    return (
+      {this.props.messages.map(function(message) {
+        var date = new Date(message.timeStamp);
+
+        if ((message.teamId === this.props.activeTeam._id) || (message.teamId._id === this.props.activeTeam._id)){
+          return ( <p key={message._id} className="chatMessage">
+          [{date.toLocaleTimeString('en-US')}] {message.userId.userName} : {message.message} </p>);
+        }
+      }.bind(this)).reverse()}
+    )
+  }
+
   render() {
     if (this.props.messages) {
         return (
           <div id="chatBody" className="chatBody">
-            {this.props.messages.map(function(message) {
-              var date = new Date(message.timeStamp);
-
-              if ((message.teamId === this.props.activeTeam._id) || (message.teamId._id === this.props.activeTeam._id))
-              {
-                return ( <p key={message._id} className="chatMessage">
-                [{date.toLocaleTimeString('en-US')}] {message.userId.userName} : {message.message} </p>
-              );
-            }
-          }.bind(this)).reverse()}
+            {this.renderMessages()}
           </div>
         );
     } else {

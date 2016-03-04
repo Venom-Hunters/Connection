@@ -206,27 +206,6 @@ input {
 	display: inline;
 }
 
-/* .hoverable {
-	cursor: pointer;
-
-}
-
-.normal {
-	display: inline;
-}
-
-.hover {
-	display: none;
-}
-
-.hoverable:hover .normal {
-	display: none;
-}
-
-.hoverable:hover .hover {
-	display: inline;
-} */
-
 .activeTeam {
 	padding: 1em 0;
 }
@@ -323,4 +302,12 @@ textarea {
 .chatInputTextarea {
 	display: flex;
 	flex: 1;
+}
+
+.user{
+	color: blue;
+}
+
+.other{
+	color: red;
 }

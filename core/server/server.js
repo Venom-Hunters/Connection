@@ -6,15 +6,30 @@ var express = require("express"),
   session = require("express-session"),
   passport = require("passport"),
   localStrategy = require("passport-local"),
+  LEX = require('letsencrypt-express').testing(),
   forceSSL = require('express-force-ssl'),
   path = require("path");
 
 var MongoStore = require("connect-mongo")(session);
 
+var lex = LEX.create({
+  configDir: require('os').homedir() + '/letsencrypt/etc'
+, approveRegistration: function (hostname, cb) {
+    cb(null, {
+      domains: "reylink.com"
+    , email: 'viscid@gmail.com'
+    , agreeTos: true
+    });
+  }
+});
+
+
+
 var options = {
   key: fs.readFileSync(path.resolve(__dirname, "server.key")).toString(),
   cert: fs.readFileSync(path.resolve(__dirname, "server.crt")).toString()
 };
+
 var	chatCtrl = require("./controllers/chatCtrl"),
     userCtrl = require("./controllers/userCtrl"),
 	teamCtrl = require("./controllers/teamCtrl"),
