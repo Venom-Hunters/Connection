@@ -320,11 +320,11 @@ textarea {
 
 .message{
 	width: auto;
-	max-width: 45%; 
+	max-width: 700px;
 	height: auto;
 	padding: 5px;
 	color: white;
-	word-break: break-all;
+	word-break: keep-all;
 }
 
 .user{
@@ -332,5 +332,9 @@ textarea {
 }
 
 .guess{
-	background-color: #5eb95e;
+	background-color: #a6a6a6;
+}
+
+.userName{
+	font-weight: bold;
 }
