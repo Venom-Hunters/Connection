@@ -4,7 +4,7 @@ import {bindActionCreators} from "redux";
 import {getActiveTeamChats} from "../actions/index";
 
 class ChatBody extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       messages: []
@@ -22,46 +22,72 @@ class ChatBody extends Component {
     chatBody.scrollTop = chatBody.scrollHeight;
   }
 
-
   componentWillReceiveProps(props) {
     if (!this.props.activeTeam && (props.activeTeam && props.activeTeam._id)) {
       this.props.getActiveTeamChats(props.activeTeam._id);
-    } else if(this.props.activeTeam && (this.props.activeTeam._id !== props.activeTeam._id)) {
+    } else if (this.props.activeTeam && (this.props.activeTeam._id !== props.activeTeam._id)) {
       this.props.getActiveTeamChats(props.activeTeam._id);
     }
   }
 
+  renderMessages() {
+    return this.props.messages.map(function(message) {
+      var date = new Date(message.timeStamp);
+
+      if (this.props.activeTeam && ((message.teamId === this.props.activeTeam._id) || (message.teamId._id === this.props.activeTeam._id))) {
+        if (message.userId._id === this.props.user._id) {
+          return (
+            <div  key={message._id} className="userTxt">
+              <p className="message user">
+                {message.userId.userName}:
+                <br/>
+                {message.message}
+                <br/>
+                {date.toLocaleTimeString('en-US')}
+              </p>
+            </div>
+          )
+          }else {
+            return (
+              <div key={message._id} className="guessTxt">
+                <p className="message guess">
+                  {message.userId.userName}:
+                  <br/>
+                  {message.message}
+                  <br/>
+                  {date.toLocaleTimeString('en-US')}
+                </p>
+              </div>
+            )
+          }
+      }
+    }.bind(this)).reverse();
+  }
+
   render() {
     if (this.props.messages) {
-        return (
-          <div id="chatBody" className="chatBody">
-            {this.props.messages.map(function(message) {
-              var date = new Date(message.timeStamp);
-
-              if (this.props.activeTeam && ((message.teamId === this.props.activeTeam._id) || (message.teamId._id === this.props.activeTeam._id)))
-              {
-                return ( <p key={message._id} className="chatMessage">
-                [{date.toLocaleTimeString('en-US')}] {message.userId.userName} : {message.message} </p>
-              );
-            }
-          }.bind(this)).reverse()}
-          </div>
-        );
+      return (
+        <div id="chatBody" className="chatBody">
+          {this.renderMessages()}
+        </div>
+      );
     } else {
-        return (
-          <div>Loading Messages...</div>
-        );
+      return (
+        <div>Loading Messages...</div>
+      );
     }
 
   }
 }
 
 function mapStateToProps(state) {
-  return { messages: state.chatMessages, socket: state.user.socket, activeTeam: state.teams.active };
+  return {messages: state.chatMessages, socket: state.user.socket, activeTeam: state.teams.active, user: state.user};
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators ({ getActiveTeamChats }, dispatch);
+  return bindActionCreators({
+    getActiveTeamChats
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatBody);

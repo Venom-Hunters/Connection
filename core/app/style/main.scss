@@ -207,27 +207,6 @@ input {
 	display: inline;
 }
 
-/* .hoverable {
-	cursor: pointer;
-
-}
-
-.normal {
-	display: inline;
-}
-
-.hover {
-	display: none;
-}
-
-.hoverable:hover .normal {
-	display: none;
-}
-
-.hoverable:hover .hover {
-	display: inline;
-} */
-
 .activeTeam {
 	padding: 1em 0;
 }
@@ -324,4 +303,34 @@ textarea {
 .chatInputTextarea {
 	display: flex;
 	flex: 1;
+}
+
+.guessTxt{
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+}
+
+.userTxt{
+	display: flex;
+	align-items: flex-end;
+	flex-direction: column;
+}
+
+
+.message{
+	width: auto;
+	max-width: 45%; 
+	height: auto;
+	padding: 5px;
+	color: white;
+	word-break: break-all;
+}
+
+.user{
+	background-color: #1f8dd6;
+}
+
+.guess{
+	background-color: #5eb95e;
 }
