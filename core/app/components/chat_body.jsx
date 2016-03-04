@@ -40,16 +40,11 @@ class ChatBody extends Component {
         if (message.userId._id === this.props.user._id) {
           return (
             <div  key={message._id} className="userTxt">
-              <div className="chatavatar">
-
-                <Avatar email={this.props.user.email}/>
-              </div>
+              <Avatar email={this.props.user.email}/>
               <p className="message user">
-                <span className="userName">{message.userId.userName}:</span>
+                <span className="userName">{message.userId.userName}</span> <span className="time">({date.toLocaleTimeString('en-US')})</span>
                 <br/>
                 {message.message}
-                <br/>
-                {date.toLocaleTimeString('en-US')}
               </p>
             </div>
           )
@@ -58,11 +53,9 @@ class ChatBody extends Component {
               <div key={message._id} className="guessTxt">
                 <Avatar email={message.userId.email}/>
                 <p className="message guess">
-                  <span className="userName">{message.userId.userName}:</span>
+                  <span className="userName">{message.userId.userName}</span> <span className="time">({date.toLocaleTimeString('en-US')})</span>
                   <br/>
                   {message.message}
-                  <br/>
-                  {date.toLocaleTimeString('en-US')}
                 </p>
               </div>
             )
