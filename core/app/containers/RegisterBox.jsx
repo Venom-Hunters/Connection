@@ -40,8 +40,8 @@ class RegisterBox extends Component {
             </div>
 
             <div className="pure-controls">
-              <Link to="login" className="pure-button pure-button-secondary">Log in</Link>
-              <button type="submit" className="pure-button pure-button-primary">Register</button>
+              <button type="submit" className="pure-button pure-button-primary" style={{marginRight: '1em'}}>Register</button>
+              <Link to="login" className="pure-button pure-button-secondary">Cancel</Link>
             </div>
           </fieldset>
         </form>

@@ -24,19 +24,31 @@ class ManageTeamBox extends Component {
     return(
       <div className="teamContent">
         <h2>Manage Team</h2>
-        <h4>Current Name: {this.props.activeTeam.teamName}</h4>
-        <form onSubmit={this.updateTeam} className="pure-form">
-          <fieldset>
-              <input id="teamName" type="text" onChange={this.onChange} value={this.state.teamName} placeholder={this.props.activeTeam.teamName + '...'} required/>
-              <div style={{marginTop: '1em'}}>
-              <button type="submit" className="pure-button pure-button-primary">Update</button>
-              <Link to="/team/chat" className="pure-button pure-button-secondary">Cancel</Link>
-              <button onClick={this.deleteTeam} className="pure-button pure-button-error" style={{background: 'rgb(255, 60, 60)'}}>Delete Team</button>
-              </div>
-          </fieldset>
-        </form>
+          {this.renderTeamInfo()}
       </div>
     );
+  }
+
+  renderTeamInfo() {
+    if (this.props.activeTeam) {
+      return (
+        <div>
+          <h4>Current Name: {this.props.activeTeam.teamName}</h4>
+          <form onSubmit={this.updateTeam} className="pure-form">
+            <fieldset>
+                <input id="teamName" type="text" onChange={this.onChange} value={this.state.teamName} placeholder={this.props.activeTeam.teamName + '...'} required/>
+                <div style={{marginTop: '1em'}}>
+                <button type="submit" className="pure-button pure-button-primary">Update</button>
+                <Link to="/team/chat" className="pure-button pure-button-secondary">Cancel</Link>
+                <button onClick={this.deleteTeam} className="pure-button pure-button-error" style={{marginTop: '1em', background: 'rgb(255, 60, 60)'}}>Delete Team</button>
+                </div>
+            </fieldset>
+          </form>
+        </div>
+      );
+    } else {
+      return;
+    }
   }
 
   onChange(event) {
@@ -63,8 +75,13 @@ class ManageTeamBox extends Component {
 
   deleteTeam() {
     event.preventDefault();
+    let membersToNotify = this.props.activeTeam.members.map((member) => {
+        return member._id;
+      })
     this.props.deleteTeam(this.props.activeTeam._id).then(() => {
       this.props.getUserTeams();
+      console.log('membersToNotify', membersToNotify);
+      this.props.socket.emit('UPDATE_MEMBERS', membersToNotify);
       browserHistory.push('/team/chat');
     });
   }
@@ -75,7 +92,7 @@ ManageTeamBox.contextTypes = {
 };
 
 function mapStateToProps(state) {
-  return {activeTeam: state.teams.active, teams: state.teams};
+  return {activeTeam: state.teams.active, teams: state.teams, socket: state.user.socket};
 }
 
 export default connect(mapStateToProps, { updateTeam, deleteTeam, setActiveTeam, getUserTeams })(ManageTeamBox);
