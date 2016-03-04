@@ -1,20 +1,23 @@
 var express = require("express"),
-  cors = require("cors"),
-  bodyParser = require("body-parser"),
-  mongoose = require("mongoose"),
-  cors = require("cors"),
-  session = require("express-session"),
-  passport = require("passport"),
-  localStrategy = require("passport-local"),
-  path = require("path");
+    cors = require("cors"),
+    bodyParser = require("body-parser"),
+    mongoose = require("mongoose"),
+    cors = require("cors"),
+    session = require("express-session"),
+    passport = require("passport"),
+    localStrategy = require("passport-local"),
+    path = require("path"),
+    https = require('https');
+
+var LEX = require('letsencrypt-express').testing();
 
 var MongoStore = require("connect-mongo")(session);
 
-var	chatCtrl = require("./controllers/chatCtrl"),
+var chatCtrl = require("./controllers/chatCtrl"),
     userCtrl = require("./controllers/userCtrl"),
-	teamCtrl = require("./controllers/teamCtrl"),
-	User = require("./models/userModel"),
-	config = require("./config");
+	  teamCtrl = require("./controllers/teamCtrl"),
+	  User = require("./models/userModel"),
+	  config = require("./config");
 
 passport.use("local", new localStrategy({
 	usernameField: "email",
@@ -51,6 +54,7 @@ passport.use("local", new localStrategy({
 passport.serializeUser(function(user, done) {
 	done(null, user);
 });
+
 passport.deserializeUser(function(user, done) {
 	done(null, user);
 });
@@ -61,35 +65,60 @@ function ensureAuthenticated(req, res, next) {
 }
 
 var app = express();
-var server = require("http").Server(app);
+
+var redirectApp = express();
+
+redirectApp.get('*', function(req, res) {
+  res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+  res.send();
+});
+
+redirectApp.listen(80);
+
+var lex = LEX.create({
+	configDir: require('os').homedir() + '/letsencrypt/etc',
+	approveRegistration: function(hostname, cb) {
+		cb(null, {
+			domains: ['reylink.com', 'www.reylink.com'],
+			email: 'viscid@gmail.com',
+			agreeTos: true
+		});
+	}
+});
+
+
+var server = https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app));
+
 var io = require("socket.io")(server);
+
+server.listen(443);
 
 io.use(function(socket, next) {
 	sessionMiddleware(socket.request, {}, next);
 });
 
 io.on("connection", function(socket) {
-	console.log('user connected');
   	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
-
   		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
   			return io.sockets.connected[item].request.session.passport.user._id;
   		}
   	});
+  	
   	for (var i = socketsArray.length - 1; i >= 0 ; i--) {
   		if (!socketsArray[i]) {
   			socketsArray.splice(i, 1);
   		}
   	}
-  	console.log(socketsArray);
-	socket.emit('ONLINE_USERS', socketsArray);
+
+  	socket.emit('ONLINE_USERS', socketsArray);
 
   	var activeTeam;
-	socket.on('JOIN_ROOMS', function(teamsToJoin) {
-    	teamsToJoin.forEach(function(team) {
-      		socket.join(team._id);
-    	});
-	});
+  	
+  	socket.on('JOIN_ROOMS', function(teamsToJoin) {
+      	teamsToJoin.forEach(function(team) {
+        		socket.join(team._id);
+      	});
+  	});
 
   	socket.on('I_CAME_ONLINE', function(user) {
   		socket.request.session = {passport:{user:{_id:user}}};
@@ -189,7 +218,6 @@ io.on("connection", function(socket) {
   })
 
   socket.on('disconnect', function() {
-	console.log('user disconnect');
   	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
 
   		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
@@ -209,11 +237,7 @@ io.on("connection", function(socket) {
 app.use(bodyParser.json());
 app.use(cors());
 
-
-
-
 app.use(express.static(path.resolve("public/")));
-
 
 var mongoUri = config.mongoUri;
 
@@ -231,7 +255,6 @@ var sessionMiddleware = session({
 });
 
 app.use(sessionMiddleware);
-
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -266,13 +289,5 @@ app.post("/team/addMembers/:teamId", teamCtrl.addMembers);
 app.put("/team/removeMember/:teamId", teamCtrl.removeMember);
 
 app.get(/^(?!.*(images))/, function (req, res) {
-
-
-
  res.sendFile(path.resolve("public/index.html"));
-
-});
-
-server.listen(config.port, function() {
-  console.log("port", config.port + "!");
 });
