@@ -45,6 +45,7 @@ class CreateTeamBox extends Component {
 
     this.props.createTeam({teamName: this.state.teamName}).then((response) => {
       this.props.setActiveTeam(response.payload.data.active);
+      this.props.socket.emit('JOIN_ROOMS', response.payload.data.all);
     });
 
     this.setState({
@@ -61,7 +62,7 @@ CreateTeamBox.contextTypes = {
 };
 
 function mapStateToProps(state) {
-  return {};
+  return {socket: state.user.socket};
 }
 
 export default connect(mapStateToProps, { createTeam, setActiveTeam })(CreateTeamBox);

@@ -80,6 +80,13 @@ io.on("connection", function(socket) {
 	socket.emit('ONLINE_USERS', socketsArray);
 
 	socket.on('JOIN_ROOMS', function(teamsToJoin) {
+		Object.keys(socket.adapter.rooms).forEach(function(room) {
+			if (room[0] === '/') {
+				return ;
+			} else {
+				socket.leave(room);
+			}
+		})
     	teamsToJoin.forEach(function(team) {
       		socket.join(team._id);
     	});
