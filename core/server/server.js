@@ -76,20 +76,26 @@ io.on("connection", function(socket) {
   			return io.sockets.connected[item].request.session.passport.user._id;
   		}
   	});
-  	for (var i = socketsArray.length - 1; i >= 0 ; i--) {
-  		if (!socketsArray[i]) {
-  			socketsArray.splice(i, 1);
-  		}
-  	}
-  	console.log(socketsArray);
+
 	socket.emit('ONLINE_USERS', socketsArray);
 
-  	var activeTeam;
 	socket.on('JOIN_ROOMS', function(teamsToJoin) {
+		Object.keys(socket.adapter.rooms).forEach(function(room) {
+			if (room[0] === '/') {
+				return ;
+			} else {
+				socket.leave(room);
+			}
+		})
     	teamsToJoin.forEach(function(team) {
       		socket.join(team._id);
     	});
 	});
+	socket.on('LEAVE_ROOMS', function(teamsToLeave) {
+		teamsToLeave.forEach(function(team) {
+			socket.leave(team._id);
+		})
+	})
 
   	socket.on('I_CAME_ONLINE', function(user) {
   		socket.request.session = {passport:{user:{_id:user}}};
@@ -99,12 +105,35 @@ io.on("connection", function(socket) {
   	  			return io.sockets.connected[item].request.session.passport.user._id;
   	  		}
   	  	});
-  	  	for (var i = socketsArray.length - 1; i >= 0 ; i--) {
-  	  		if (!socketsArray[i]) {
-  	  			socketsArray.splice(i, 1);
-  	  		}
-  	  	}
+
   		io.emit('ONLINE_USERS', socketsArray);
+
+  		/*teamCtrl.getTeamsForSocket(user).then(function(userTeams) {
+  			var newSocketsArray = Object.keys(io.sockets.connected).map(function(item) {
+  				if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
+  					return {
+  						sessionId: io.sockets.connected[item].request.session.passport.user._id, 
+  						socketId: io.sockets.connected[item].id
+  					}
+  				}
+  			});
+
+  			userTeams.map(function(team) {
+  				var inSessionCounter = 0;
+  				newSocketsArray.map(function(socketUser) {
+  					if (team.members.indexOf(socketUser.sessionId) !== -1) {
+  						inSessionCounter++;
+  					}
+  				})
+  				if (inSessionCounter === 1) {
+  					chatCtrl.createChatSession(team._id).then(function(teamChatSessions) {
+  					});
+  				} else {
+					chatCtrl.retrieveTeamChatSessions(team._id).then(function(teamChatSessions) {
+					});
+  				}
+  			})
+  		});*/
 	});
 
 	socket.on('I_LOGGED_OFF', function(user) {
@@ -117,11 +146,6 @@ io.on("connection", function(socket) {
 			}
 		});
 
-		for (var i = socketsArray.length - 1; i >= 0 ; i--) {
-			if (!socketsArray[i].sessionId) {
-				socketsArray.splice(i, 1);
-			}
-		}
 		socketsArray.map(function(socketUser) {
 			if (socketUser.sessionId === user) {
 				io.sockets.connected[socketUser.socketId].disconnect();
@@ -146,14 +170,16 @@ io.on("connection", function(socket) {
 				var inSession = false;
 				newSocketsArray.map(function(socketUser) {
 					if (team.members.indexOf(socketUser.sessionId) !== -1) {
-						console.log(socketUser.sessionId, team.members.indexOf(socketUser.sessionId))
 						inSession = true;
 					}
 				})
 				if (inSession === true) {
-					console.log('someone in team session: ', team.teamName);
+
 				} else {
-					console.log('no one in team session: ', team.teamName);
+
+					/*chatCtrl.createChatSession(team._id).then(function(response) {
+						console.log('chat session created', response);
+					}) *********DO NOT DELETE THIS!!********* */
 				}
 			})
 		});
@@ -167,6 +193,7 @@ io.on("connection", function(socket) {
   });
 
   socket.on('UPDATE_MEMBERS', function(memberIdArray) {
+  	console.log()
   	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
   		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
   			return {
@@ -175,12 +202,6 @@ io.on("connection", function(socket) {
   			}
   		}
   	});
-
-  	for (var i = socketsArray.length - 1; i >= 0 ; i--) {
-  		if (!socketsArray[i].sessionId) {
-  			socketsArray.splice(i, 1);
-  		}
-  	}
   	socketsArray.map(function(connectedUser) {
   		if (memberIdArray.indexOf(connectedUser.sessionId) !== -1) {
   			io.sockets.connected[connectedUser.socketId].emit('UPDATE_TEAMS');
@@ -196,13 +217,9 @@ io.on("connection", function(socket) {
   			return io.sockets.connected[item].request.session.passport.user._id;
   		}
   	});
-  	for (var i = socketsArray.length - 1; i >= 0 ; i--) {
-  		if (!socketsArray[i]) {
-  			socketsArray.splice(i, 1);
-  		}
-  	}
+
 	io.emit('ONLINE_USERS', socketsArray);
-});
+  });
 
 });
 

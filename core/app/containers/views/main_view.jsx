@@ -17,6 +17,7 @@ class MainView extends Component {
 
 
   componentWillReceiveProps(props) {
+
     if (!this.props.socket && props.socket) {
       props.socket.on("RECEIVE_MESSAGE", function(message) {
         props.addMessage(message);
@@ -25,9 +26,10 @@ class MainView extends Component {
         props.onlineUsers(users);
       })
       props.socket.on('UPDATE_TEAMS', function() {
-        console.log('updating teams after team invite');
         props.getUser();
-        props.getUserTeams();
+        props.getUserTeams().then((teams) => {
+          props.socket.emit('JOIN_ROOMS', teams.payload.data);
+        });
       })
     } else if (this.props.socket && !props.socket) {
       this.props.socket.off("RECEIVE_MESSAGE");

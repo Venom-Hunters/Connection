@@ -49,7 +49,7 @@ class LoginBox extends Component {
             </div>
 
             <div className="pure-controls">
-              <button type="submit" className="pure-button pure-button-primary">Log in</button>
+              <button type="submit" className="pure-button pure-button-primary" style={{marginRight: '1em'}}>Log in</button>
               <Link to="register" className="pure-button pure-button-secondary">Register</Link>
             </div>
 
