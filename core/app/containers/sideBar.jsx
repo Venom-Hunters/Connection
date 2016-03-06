@@ -14,7 +14,6 @@ class SideBar extends Component{
 	}
 
 	componentWillMount() {
-		console.log('componentWillMount');
         this.props.getUser().then( () => {
             this.props.getUserTeams().then( () => {
                 this.props.socket.emit('JOIN_ROOMS', this.props.teams);
@@ -23,22 +22,21 @@ class SideBar extends Component{
     }
 
 	componentWillReceiveProps(props) {
-/*		console.log('new active team', props.activeTeam);
-		console.log('old activeTeam', this.props.activeTeam);*/
+
 		/*console.log('new prop teams',props.teams);
 		console.log('old teams', this.props.teams);
 		if (props.teams && (props.teams.length === 0)) {
 			console.log('You are not on any teams');
 		}
-		else if (this.props.teams && (this.props.teams.length < props.teams.length)) {
+		else if (this.props.teams && (this.state.teams.length < props.teams.length)) {
 			console.log('You joined a team');
-		} else if(this.props.teams && (this.props.teams.length > props.teams.length)) {
+		} else if(this.props.teams && (this.state.teams.length > props.teams.length)) {
 			console.log('You left a team');
-		}
+		}*/
 		this.setState({
 			teams: props.teams.all,
 			activeTeam: props.activeTeam
-		});*/
+		});
 
 		if (this.props.messages && this.props.messages.length && props.messages && props.messages.length)
 		{

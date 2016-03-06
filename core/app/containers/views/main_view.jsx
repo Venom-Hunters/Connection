@@ -27,7 +27,9 @@ class MainView extends Component {
       })
       props.socket.on('UPDATE_TEAMS', function() {
         props.getUser();
-        props.getUserTeams();
+        props.getUserTeams().then((teams) => {
+          props.socket.emit('JOIN_ROOMS', teams.payload.data);
+        });
       })
     } else if (this.props.socket && !props.socket) {
       this.props.socket.off("RECEIVE_MESSAGE");
