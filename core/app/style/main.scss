@@ -14,7 +14,7 @@ a {
 
 video {
 	height: 200px;
-	margin: 0.25em;
+	margin: 0 0.25em;
 	padding: 0;
 	display: inline-block;
 }
@@ -315,8 +315,8 @@ textarea {
 .chatInput {
 	display: flex;
 	flex: 1;
-	max-height: 3em;
-	min-height: 3em;
+	max-height: 100px;
+	min-height: 100px;
 	margin-bottom: 2em;
 	box-sizing: border-box;
 	padding: 1em;
