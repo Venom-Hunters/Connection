@@ -2,7 +2,7 @@ import SideBar from "../sideBar";
 import React, {Component, PropTypes} from "react";
 import {bindActionCreators} from "redux";
 
-import { getUser, initiateSocket, addMessage, onlineUsers, getUserTeams } from '../../actions/index';
+import { getUser, initiateSocket, addMessage, onlineUsers, getUserTeams, startChatSession, endChatSession } from '../../actions/index';
 import { connect} from 'react-redux';
 
 import { browserHistory } from 'react-router';
@@ -17,7 +17,6 @@ class MainView extends Component {
 
 
   componentWillReceiveProps(props) {
-
     if (!this.props.socket && props.socket) {
       props.socket.on("RECEIVE_MESSAGE", function(message) {
         props.addMessage(message);
@@ -30,6 +29,14 @@ class MainView extends Component {
         props.getUserTeams().then((teams) => {
           props.socket.emit('JOIN_ROOMS', teams.payload.data);
         });
+      })
+      props.socket.on('CHAT_SESSION_STARTED', function(activeTeam) {
+        console.log('chat: ', activeTeam);
+        props.startChatSession(activeTeam);
+      })
+      props.socket.on('CHAT_SESSION_ENDED', function(activeTeam) {
+        console.log('chat session ended --->',activeTeam);
+        props.endChatSession(activeTeam);
       })
     } else if (this.props.socket && !props.socket) {
       this.props.socket.off("RECEIVE_MESSAGE");
@@ -68,11 +75,11 @@ MainView.contextTypes = {
 };
 
 function mapStateToProps(state) {
-  return {user: state.user, socket: state.user.socket};
+  return {user: state.user, socket: state.user.socket, activeTeam: state.teams.active};
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators ({ getUser, initiateSocket, addMessage, onlineUsers, getUserTeams }, dispatch);
+  return bindActionCreators ({ getUser, initiateSocket, addMessage, onlineUsers, getUserTeams, startChatSession, endChatSession }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainView);

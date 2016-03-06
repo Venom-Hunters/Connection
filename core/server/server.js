@@ -176,24 +176,62 @@ io.on("connection", function(socket) {
 				if (inSession === true) {
 
 				} else {
-
-					/*chatCtrl.createChatSession(team._id).then(function(response) {
-						console.log('chat session created', response);
-					}) *********DO NOT DELETE THIS!!********* */
+					chatCtrl.deleteNullSessionTeamChats(team._id).then(function(response) {
+						console.log('response', response);
+					});
 				}
 			})
 		});
 
 	})
 
+	socket.on('START_CHAT_SESSION', function(team) {
+		chatCtrl.createChatSession(team._id).then(function(chatSession) {
+			var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
+				if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
+					return {
+						sessionId: io.sockets.connected[item].request.session.passport.user._id, 
+						socketId: io.sockets.connected[item].id
+					}
+				}
+			});
+			team.sessionId = chatSession._id;
+			socketsArray.map(function(connectedUser) {
+				if (chatSession.teamId.members.indexOf(connectedUser.sessionId) !== -1) {
+					io.sockets.connected[connectedUser.socketId].emit('CHAT_SESSION_STARTED', team);
+				}
+			})
+		});
+	})
+
+	socket.on('END_CHAT_SESSION', function(team) {
+		chatCtrl.endChatSession(team.sessionId).then(function(chatSession) {
+			var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
+				if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
+					return {
+						sessionId: io.sockets.connected[item].request.session.passport.user._id, 
+						socketId: io.sockets.connected[item].id
+					}
+				}
+			});
+			team.sessionId = null;
+			socketsArray.map(function(connectedUser) {
+				if (chatSession.teamId.members.indexOf(connectedUser.sessionId) !== -1) {
+					io.sockets.connected[connectedUser.socketId].emit('CHAT_SESSION_ENDED', team);
+				}
+			})
+		})
+	})
+
   socket.on("SEND_MESSAGE", function(payload) {
+  	console.log(payload);
   	chatCtrl.create(payload).then(function(result) {
+  		
   		socket.server.to(payload.teamId._id).emit("RECEIVE_MESSAGE", result);
   	});
   });
 
   socket.on('UPDATE_MEMBERS', function(memberIdArray) {
-  	console.log()
   	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
   		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
   			return {
@@ -266,8 +304,6 @@ app.delete("/user/delete/:userId", userCtrl.deleteUser);
 //chat endpoints
 app.post("/chat/:teamId", chatCtrl.create);
 app.get("/chat/:teamId", chatCtrl.readAllChatsInTeam);
-//delete team session chats when last person logs out?
-app.delete("/chat/:teamId", chatCtrl.deleteTeamSessionChats);
 
 //team endpoints
 app.post("/team/create", teamCtrl.create);

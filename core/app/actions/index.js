@@ -16,6 +16,7 @@ export const GET_ACTIVE_TEAM_CHATS = "GET_ACTIVE_TEAM_CHATS";
 export const SEND_MESSAGE = "SEND_MESSAGE";
 export const JOIN_ROOM = "JOIN_ROOM";
 export const ADD_MESSAGE = "ADD_MESSAGE";
+export const CHAT_SESSION = 'CHAT_SESSION';
 export const GET_MESSAGE = "GET_MESSAGE";
 
 export const CREATE_TEAM = "CREATE_TEAM";
@@ -115,6 +116,22 @@ export function getActiveTeamChats(teamId) {
   return {
     type: GET_ACTIVE_TEAM_CHATS,
     payload: request
+  };
+}
+
+export function startChatSession(activeTeam) {
+  
+  return {
+    type: CHAT_SESSION,
+    payload: activeTeam
+  };
+}
+
+export function endChatSession(activeTeam) {
+
+  return {
+    type: CHAT_SESSION,
+    payload: activeTeam
   };
 }
 

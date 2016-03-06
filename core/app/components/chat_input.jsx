@@ -36,6 +36,7 @@ class ChatInput extends Component {
       message: this.state.message,
       _id: this.props.user._id
     };
+    console.log(this.props.activeTeam);
     this.props.socket.emit('SEND_MESSAGE', messageObj);
   }
 
