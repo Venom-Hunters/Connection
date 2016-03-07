@@ -22,6 +22,17 @@ class SideBar extends Component{
     }
 
 	componentWillReceiveProps(props) {
+
+		/*console.log('new prop teams',props.teams);
+		console.log('old teams', this.props.teams);
+		if (props.teams && (props.teams.length === 0)) {
+			console.log('You are not on any teams');
+		}
+		else if (this.props.teams && (this.state.teams.length < props.teams.length)) {
+			console.log('You joined a team');
+		} else if(this.props.teams && (this.state.teams.length > props.teams.length)) {
+			console.log('You left a team');
+		}*/
 		this.setState({
 			teams: props.teams.all,
 			activeTeam: props.activeTeam
@@ -103,14 +114,15 @@ class SideBar extends Component{
 	}
 
 	renderTeamList() {
+
 		if (this.props.teams && this.props.teams.length) {
 				return (
 					<ul className="teamList">
 						{this.props.teams.map((team) => {
-							if (this.state.activeTeam && (team._id === this.state.activeTeam._id)) {
+							if (this.props.activeTeam && (team._id === this.props.activeTeam._id)) {
 								return (
 									<li key={team._id} className="activeTeam">
-										{this.renderActiveTeam(this.state.activeTeam)}
+										{this.renderActiveTeam(this.props.activeTeam)}
 									</li>
 								);
 							}
@@ -118,7 +130,7 @@ class SideBar extends Component{
 
 						{this.props.teams.map((team) => {
 
-							if (this.state.activeTeam && (team._id === this.state.activeTeam._id)) {
+							if (this.props.activeTeam && (team._id === this.props.activeTeam._id)) {
 								return;
 							}
 							return <li id={'team_' + team._id} key={team._id} className="team"> <Link to="/team/chat" onClick={this.clickTeam.bind(this, team)}> {team.teamName} </Link> </li>;
