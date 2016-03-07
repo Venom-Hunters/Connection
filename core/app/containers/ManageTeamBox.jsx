@@ -79,8 +79,7 @@ class ManageTeamBox extends Component {
         return member._id;
       })
     this.props.deleteTeam(this.props.activeTeam._id).then(() => {
-      this.props.getUserTeams();
-      console.log('membersToNotify', membersToNotify);
+      console.log('members to notify: ', membersToNotify);
       this.props.socket.emit('UPDATE_MEMBERS', membersToNotify);
       browserHistory.push('/team/chat');
     });
