@@ -74,9 +74,12 @@ input {
 }
 
 .gravatarIcon > img {
-	border-radius: 5px;
+	border-radius: 4px;
 }
 
+.logo{
+	margin-left: 80%;
+}
 /* Content Area */
 
 .content {
@@ -207,27 +210,6 @@ input {
 	display: inline;
 }
 
-/* .hoverable {
-	cursor: pointer;
-
-}
-
-.normal {
-	display: inline;
-}
-
-.hover {
-	display: none;
-}
-
-.hoverable:hover .normal {
-	display: none;
-}
-
-.hoverable:hover .hover {
-	display: inline;
-} */
-
 .activeTeam {
 	padding: 1em 0;
 }
@@ -324,4 +306,74 @@ textarea {
 .chatInputTextarea {
 	display: flex;
 	flex: 1;
+}
+
+.guessTxt{
+	display: flex;
+}
+
+.userTxt{
+	display: flex;
+}
+
+
+.message{
+	width: auto;
+	min-width: 12%;
+	max-width: 700px;
+	height: auto;
+	color: black;
+	word-break: keep-all;
+	margin-top: 0.5em;
+	margin-left: 1em;
+}
+
+.user{
+	flex-direction: column;
+}
+
+.guess{
+	flex-direction: column;
+}
+
+.userName{
+	font-weight: bold;
+}
+
+.time{
+	font-style: italic;
+	color: #999;
+}
+
+.info{
+	height: 30%;
+	width: 40%;
+	padding: 2em;
+	border: 1px solid #D5D5D5;
+	margin-top: 5%;
+}
+
+.align{
+	display: flex;
+	justify-content: center;
+}
+
+.infoButton{
+	color: #F99;
+	margin-left: 0.2em;
+	font-size: 1.5em;
+}
+.infoTitle{
+	color: #3F6BB4;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+
+.info p {
+	font-weight: bold;
+}
+
+.infoList li {
+	padding: 0.5em 0;
 }

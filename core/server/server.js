@@ -101,14 +101,13 @@ io.on("connection", function(socket) {
   	  	});
 
   		io.emit('ONLINE_USERS', socketsArray);
-
 	});
 
 	socket.on('I_LOGGED_OFF', function(user) {
 		var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
 			if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
 				return {
-					sessionId: io.sockets.connected[item].request.session.passport.user._id, 
+					sessionId: io.sockets.connected[item].request.session.passport.user._id,
 					socketId: io.sockets.connected[item].id
 				}
 			}
@@ -118,14 +117,14 @@ io.on("connection", function(socket) {
 			if (socketUser.sessionId === user) {
 				io.sockets.connected[socketUser.socketId].disconnect();
 			}
-		})
+		});
 		teamCtrl.getTeamsForSocket(user).then(function(userTeams) {
 			var newSocketsArray = Object.keys(io.sockets.connected).map(function(item) {
 				if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
 					return {
-						sessionId: io.sockets.connected[item].request.session.passport.user._id, 
+						sessionId: io.sockets.connected[item].request.session.passport.user._id,
 						socketId: io.sockets.connected[item].id
-					}
+					};
 				}
 			});
 
@@ -140,7 +139,7 @@ io.on("connection", function(socket) {
 					if (team.members.indexOf(socketUser.sessionId) !== -1) {
 						inSession = true;
 					}
-				})
+				});
 				if (inSession === true) {
 
 				} else {
@@ -168,7 +167,7 @@ io.on("connection", function(socket) {
 				if (chatSession.teamId.members.indexOf(connectedUser.sessionId) !== -1) {
 					io.sockets.connected[connectedUser.socketId].emit('CHAT_SESSION_STARTED', team);
 				}
-			})
+			});
 		});
 	})
 
@@ -202,7 +201,7 @@ io.on("connection", function(socket) {
   	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
   		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
   			return {
-  				sessionId: io.sockets.connected[item].request.session.passport.user._id, 
+  				sessionId: io.sockets.connected[item].request.session.passport.user._id,
   				socketId: io.sockets.connected[item].id
   			}
   		}
