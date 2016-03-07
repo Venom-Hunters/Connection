@@ -68,6 +68,7 @@ class ChatBody extends Component {
     if (this.props.messages) {
       return (
         <div id="chatBody" className="chatBody">
+          {this.renderChatSessionControls()}
           {this.renderMessages()}
         </div>
       )
@@ -76,7 +77,30 @@ class ChatBody extends Component {
         <div>Loading Messages...</div>
       );
     }
+  }
 
+  renderChatSessionControls() {
+    if (!this.props.activeTeam || !this.props.activeTeam.sessionId) {
+      return (
+        <div>
+          <button onClick={this.startChatSession} className="pure-button pure-button-primary">Start Session</button>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <button onClick={this.endChatSession} className="pure-button pure-button-secondary">End Session</button>
+        </div>
+      );
+    }
+  }
+
+  startChatSession() {
+    this.props.socket.emit('START_CHAT_SESSION', this.props.activeTeam);
+  }
+
+  endChatSession() {
+    this.props.socket.emit('END_CHAT_SESSION', this.props.activeTeam);
   }
 }
 
