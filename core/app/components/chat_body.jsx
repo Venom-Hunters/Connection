@@ -70,7 +70,7 @@ class ChatBody extends Component {
         <div id="chatBody" className="chatBody">
           {this.renderMessages()}
         </div>
-      );
+      )
     } else {
       return (
         <div>Loading Messages...</div>

@@ -86,7 +86,7 @@ io.on("connection", function(socket) {
 			} else {
 				socket.leave(room);
 			}
-		})
+		});
     	teamsToJoin.forEach(function(team) {
       		socket.join(team._id);
     	});
@@ -94,8 +94,8 @@ io.on("connection", function(socket) {
 	socket.on('LEAVE_ROOMS', function(teamsToLeave) {
 		teamsToLeave.forEach(function(team) {
 			socket.leave(team._id);
-		})
-	})
+		});
+	});
 
   	socket.on('I_CAME_ONLINE', function(user) {
   		socket.request.session = {passport:{user:{_id:user}}};
@@ -142,7 +142,7 @@ io.on("connection", function(socket) {
 				return {
 					sessionId: io.sockets.connected[item].request.session.passport.user._id,
 					socketId: io.sockets.connected[item].id
-				}
+				};
 			}
 		});
 
@@ -184,7 +184,7 @@ io.on("connection", function(socket) {
 			});
 		});
 
-	})
+	});
 
   socket.on("SEND_MESSAGE", function(payload) {
   	chatCtrl.create(payload).then(function(result) {
@@ -193,21 +193,20 @@ io.on("connection", function(socket) {
   });
 
   socket.on('UPDATE_MEMBERS', function(memberIdArray) {
-  	console.log()
   	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
   		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
   			return {
   				sessionId: io.sockets.connected[item].request.session.passport.user._id,
   				socketId: io.sockets.connected[item].id
-  			}
+  			};
   		}
   	});
   	socketsArray.map(function(connectedUser) {
   		if (memberIdArray.indexOf(connectedUser.sessionId) !== -1) {
   			io.sockets.connected[connectedUser.socketId].emit('UPDATE_TEAMS');
   		}
-  	})
-  })
+  	});
+  });
 
   socket.on('disconnect', function() {
 	console.log('user disconnect');
