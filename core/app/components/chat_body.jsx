@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
+
+import Avatar from "./avatar";
 import {getActiveTeamChats} from "../actions/index";
 
 class ChatBody extends Component {
@@ -38,24 +40,22 @@ class ChatBody extends Component {
         if (message.userId._id === this.props.user._id) {
           return (
             <div  key={message._id} className="userTxt">
+              <Avatar email={this.props.user.email}/>
               <p className="message user">
-                {message.userId.userName}:
+                <span className="userName">{message.userId.userName}</span> <span className="time">({date.toLocaleTimeString('en-US')})</span>
                 <br/>
                 {message.message}
-                <br/>
-                {date.toLocaleTimeString('en-US')}
               </p>
             </div>
           )
           }else {
             return (
               <div key={message._id} className="guessTxt">
+                <Avatar email={message.userId.email}/>
                 <p className="message guess">
-                  {message.userId.userName}:
+                  <span className="userName">{message.userId.userName}</span> <span className="time">({date.toLocaleTimeString('en-US')})</span>
                   <br/>
                   {message.message}
-                  <br/>
-                  {date.toLocaleTimeString('en-US')}
                 </p>
               </div>
             )

@@ -42,9 +42,9 @@ class HeaderBar extends Component {
 						<li className="pure-menu-item">
 							{this.props.user && this.props.user.userName ? <Link className="pure-menu-link" to="/"> {this.props.user.userName} </Link> : ""}
 						</li>
-
 						{ this.renderLogoutButton(this.props.user) }
 	    		</ul>
+					<img src="../../../assets/img/reylink-logo-sm.png" className="pure-menu-heading pure-menu-link logo"/>
 				</div>
 		</div>
 		);

@@ -112,7 +112,7 @@ io.on("connection", function(socket) {
   			var newSocketsArray = Object.keys(io.sockets.connected).map(function(item) {
   				if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
   					return {
-  						sessionId: io.sockets.connected[item].request.session.passport.user._id, 
+  						sessionId: io.sockets.connected[item].request.session.passport.user._id,
   						socketId: io.sockets.connected[item].id
   					}
   				}
@@ -140,7 +140,7 @@ io.on("connection", function(socket) {
 		var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
 			if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
 				return {
-					sessionId: io.sockets.connected[item].request.session.passport.user._id, 
+					sessionId: io.sockets.connected[item].request.session.passport.user._id,
 					socketId: io.sockets.connected[item].id
 				}
 			}
@@ -150,14 +150,14 @@ io.on("connection", function(socket) {
 			if (socketUser.sessionId === user) {
 				io.sockets.connected[socketUser.socketId].disconnect();
 			}
-		})
+		});
 		teamCtrl.getTeamsForSocket(user).then(function(userTeams) {
 			var newSocketsArray = Object.keys(io.sockets.connected).map(function(item) {
 				if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
 					return {
-						sessionId: io.sockets.connected[item].request.session.passport.user._id, 
+						sessionId: io.sockets.connected[item].request.session.passport.user._id,
 						socketId: io.sockets.connected[item].id
-					}
+					};
 				}
 			});
 
@@ -172,7 +172,7 @@ io.on("connection", function(socket) {
 					if (team.members.indexOf(socketUser.sessionId) !== -1) {
 						inSession = true;
 					}
-				})
+				});
 				if (inSession === true) {
 
 				} else {
@@ -181,7 +181,7 @@ io.on("connection", function(socket) {
 						console.log('chat session created', response);
 					}) *********DO NOT DELETE THIS!!********* */
 				}
-			})
+			});
 		});
 
 	})
@@ -197,7 +197,7 @@ io.on("connection", function(socket) {
   	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
   		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
   			return {
-  				sessionId: io.sockets.connected[item].request.session.passport.user._id, 
+  				sessionId: io.sockets.connected[item].request.session.passport.user._id,
   				socketId: io.sockets.connected[item].id
   			}
   		}
