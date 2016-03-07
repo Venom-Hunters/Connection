@@ -80,18 +80,25 @@ io.on("connection", function(socket) {
 	socket.emit('ONLINE_USERS', socketsArray);
 
 	socket.on('JOIN_ROOMS', function(teamsToJoin) {
-		Object.keys(socket.adapter.rooms).forEach(function(room) {
-			if (room[0] === '/') {
-				return ;
-			} else {
-				socket.leave(room);
-			}
-		})
+		// Object.keys(socket.adapter.rooms).forEach(function(room) {
+		// 	if (room[0] === '/') {
+		// 		return ;
+		// 	} else {
+		// 		/*console.log('leaving room: ', room);*/
+		// 		socket.leave(room);
+		// 	}
+		// })
     	teamsToJoin.forEach(function(team) {
+    		/*console.log('joining room: ', team._id);*/
+    		/*if(socket.server.sockets.adapter.rooms[team._id]){
+    		console.log('users in room:',socket.server.sockets.adapter.rooms[team._id]);
+    		}*/
       		socket.join(team._id);
+      		/*console.log('users in room:',socket.server.sockets.adapter.rooms[team._id]);*/
     	});
 	});
 	socket.on('LEAVE_ROOMS', function(teamsToLeave) {
+		console.log("Just to make sure it's not <_<");
 		teamsToLeave.forEach(function(team) {
 			socket.leave(team._id);
 		})
@@ -224,9 +231,10 @@ io.on("connection", function(socket) {
 	})
 
   socket.on("SEND_MESSAGE", function(payload) {
-  	console.log(payload);
+  	
   	chatCtrl.create(payload).then(function(result) {
-  		
+/*  		console.log('message sent to room:', payload.teamId._id);
+  		console.log('users in room:',socket.server.sockets.adapter.rooms[payload.teamId._id].length);*/
   		socket.server.to(payload.teamId._id).emit("RECEIVE_MESSAGE", result);
   	});
   });
@@ -242,6 +250,7 @@ io.on("connection", function(socket) {
   	});
   	socketsArray.map(function(connectedUser) {
   		if (memberIdArray.indexOf(connectedUser.sessionId) !== -1) {
+  			/*console.log('sending to ',connectedUser.socketId);*/
   			io.sockets.connected[connectedUser.socketId].emit('UPDATE_TEAMS');
   		}
   	})

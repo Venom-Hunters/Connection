@@ -31,7 +31,7 @@ class SideBar extends Component{
 		{
 			let newMessage = props.messages[0];
 			if (this.props.messages[0]._id !== newMessage._id) {
-				if (newMessage.teamId._id !== this.props.activeTeam._id) {
+				if (this.props.activeTeam && (newMessage.teamId._id !== this.props.activeTeam._id)) {
 					var activeTeam = document.getElementById('team_' + newMessage.teamId._id);
 					if (activeTeam) {
 						activeTeam.className = "teamActivity";

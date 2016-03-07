@@ -37,5 +37,6 @@ module.exports = {
       "", ".js", ".jsx"
     ]
   },
-  watch:true
+  watch:true, 
+  devtool:"inline-source-map"
 };

@@ -60,8 +60,22 @@ module.exports = {
 			.populate('members teamLead')
 			.exec(function(err, teams) {
 				if (err) res.sendStatus(500);
-				else if (!teams) res.sendStatus(404);
-				else res.send(teams);
+				else if (!teams) return res.sendStatus(404);
+				else {
+					if (teams.length === 0) {
+						User.findById(req.user._id, function(err, user) {
+							if (err) return res.sendStatus(500);
+							else {
+								console.log('getting teams', user);
+								user.lastTeamViewed = null;
+								user.save();
+								return res.send(teams);
+							}
+						});
+					} else {
+						return res.send(teams);
+					}
+				}
 			});
 		} else {
 			res.sendStatus(500);
