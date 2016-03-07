@@ -44,15 +44,11 @@ module.exports = {
 			User.findById(req.user._id, function(err, user) {
 	      if (err)
 	        return res.status(500).send(err);
-	    console.log(req.body);
 	      if (!req.body._id) {
-	      	console.log('setting last team viewed to null')
 	      	user.lastTeamViewed = null;
 	      } else {
-	      	  console.log('setting last team viewed to req.body');
 		      user.lastTeamViewed = req.body;
 	      }
-	      console.log('user', user);
 	      user.save(function(err, user) {
 	        if (err) return res.status(500).send(err);
 					return res.send();

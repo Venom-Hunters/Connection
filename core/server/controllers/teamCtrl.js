@@ -66,7 +66,6 @@ module.exports = {
 						User.findById(req.user._id, function(err, user) {
 							if (err) return res.sendStatus(500);
 							else {
-								console.log('getting teams', user);
 								user.lastTeamViewed = null;
 								user.save();
 								return res.send(teams);

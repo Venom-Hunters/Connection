@@ -15,7 +15,11 @@ class SideBar extends Component{
 
 	componentWillMount() {
         this.props.getUser().then( () => {
-            this.props.getUserTeams().then( () => {
+            this.props.getUserTeams().then( (response) => {
+            	/*console.log('response', response);
+            	if (response.payload.data.length === 0) {
+            		browserHistory.push('/');
+            	}*/
                 this.props.socket.emit('JOIN_ROOMS', this.props.teams);
             });
         });

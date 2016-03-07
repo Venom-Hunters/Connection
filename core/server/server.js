@@ -80,21 +80,8 @@ io.on("connection", function(socket) {
 	socket.emit('ONLINE_USERS', socketsArray);
 
 	socket.on('JOIN_ROOMS', function(teamsToJoin) {
-		// Object.keys(socket.adapter.rooms).forEach(function(room) {
-		// 	if (room[0] === '/') {
-		// 		return ;
-		// 	} else {
-		// 		/*console.log('leaving room: ', room);*/
-		// 		socket.leave(room);
-		// 	}
-		// })
     	teamsToJoin.forEach(function(team) {
-    		/*console.log('joining room: ', team._id);*/
-    		/*if(socket.server.sockets.adapter.rooms[team._id]){
-    		console.log('users in room:',socket.server.sockets.adapter.rooms[team._id]);
-    		}*/
       		socket.join(team._id);
-      		/*console.log('users in room:',socket.server.sockets.adapter.rooms[team._id]);*/
     	});
 	});
 	socket.on('LEAVE_ROOMS', function(teamsToLeave) {
@@ -115,32 +102,6 @@ io.on("connection", function(socket) {
 
   		io.emit('ONLINE_USERS', socketsArray);
 
-  		/*teamCtrl.getTeamsForSocket(user).then(function(userTeams) {
-  			var newSocketsArray = Object.keys(io.sockets.connected).map(function(item) {
-  				if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
-  					return {
-  						sessionId: io.sockets.connected[item].request.session.passport.user._id, 
-  						socketId: io.sockets.connected[item].id
-  					}
-  				}
-  			});
-
-  			userTeams.map(function(team) {
-  				var inSessionCounter = 0;
-  				newSocketsArray.map(function(socketUser) {
-  					if (team.members.indexOf(socketUser.sessionId) !== -1) {
-  						inSessionCounter++;
-  					}
-  				})
-  				if (inSessionCounter === 1) {
-  					chatCtrl.createChatSession(team._id).then(function(teamChatSessions) {
-  					});
-  				} else {
-					chatCtrl.retrieveTeamChatSessions(team._id).then(function(teamChatSessions) {
-					});
-  				}
-  			})
-  		});*/
 	});
 
 	socket.on('I_LOGGED_OFF', function(user) {
@@ -233,8 +194,6 @@ io.on("connection", function(socket) {
   socket.on("SEND_MESSAGE", function(payload) {
   	
   	chatCtrl.create(payload).then(function(result) {
-/*  		console.log('message sent to room:', payload.teamId._id);
-  		console.log('users in room:',socket.server.sockets.adapter.rooms[payload.teamId._id].length);*/
   		socket.server.to(payload.teamId._id).emit("RECEIVE_MESSAGE", result);
   	});
   });
@@ -250,7 +209,6 @@ io.on("connection", function(socket) {
   	});
   	socketsArray.map(function(connectedUser) {
   		if (memberIdArray.indexOf(connectedUser.sessionId) !== -1) {
-  			/*console.log('sending to ',connectedUser.socketId);*/
   			io.sockets.connected[connectedUser.socketId].emit('UPDATE_TEAMS');
   		}
   	})

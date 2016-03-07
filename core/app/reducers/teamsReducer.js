@@ -13,7 +13,6 @@ import {
 export default function(state = {all: [], active: {}}, action = "") {
   switch(action.type) {
     case(USER_GET):
-      /*console.log('USER_GET', action.payload.data.lastTeamViewed);*/
       return Object.assign({}, state, {
         active: action.payload.data.lastTeamViewed
       });
@@ -32,7 +31,6 @@ export default function(state = {all: [], active: {}}, action = "") {
       });
 
     case(SET_ACTIVE_TEAM):
-    console.log("SET_ACTIVE_TEAM", action.payload);
       return Object.assign({}, state, {
         active: action.payload
       });
@@ -48,7 +46,6 @@ export default function(state = {all: [], active: {}}, action = "") {
       });
 
     case(DELETE_TEAM):
-    /*console.log('DELETE_TEAM', action.payload.data);*/
       return Object.assign({}, state, {
         active: action.payload.data
       });

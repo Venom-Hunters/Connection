@@ -27,11 +27,10 @@ class MainView extends Component {
       props.socket.on('UPDATE_TEAMS', function() {
         props.getUser().then(() => {
           props.getUserTeams().then((teams) => {
-            console.log(teams.payload.data);
-            console.log('active team',this.props.activeTeam);
             if (!teams.payload.data.length) {
               this.props.setActiveTeam();
               props.getUser();
+              browserHistory.push('/');
             }
             else if (!this.props.activeTeam && teams.payload.data.length) {
               this.props.setActiveTeam(teams.payload.data[0]);
@@ -39,10 +38,9 @@ class MainView extends Component {
               let teamsToCheck = teams.payload.data.map((team) => {
                 return team._id;
               })
-              console.log(teamsToCheck);
               if (teamsToCheck.indexOf(this.props.activeTeam._id) === -1) {
-                console.log('match', teamsToCheck.indexOf(this.props.activeTeam._id));
                 this.props.setActiveTeam();
+                browserHistory.push('/');
               }
             }
             props.socket.emit('JOIN_ROOMS', teams.payload.data);
@@ -70,6 +68,10 @@ class MainView extends Component {
     if (!this.props.user._id) {
       browserHistory.push('/login');
     }
+    console.log(this.props.teams.active);
+    if (!this.props.teams.active) {
+      browserHistory.push('/');
+    }
   });
 
   }
@@ -95,7 +97,7 @@ MainView.contextTypes = {
 };
 
 function mapStateToProps(state) {
-  return {user: state.user, socket: state.user.socket, activeTeam: state.teams.active};
+  return {user: state.user, socket: state.user.socket, activeTeam: state.teams.active, teams: state.teams};
 }
 
 function mapDispatchToProps(dispatch) {
