@@ -5,21 +5,10 @@ import { connect } from 'react-redux';
 class VideoBox extends Component {
 
     constructor(props) {
-        super(props);
-
-        
+        super(props);    
     }
     
-    componentWillReceiveProps(props)
-    {
-
-    }
-
     render() {
-    
-    
-      
-    
          var infoObject = {
            roomname : this.props.activeTeam ? this.props.activeTeam._id : "lobby",
            /*provide a valid url for signalmaster otherwise this won't work*/
@@ -29,13 +18,7 @@ class VideoBox extends Component {
         return ( <div className="videoBox">
                <WebRtc roomname={this.props.activeTeam ? this.props.activeTeam._id : "lobby"} options = {infoObject} />
           </div>  );
-           
-
- 
    }   
-    
-
- 
  }
 
  function mapStateToProps(state) {
