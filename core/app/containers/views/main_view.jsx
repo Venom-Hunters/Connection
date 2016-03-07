@@ -30,7 +30,6 @@ class MainView extends Component {
             if (!teams.payload.data.length) {
               this.props.setActiveTeam();
               props.getUser();
-              browserHistory.push('/');
             }
             else if (!this.props.activeTeam && teams.payload.data.length) {
               this.props.setActiveTeam(teams.payload.data[0]);
@@ -40,7 +39,6 @@ class MainView extends Component {
               })
               if (teamsToCheck.indexOf(this.props.activeTeam._id) === -1) {
                 this.props.setActiveTeam();
-                browserHistory.push('/');
               }
             }
             props.socket.emit('JOIN_ROOMS', teams.payload.data);
@@ -67,10 +65,6 @@ class MainView extends Component {
       this.props.user.socket.emit('I_CAME_ONLINE', this.props.user._id);
     if (!this.props.user._id) {
       browserHistory.push('/login');
-    }
-    console.log(this.props.teams.active);
-    if (!this.props.teams.active) {
-      browserHistory.push('/');
     }
   });
 
