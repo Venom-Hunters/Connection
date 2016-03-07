@@ -344,3 +344,36 @@ textarea {
 	font-style: italic;
 	color: #999;
 }
+
+.info{
+	height: 30%;
+	width: 40%;
+	padding: 2em;
+	border: 1px solid #D5D5D5;
+	margin-top: 5%;
+}
+
+.align{
+	display: flex;
+	justify-content: center;
+}
+
+.infoButton{
+	color: #F99;
+	margin-left: 0.2em;
+	font-size: 1.5em;
+}
+.infoTitle{
+	color: #3F6BB4;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+
+.info p {
+	font-weight: bold;
+}
+
+.infoList li {
+	padding: 0.5em 0;
+}
