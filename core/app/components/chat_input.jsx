@@ -18,6 +18,10 @@ class ChatInput extends Component {
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
+  componentDidMount() {
+    document.getElementById("chatInputArea").focus();
+  }
+
   onInputChange(event) {
     this.setState({message: event.target.value});
   }
@@ -43,7 +47,7 @@ class ChatInput extends Component {
     return (
       <div className="chatInput">
         <form onSubmit={this.onFormSubmit} className="pure-form chatInputTextarea">
-          <textarea className="chatInputTextarea" onKeyPress={this.handleKeyPress} value={this.state.message} onChange={this.onInputChange} placeholder="Enter a message.."></textarea>
+            <textarea id="chatInputArea" className="chatInputTextarea" onKeyPress={this.handleKeyPress} value={this.state.message} onChange={this.onInputChange} placeholder="Enter a message.."></textarea>
         </form>
       </div>
     );
