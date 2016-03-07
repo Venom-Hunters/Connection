@@ -7,7 +7,8 @@ var teamSchema = mongoose.Schema({
 	members: [{type: mongoose.Schema.Types.ObjectId, ref: "users"}],
 	teamLead: {type: mongoose.Schema.Types.ObjectId, ref: "users"},
 	regToken: {type: "String"},
-	creationDate: {type: "Date"}
+	creationDate: {type: "Date"},
+	sessionId: {type: mongoose.Schema.Types.ObjectId, ref: "chatSessions"}
 });
 
 teamSchema.methods.generateHash = function (regToken) {

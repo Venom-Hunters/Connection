@@ -9,13 +9,14 @@ module.exports = {
 		var newChat = new Chat();
 		newChat.teamId = payload.teamId;
 		newChat.userId = payload._id;
+		newChat.sessionId = payload.teamId.sessionId;
 		newChat.message = payload.message;
 		newChat.timeStamp = new Date();
 		newChat.save(function(err, result) {
-						Chat.findById(result._id, function(err, result) {
-										if (err) return err;
-										dfd.resolve(result);
-						}).populate('teamId userId');
+			Chat.findById(result._id, function(err, result) {
+							if (err) return err;
+							dfd.resolve(result);
+			}).populate('teamId userId');
 		});
 		return dfd.promise;
 	},
@@ -43,7 +44,10 @@ module.exports = {
 		newChatSession.save(function(err, newChatSession) {
 			if (err) return false;
 			else {
-				ChatSession.find({'teamId': teamId}, function(err, result) {
+				ChatSession
+				.findById(newChatSession._id)
+				.populate('teamId')
+				.exec(function(err, result) {
 					if (err) return false;
 					else dfd.resolve(result);
 				})
@@ -51,15 +55,28 @@ module.exports = {
 		});
 		return dfd.promise;
 	},
-	endChatSession: function(teamId) {
+	endChatSession: function(sessionId) {
 		var dfd = q.defer();
-		var newChatSession = new ChatSession();
-		newChatSession.teamId = teamId;
-		newChatSession.timeEnd = new Date();
-		newChatSession.save(function(err, newChatSession) {
-			if (err) return false;
-			else return dfd.resolve(newChatSession);
-		});
+		ChatSession.findById(sessionId, function(err, session) {
+			if (err) return err;
+			else {
+				session.timeEnd = new Date();
+				session.save(function(err, result) {
+					if (err) return result;
+					else {
+						ChatSession
+						.findById(session._id)
+						.populate('teamId')
+						.exec(function(err, result) {
+							if (err) return err;
+							else dfd.resolve(result);
+						})
+						
+					} 
+
+				})
+			}
+		})
 		return dfd.promise;
 	},
 	retrieveTeamChatSessions: function(teamId) {
@@ -70,10 +87,21 @@ module.exports = {
 		});
 		return dfd.promise;
 	},
-	deleteTeamSessionChats: function(req, res, next) {
-		Chat.remove({teamId: req.params.teamId}, function(err) {
-				if (err) res.sendStatus(500);
-				else res.send("chats deleted");
-			});
+	deleteNullSessionTeamChats: function(teamId) {
+		var dfd = q.defer();
+		Chat.find({teamId: teamId}, function(err, chats) {
+			if (err) dfd.resolve(err);
+			else {
+				chats.forEach(function(chat) {
+					if (!chat.sessionId) {
+						Chat.remove({_id: chat._id}, function(err, result) {
+							if (err) return dfd.resolve(err);
+						});
+					}
+				})
+				return dfd.resolve('null chats deleted');
+			}
+		})
+		return dfd.promise;
 	}
 };
