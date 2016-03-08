@@ -46,11 +46,9 @@ class MainView extends Component {
         });
       }.bind(this))
       props.socket.on('CHAT_SESSION_STARTED', function(activeTeam) {
-        console.log('chat: ', activeTeam);
         props.startChatSession(activeTeam);
       })
       props.socket.on('CHAT_SESSION_ENDED', function(activeTeam) {
-        console.log('chat session ended --->',activeTeam);
         props.endChatSession(activeTeam);
       })
     } else if (this.props.socket && !props.socket) {

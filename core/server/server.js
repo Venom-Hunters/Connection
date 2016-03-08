@@ -84,6 +84,7 @@ io.on("connection", function(socket) {
       		socket.join(team._id);
     	});
 	});
+
 	socket.on('LEAVE_ROOMS', function(teamsToLeave) {
 		console.log("Just to make sure it's not <_<");
 		teamsToLeave.forEach(function(team) {
@@ -144,7 +145,6 @@ io.on("connection", function(socket) {
 
 				} else {
 					chatCtrl.deleteNullSessionTeamChats(team._id).then(function(response) {
-						console.log('response', response);
 					});
 				}
 			})
@@ -270,6 +270,8 @@ app.delete("/user/delete/:userId", userCtrl.deleteUser);
 //chat endpoints
 app.post("/chat/:teamId", chatCtrl.create);
 app.get("/chat/:teamId", chatCtrl.readAllChatsInTeam);
+app.get('/chat/sessions/:teamId', chatCtrl.retrieveTeamChatSessions);
+app.get('/chat/sessions/chats/:sessionId', chatCtrl.getSessionChats);
 
 //team endpoints
 app.post("/team/create", teamCtrl.create);

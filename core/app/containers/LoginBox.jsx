@@ -38,6 +38,7 @@ class LoginBox extends Component {
         <div className="registrationErrorMessage">{this.state.error ? this.state.error : ""}</div>
 
 
+
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}  className="pure-form pure-form-aligned">
           <fieldset>
             <div className="pure-control-group">

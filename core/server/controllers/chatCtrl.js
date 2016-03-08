@@ -79,13 +79,19 @@ module.exports = {
 		})
 		return dfd.promise;
 	},
-	retrieveTeamChatSessions: function(teamId) {
-		var dfd = q.defer();
-		ChatSession.find({'teamId': teamId}, function(err, result) {
-			if (err) return false;
-			else dfd.resolve(result);
+	retrieveTeamChatSessions: function(req, res, next) {
+		ChatSession.find({'teamId': req.params.teamId}, function(err, result) {
+			if (err) return res.sendStatus(500);
+			else res.send(result);
 		});
-		return dfd.promise;
+	},
+	getSessionChats: function(req, res, next) {
+		Chat.find({sessionId: req.params.sessionId}, function(err, chats) {
+			if (err) return res.sendStatus(500);
+			else {
+				return res.send(chats);
+			}
+		})
 	},
 	deleteNullSessionTeamChats: function(teamId) {
 		var dfd = q.defer();
