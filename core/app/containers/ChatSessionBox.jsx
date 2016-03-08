@@ -11,9 +11,9 @@ class ChatSessionBox extends Component {
 
   render() {
     return(
-      <div style={{margin: '4px 0'}}>
-        <div style={{fontSize: '1.2em'}}>Chat Sessions:</div>
-        {this.renderChatSessions()}
+      <div style={{paddingTop: '1em', minWidth: '400px'}}>
+        <h3 style={{fontSize: '1.5em'}}>Chat Sessions:</h3>
+        <div style={{overflowY: 'auto'}}>{this.renderChatSessions()}</div>
       </div>
     );
   }
@@ -23,11 +23,11 @@ class ChatSessionBox extends Component {
       return (
         this.props.chatSession.map((session) => {
           let timeStart = new Date(session.timeStart);
-          let timeEnd = new Date(session.timeEnd);
           return (
-            <Link to={'/team/sessions/' + session._id} key={session._id} style={{cursor: 'pointer', display: 'block', color: 'blue'}}>
-              Start: {timeStart.toLocaleString('en-US')} - End: {timeEnd.toLocaleString('en-US')}
-            </Link>
+            <div key={session._id}>
+              <Link to={'/team/sessions/' + session._id} style={{cursor: 'pointer', color: 'blue'}}>Start: {timeStart.toLocaleString('en-US')}</Link>
+              <span> - Messages: {session.chatQty}</span>
+            </div>
           );
         })
       );

@@ -52,7 +52,6 @@ class MainView extends Component {
         props.endChatSession(activeTeam);
       })
     } else if (this.props.socket && !props.socket) {
-      console.log("cleaning socket");
       this.props.socket.off("RECEIVE_MESSAGE");
     }
   }
