@@ -112,6 +112,7 @@ io.on("connection", function(socket) {
       		socket.join(team._id);
     	});
 	});
+
 	socket.on('LEAVE_ROOMS', function(teamsToLeave) {
 		console.log("Just to make sure it's not <_<");
 		teamsToLeave.forEach(function(team) {
@@ -173,7 +174,6 @@ io.on("connection", function(socket) {
 
 				} else {
 					chatCtrl.deleteNullSessionTeamChats(team._id).then(function(response) {
-						console.log('response', response);
 					});
 				}
 			})
@@ -297,6 +297,8 @@ app.delete("/user/delete/:userId", userCtrl.deleteUser);
 //chat endpoints
 app.post("/chat/:teamId", chatCtrl.create);
 app.get("/chat/:teamId", chatCtrl.readAllChatsInTeam);
+app.get('/chat/sessions/:teamId', chatCtrl.retrieveTeamChatSessions);
+app.get('/chat/sessions/chats/:sessionId', chatCtrl.getSessionChats);
 
 //team endpoints
 app.post("/team/create", teamCtrl.create);
@@ -309,4 +311,44 @@ app.put("/team/removeMember/:teamId", teamCtrl.removeMember);
 
 app.get(/^(?!.*(images))/, function (req, res) {
  res.sendFile(path.resolve("public/index.html"));
+
+});
+
+server.listen(config.port, function() {
+  console.log("port", config.port + "!" +'\n'+
+'                    xxxxx   ' + '\n' +
+'                  xXXXXXXXXXx   ' + '\n' +
+'                 XXXXXXXXXXXXX   ' + '\n' +
+'                xXXXXXXXX  XXXx   ' + '\n' +
+'                XXXXXXXXX 0XXXX\\\\\\\\\\\   ' + '\n' +
+'               xXXXXXXXXXxxXXXX\\\\\\\\\\\\   ' + '\n' +
+'               XXXXXXXXXXXXXXXX////// \   ' + '\n' +
+'               XXXXXXXXXXXXXXXXX   ' + '\n' +
+'               XXXXX|\\XXX/|XXXXX   ' + '\n' +
+'               XXXXX| \\-/ |XXXXX   ' + '\n' +
+'              xXXXXX| [ ] |XXXXXx   ' + '\n' +
+'            xXXXX   | /-\\ |   XXXXx   ' + '\n' +
+'         xXXXXX     |/   \\|     XXXXXx   ' + '\n' +
+'       xXXXXXX                   XXXXXXx   ' + '\n' +
+'      xXXXXXXX                   XXXXXXXx   ' + '\n' +
+'     xXXXXXXXX                   XXXXXXXXx   ' + '\n' +
+'    xXXXXXXXXX                   XXXXXXXXXx   ' + '\n' +
+'   xXXXXXXXXXX                   XXXXXXXXXXx   ' + '\n' +
+'  xXXXXXXXXXXX                   XXXXXXXXXXXx   ' + '\n' +
+' xXXXXXXXX XXX                   XXX XXXXXXXXx   ' + '\n' +
+' XXXXXXXX  XXX                   XXX  XXXXXXXX   ' + '\n' +
+'xXXXXXXX   XXX                   XXX   XXXXXXXx   ' + '\n' +
+'XXXXXX     XXX                   XXX     XXXXXX   ' + '\n' +
+'XXXX       XXX                   XXX       XXXX   ' + '\n' +
+' XX        XXX                   XXX        XX   ' + '\n' +
+'           XXX                   XXX   ' + '\n' +
+'           XXX                   XXX   ' + '\n' +
+'           XXX                   XXX   ' + '\n' +
+'           XXX                   XXX   ' + '\n' +
+'           XXXx                 xXXX   ' + '\n' +
+'           XXXXXXXXXXXXXXXXXXXXXXXXX   ' + '\n' +
+'           XXXXXXX           XXXXXXX   ' + '\n' +
+'       ____XXXXXX             XXXXXX____   ' + '\n' +
+'      /________/               \\________\\   ' + '\n');
+
 });

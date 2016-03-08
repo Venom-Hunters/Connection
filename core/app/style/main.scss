@@ -66,6 +66,10 @@ input {
 	padding: 1em;
 }
 
+.registrationLogo {
+	margin-left: 180px;
+}
+
 .registrationContainer {
 	height: 100%;
 	margin: 0 auto;
@@ -88,6 +92,7 @@ input {
 /* Header Menu */
 
 .header {
+	position: relative;
 	padding-top: 2px;
 	padding-left: 2px;
 	border-bottom: 1px solid #D5D5D5;
@@ -102,7 +107,10 @@ input {
 }
 
 .logo{
-	margin-left: 80%;
+
+	position: absolute;
+	bottom: 0;
+	right: 10px;
 }
 /* Content Area */
 
@@ -317,6 +325,7 @@ textarea {
 
 .chatInput {
 	display: flex;
+	flex-direction: column;
 	flex: 1;
 	max-height: 100px;
 	min-height: 100px;

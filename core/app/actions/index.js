@@ -17,6 +17,8 @@ export const SEND_MESSAGE = "SEND_MESSAGE";
 export const JOIN_ROOM = "JOIN_ROOM";
 export const ADD_MESSAGE = "ADD_MESSAGE";
 export const CHAT_SESSION = 'CHAT_SESSION';
+export const CHAT_SESSIONS = 'CHAT_SESSIONS';
+export const SESSION_CHATS = 'SESSION_CHATS';
 export const GET_MESSAGE = "GET_MESSAGE";
 
 export const CREATE_TEAM = "CREATE_TEAM";
@@ -139,6 +141,24 @@ export function endChatSession(activeTeam) {
   return {
     type: CHAT_SESSION,
     payload: activeTeam
+  };
+}
+
+export function getChatSessions(team) {
+  const request = axios.get(`${ROOT_URL}/chat/sessions/${team._id}`);
+
+  return {
+    type: CHAT_SESSIONS,
+    payload: request
+  };
+}
+
+export function getSessionChats(sessionId) {
+  const request = axios.get(`${ROOT_URL}/chat/sessions/chats/${sessionId}`);
+
+  return {
+    type: SESSION_CHATS,
+    payload: request
   };
 }
 

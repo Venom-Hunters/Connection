@@ -9,6 +9,8 @@ import CreateTeamBox from "./containers/CreateTeamBox";
 import ManageTeamBox from "./containers/ManageTeamBox";
 import InviteTeamBox from "./containers/InviteTeamBox";
 import WebRtcBox from "./components/rtc";
+import ChatSessionBox from './containers/ChatSessionBox';
+import ChatSessionByIdBox from './containers/ChatSessionByIdBox';
 
 export default (
   <Route path="/" component={App}>
@@ -17,7 +19,10 @@ export default (
   		<Route path="/team/chat" component={ChatView} />
   		<Route path="/team/create" component={CreateTeamBox} />
   		<Route path="/team/manage" component={ManageTeamBox} />
-      	<Route path="/team/invite" component={InviteTeamBox} />
+      <Route path="/team/invite" component={InviteTeamBox} />
+      <Route path="/team/sessions" component={ChatSessionBox} />
+      <Route path="/team/sessions/:id" component={ChatSessionByIdBox} />
+
     </Route>
     <Route path="rtc" component={WebRtcBox} />
     <Route path="login" component={LoginView} />

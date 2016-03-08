@@ -16,10 +16,6 @@ class SideBar extends Component{
 	componentWillMount() {
         this.props.getUser().then( () => {
             this.props.getUserTeams().then( (response) => {
-            	/*console.log('response', response);
-            	if (response.payload.data.length === 0) {
-            		browserHistory.push('/');
-            	}*/
                 this.props.socket.emit('JOIN_ROOMS', this.props.teams);
             });
         });
@@ -40,7 +36,6 @@ class SideBar extends Component{
 					if (activeTeam) {
 						activeTeam.className = "teamActivity";
 					}
-
 				}
 			}
 		}
@@ -85,7 +80,7 @@ class SideBar extends Component{
 					<div className="dropDownContent">
 						<div className="menuIcon"><span className="menuIconInfo" style={{bottom: '2px'}}>Manage Members</span><Link to="/team/invite" className="zmdi zmdi-account zmdi-hc-2x" style={{fontSize: '2.2em'}}></Link></div>
 						<div className="menuIcon"><span className="menuIconInfo">Manage Team</span><Link to="/team/manage" className="zmdi zmdi-edit zmdi-hc-2x"></Link></div>
-						<div className="menuIcon"><span className="menuIconInfo">Save Chats</span><Link to="/team/invite" className="zmdi zmdi-file zmdi-hc-2x"></Link></div>
+						<div className="menuIcon"><span className="menuIconInfo">Chat Sessions</span><Link to="/team/sessions" className="zmdi zmdi-file zmdi-hc-2x"></Link></div>
 					</div>
 				</div>
 			);

@@ -35,8 +35,10 @@ var WebRTC = (function (_React$Component) {
   }
 
   _createClass(WebRTC, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {}
+    key: 'componentWillUpdate',
+    value: function componentWillUpdate() {
+ }   
+   
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
@@ -50,7 +52,13 @@ var WebRTC = (function (_React$Component) {
       });
 
       console.log("webrtc component mounted");
-      console.log(this.props);
+
+      setTimeout(function() {
+      if (!this.webrtc.roomName && this.props.roomname) {
+      console.log('Hey, were not ini a room.. rejoining...');
+      this.webrtc.joinRoom(this.props.roomname);
+      }
+      }.bind(this), 1000);
      
       this.webrtc.on('videoAdded', this.addVideo);
       this.webrtc.on('videoRemoved', this.removeVideo);
@@ -64,6 +72,9 @@ var WebRTC = (function (_React$Component) {
    console.log(props);
      if (this.webrtc) {
      console.log('WebRTC Found');
+
+       
+       if (this.props.roomname !== props.roomname) {
        var remotes = _reactDom2['default'].findDOMNode(this.refs.remotes);
        if (remotes.firstChild)
        {
@@ -71,10 +82,7 @@ var WebRTC = (function (_React$Component) {
          while (remotes.firstChild) {
            remotes.removeChild(remotes.firstChild);
          }
-       }
-       
-       if (this.props.roomname !== props.roomname) {
-   
+       }    
        console.log("joining room " + props.roomname);
        this.webrtc.joinRoom(props.roomname);
        }
@@ -85,7 +93,8 @@ var WebRTC = (function (_React$Component) {
    {
    key: 'componentWillUnmount',
    value: function componentWillUnmount() {
-     if (this.webrtc) {
+     if (this.webrtc.roomName) {
+     console.log('leaving room.');
      this.webrtc.leaveRoom();
      }
    }
@@ -94,10 +103,14 @@ var WebRTC = (function (_React$Component) {
    {
     key: 'addVideo',
     value: function addVideo(video, peer) {
+      var remotes = _reactDom2['default'].findDOMNode(this.refs.remotes); 
+ 
+   
+   
       console.log('video added', peer.nick);
       console.log(this.refs);
       //  console.log(this.refs.remotes);
-      var remotes = _reactDom2['default'].findDOMNode(this.refs.remotes);
+      
       console.log(remotes);
       if (remotes) {
 
@@ -112,6 +125,7 @@ var WebRTC = (function (_React$Component) {
         console.log(container);
         remotes.appendChild(container);
       }
+   
     }
   }, {
     key: 'removeVideo',
