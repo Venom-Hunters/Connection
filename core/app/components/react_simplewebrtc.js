@@ -55,7 +55,7 @@ var WebRTC = (function (_React$Component) {
 
       setTimeout(function() {
       if (!this.webrtc.roomName && this.props.roomname) {
-      console.log('Hey, were not ini a room.. rejoining...');
+      console.log('Hey, were not in a room.. rejoining...');
       this.webrtc.joinRoom(this.props.roomname);
       }
       }.bind(this), 1000);
@@ -108,6 +108,9 @@ var WebRTC = (function (_React$Component) {
    
    
       console.log('video added', peer.nick);
+      if (!peer.nick) {
+      this.setState({ blah: true });
+      }
       console.log(this.refs);
       //  console.log(this.refs.remotes);
       

@@ -1,5 +1,9 @@
 @import "../../../node_modules/purecss-sass/vendor/assets/stylesheets/_purecss.scss";
 
+* {
+min-height: 0;
+}
+
 html, body {
 	padding: 0;
 	margin: 0;
@@ -311,6 +315,7 @@ textarea {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
+	min-height: 0;
 }
 
 .chatBody {
@@ -319,7 +324,8 @@ textarea {
 	font-size: 1.1em;
 	display: block;
 	padding: 1em;
-	overflow-y: auto;
+	overflow-y: scroll;
+	min-height: 0;
   background-color: #FFF;
 }
 
