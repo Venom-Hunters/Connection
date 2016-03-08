@@ -25,7 +25,9 @@ class ChatBody extends Component {
   }
 
   componentWillReceiveProps(props) {
-    if (!this.props.activeTeam && (props.activeTeam && props.activeTeam._id)) {
+    if (!props.activeTeam) {
+      return;
+    } else if (!this.props.activeTeam && (props.activeTeam && props.activeTeam._id)) {
       this.props.getActiveTeamChats(props.activeTeam._id);
     } else if (this.props.activeTeam && (this.props.activeTeam._id !== props.activeTeam._id)) {
       this.props.getActiveTeamChats(props.activeTeam._id);
@@ -68,7 +70,6 @@ class ChatBody extends Component {
     if (this.props.messages) {
       return (
         <div id="chatBody" className="chatBody">
-          {this.renderChatSessionControls()}
           {this.renderMessages()}
         </div>
       )
@@ -78,34 +79,14 @@ class ChatBody extends Component {
       );
     }
   }
-
-  renderChatSessionControls() {
-    if (!this.props.activeTeam || !this.props.activeTeam.sessionId) {
-      return (
-        <div>
-          <button onClick={this.startChatSession} className="pure-button pure-button-primary">Start Session</button>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <button onClick={this.endChatSession} className="pure-button pure-button-secondary">End Session</button>
-        </div>
-      );
-    }
-  }
-
-  startChatSession() {
-    this.props.socket.emit('START_CHAT_SESSION', this.props.activeTeam);
-  }
-
-  endChatSession() {
-    this.props.socket.emit('END_CHAT_SESSION', this.props.activeTeam);
-  }
 }
 
 function mapStateToProps(state) {
-  return {messages: state.chatMessages, socket: state.user.socket, activeTeam: state.teams.active, user: state.user};
+  return {
+    messages: state.chatMessages,
+    activeTeam: state.teams.active,
+    user: state.user
+  };
 }
 
 function mapDispatchToProps(dispatch) {

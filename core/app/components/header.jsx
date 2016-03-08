@@ -43,10 +43,10 @@ class HeaderBar extends Component {
 							{this.props.user && this.props.user.userName ? <Link className="pure-menu-link" to="/"> {this.props.user.userName} </Link> : ""}
 						</li>
 						{ this.renderLogoutButton(this.props.user) }
-	    		</ul>
-					<img src="../../../assets/img/reylink-logo-sm.png" className="pure-menu-heading pure-menu-link logo"/>
+	    			</ul>
+					<img src="../../../assets/img/reylink-logo-sm.png" className="logo"/>
 				</div>
-		</div>
+			</div>
 		);
 	} else {
 		return <div></div>;
