@@ -16,14 +16,15 @@ class VideoBox extends Component {
          };
 
         return ( <div className="videoBox">
-               <WebRtc roomname={this.props.activeTeam ? this.props.activeTeam._id : "lobby"} options = {infoObject} />
+               <WebRtc roomname={this.props.activeTeam ? this.props.activeTeam._id : "lobby"} username={this.props.username} options = {infoObject} />
           </div>  );
    }   
  }
 
  function mapStateToProps(state) {
    return {
-     activeTeam: state.teams.active
+     activeTeam: state.teams.active,
+     username: state.user.userName
    };
  }
 

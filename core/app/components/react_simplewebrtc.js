@@ -45,11 +45,13 @@ var WebRTC = (function (_React$Component) {
         remoteVideosEl: "",
         autoRequestMedia: true,
         url: this.props.options.signalmasterUrl,
-        socketio: { forceNewConnection: true }
+        socketio: { forceNewConnection: true },
+        nick: this.props.username
       });
 
       console.log("webrtc component mounted");
       console.log(this.props);
+     
       this.webrtc.on('videoAdded', this.addVideo);
       this.webrtc.on('videoRemoved', this.removeVideo);
       this.webrtc.on('readyToCall', this.readyToCall);
@@ -58,16 +60,24 @@ var WebRTC = (function (_React$Component) {
    {
    key: 'componentWillReceiveProps',
    value: function componentWillReceiveProps(props) {
+   console.log('Got props');
+   console.log(props);
      if (this.webrtc) {
-     
+     console.log('WebRTC Found');
        var remotes = _reactDom2['default'].findDOMNode(this.refs.remotes);
-       if (remotes)
+       if (remotes.firstChild)
        {
-       while (remotes.firstChild) {
-         remotes.removeChild(remotes.firstChild);
+         console.log("There are other video streams!");
+         while (remotes.firstChild) {
+           remotes.removeChild(remotes.firstChild);
+         }
        }
-       }
+       
+       if (this.props.roomname !== props.roomname) {
+   
+       console.log("joining room " + props.roomname);
        this.webrtc.joinRoom(props.roomname);
+       }
      }
    }
   },
@@ -84,7 +94,8 @@ var WebRTC = (function (_React$Component) {
    {
     key: 'addVideo',
     value: function addVideo(video, peer) {
-      console.log('video added', peer);
+      console.log('video added', peer.nick);
+      console.log(this.refs);
       //  console.log(this.refs.remotes);
       var remotes = _reactDom2['default'].findDOMNode(this.refs.remotes);
       console.log(remotes);

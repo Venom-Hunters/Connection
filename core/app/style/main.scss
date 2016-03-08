@@ -98,9 +98,12 @@ input {
 }
 
 .gravatarIcon > img {
-	border-radius: 5px;
+	border-radius: 4px;
 }
 
+.logo{
+	margin-left: 80%;
+}
 /* Content Area */
 
 .content {
@@ -331,30 +334,70 @@ textarea {
 
 .guessTxt{
 	display: flex;
-	align-items: flex-start;
-	flex-direction: column;
 }
 
 .userTxt{
 	display: flex;
-	align-items: flex-end;
-	flex-direction: column;
 }
 
 
 .message{
 	width: auto;
-	max-width: 45%; 
+	min-width: 12%;
+	max-width: 700px;
 	height: auto;
-	padding: 5px;
-	color: white;
-	word-break: break-all;
+	color: black;
+	word-break: keep-all;
+	margin-top: 0.5em;
+	margin-left: 1em;
 }
 
 .user{
-	background-color: #1f8dd6;
+	flex-direction: column;
 }
 
 .guess{
-	background-color: #5eb95e;
+	flex-direction: column;
+}
+
+.userName{
+	font-weight: bold;
+}
+
+.time{
+	font-style: italic;
+	color: #999;
+}
+
+.info{
+	height: 30%;
+	width: 40%;
+	padding: 2em;
+	border: 1px solid #D5D5D5;
+	margin-top: 5%;
+}
+
+.align{
+	display: flex;
+	justify-content: center;
+}
+
+.infoButton{
+	color: #F99;
+	margin-left: 0.2em;
+	font-size: 1.5em;
+}
+.infoTitle{
+	color: #3F6BB4;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+
+.info p {
+	font-weight: bold;
+}
+
+.infoList li {
+	padding: 0.5em 0;
 }

@@ -15,24 +15,17 @@ class SideBar extends Component{
 
 	componentWillMount() {
         this.props.getUser().then( () => {
-            this.props.getUserTeams().then( () => {
+            this.props.getUserTeams().then( (response) => {
+            	/*console.log('response', response);
+            	if (response.payload.data.length === 0) {
+            		browserHistory.push('/');
+            	}*/
                 this.props.socket.emit('JOIN_ROOMS', this.props.teams);
             });
         });
     }
 
 	componentWillReceiveProps(props) {
-
-		/*console.log('new prop teams',props.teams);
-		console.log('old teams', this.props.teams);
-		if (props.teams && (props.teams.length === 0)) {
-			console.log('You are not on any teams');
-		}
-		else if (this.props.teams && (this.state.teams.length < props.teams.length)) {
-			console.log('You joined a team');
-		} else if(this.props.teams && (this.state.teams.length > props.teams.length)) {
-			console.log('You left a team');
-		}*/
 		this.setState({
 			teams: props.teams.all,
 			activeTeam: props.activeTeam
@@ -42,7 +35,7 @@ class SideBar extends Component{
 		{
 			let newMessage = props.messages[0];
 			if (this.props.messages[0]._id !== newMessage._id) {
-				if (newMessage.teamId._id !== this.props.activeTeam._id) {
+				if (this.props.activeTeam && (newMessage.teamId._id !== this.props.activeTeam._id)) {
 					var activeTeam = document.getElementById('team_' + newMessage.teamId._id);
 					if (activeTeam) {
 						activeTeam.className = "teamActivity";
@@ -52,7 +45,6 @@ class SideBar extends Component{
 			}
 		}
 	}
-
 
 	clickTeam(team) {
 		this.setState({
