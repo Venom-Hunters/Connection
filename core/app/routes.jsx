@@ -21,6 +21,7 @@ export default (
       <Route path="/team/invite" component={InviteTeamBox} />
       <Route path="/team/sessions" component={ChatSessionBox} />
       <Route path="/team/sessions/:id" component={ChatSessionByIdBox} />
+
     </Route>
     <Route path="login" component={LoginView} />
     <Route path="register" component={RegistrationView} />

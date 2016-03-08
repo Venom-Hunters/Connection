@@ -287,5 +287,39 @@ app.get(/^(?!.*(images))/, function (req, res) {
 });
 
 server.listen(config.port, function() {
-  console.log("port", config.port + "!");
+  console.log("port", config.port + "!" +'\n'+
+'                    xxxxx   ' + '\n' +
+'                  xXXXXXXXXXx   ' + '\n' +
+'                 XXXXXXXXXXXXX   ' + '\n' +
+'                xXXXXXXXX  XXXx   ' + '\n' +
+'                XXXXXXXXX 0XXXX\\\\\\\\\\\   ' + '\n' +
+'               xXXXXXXXXXxxXXXX\\\\\\\\\\\\   ' + '\n' +
+'               XXXXXXXXXXXXXXXX////// \   ' + '\n' +
+'               XXXXXXXXXXXXXXXXX   ' + '\n' +
+'               XXXXX|\\XXX/|XXXXX   ' + '\n' +
+'               XXXXX| \\-/ |XXXXX   ' + '\n' +
+'              xXXXXX| [ ] |XXXXXx   ' + '\n' +
+'            xXXXX   | /-\\ |   XXXXx   ' + '\n' +
+'         xXXXXX     |/   \\|     XXXXXx   ' + '\n' +
+'       xXXXXXX                   XXXXXXx   ' + '\n' +
+'      xXXXXXXX                   XXXXXXXx   ' + '\n' +
+'     xXXXXXXXX                   XXXXXXXXx   ' + '\n' +
+'    xXXXXXXXXX                   XXXXXXXXXx   ' + '\n' +
+'   xXXXXXXXXXX                   XXXXXXXXXXx   ' + '\n' +
+'  xXXXXXXXXXXX                   XXXXXXXXXXXx   ' + '\n' +
+' xXXXXXXXX XXX                   XXX XXXXXXXXx   ' + '\n' +
+' XXXXXXXX  XXX                   XXX  XXXXXXXX   ' + '\n' +
+'xXXXXXXX   XXX                   XXX   XXXXXXXx   ' + '\n' +
+'XXXXXX     XXX                   XXX     XXXXXX   ' + '\n' +
+'XXXX       XXX                   XXX       XXXX   ' + '\n' +
+' XX        XXX                   XXX        XX   ' + '\n' +
+'           XXX                   XXX   ' + '\n' +
+'           XXX                   XXX   ' + '\n' +
+'           XXX                   XXX   ' + '\n' +
+'           XXX                   XXX   ' + '\n' +
+'           XXXx                 xXXX   ' + '\n' +
+'           XXXXXXXXXXXXXXXXXXXXXXXXX   ' + '\n' +
+'           XXXXXXX           XXXXXXX   ' + '\n' +
+'       ____XXXXXX             XXXXXX____   ' + '\n' +
+'      /________/               \\________\\   ' + '\n');
 });

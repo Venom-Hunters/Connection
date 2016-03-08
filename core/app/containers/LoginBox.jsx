@@ -33,7 +33,12 @@ class LoginBox extends Component {
     return(
       <div className="registrationContainer">
       <div className="registration">
+        <div className="registrationLogo"> <img src="../../../assets/img/reylink-logo-sm.png" /> </div>
+        
         <div className="registrationErrorMessage">{this.state.error ? this.state.error : ""}</div>
+
+
+
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}  className="pure-form pure-form-aligned">
           <fieldset>
             <div className="pure-control-group">
