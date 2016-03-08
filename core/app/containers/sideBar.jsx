@@ -55,7 +55,7 @@ class SideBar extends Component{
 
 					<div className="activeTeamName">
 						<span className="activeTeamHeader"> <Link to="/team/chat">{team.teamName} </Link> </span>
-						{this.renderTeamLeadControls()}
+						{this.renderMenuControls()}
 					</div>
 					<ul className="activeTeamMember">
 
@@ -72,7 +72,7 @@ class SideBar extends Component{
 		}
 	}
 
-	renderTeamLeadControls() {
+	renderMenuControls() {
 		if (this.props.user._id === this.props.activeTeam.teamLead._id) {
 			return (
 				<div className="dropDownMenu">
@@ -81,6 +81,15 @@ class SideBar extends Component{
 						<div className="menuIcon"><span className="menuIconInfo" style={{bottom: '2px'}}>Manage Members</span><Link to="/team/invite" className="zmdi zmdi-account zmdi-hc-2x" style={{fontSize: '2.2em'}}></Link></div>
 						<div className="menuIcon"><span className="menuIconInfo">Manage Team</span><Link to="/team/manage" className="zmdi zmdi-edit zmdi-hc-2x"></Link></div>
 						<div className="menuIcon"><span className="menuIconInfo">Chat Sessions</span><Link to="/team/sessions" className="zmdi zmdi-file zmdi-hc-2x"></Link></div>
+					</div>
+				</div>
+			);
+		} else if (this.props.user._id !== this.props.activeTeam.teamLead._id) {
+			return (
+				<div className="dropDownMenu">
+					<i className="zmdi zmdi-menu zmdi-hc-2x" style={{fontSize: '1.4em'}}></i>
+					<div className="dropDownContent">
+						<div className="menuIcon"><span className="menuIconInfo" style={{bottom: '2px'}}>Leave Team</span><Link to="/team/invite" className="zmdi zmdi-arrow-left" style={{fontSize: '2.2em'}}></Link></div>
 					</div>
 				</div>
 			);

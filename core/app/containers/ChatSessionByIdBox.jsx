@@ -26,7 +26,7 @@ class ChatSessionByIdBox extends Component {
         var date = new Date(message.timeStamp);
         return (
           <div  key={message._id} className="userTxt">
-            <Avatar email={this.props.user.email}/>
+            <Avatar email={message.userId.email}/>
             <p className="message user">
               <span className="userName">{message.userId.userName}</span> <span className="time">({date.toLocaleString('en-US')})</span>
               <br/>
