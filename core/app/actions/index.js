@@ -26,6 +26,7 @@ export const UPDATE_TEAM_PROFILE = "UPDATE_TEAM_PROFILE";
 export const DELETE_TEAM = 'DELETE_TEAM';
 export const ADD_MEMBERS_TO_UPDATE = 'ADD_MEMBERS_TO_UPDATE';
 export const CLEAR_MEMBERS_TO_UPDATE = 'CLEAR_MEMBERS_TO_UPDATE';
+export const REMOVE_USER_FROM_TEAM = 'REMOVE_USER_FROM_TEAM';
 
 
 const ROOT_URL = window.location.origin;
@@ -222,5 +223,14 @@ export function addTeamMembers(teamId, newMembers) {
     type: ADD_TEAM_MEMBERS,
     payload: request
 
+  };
+}
+
+export function leaveTeam(teamId, userId) {
+  const request = axios.put(`${ROOT_URL}/team/removeMember/${teamId}`, { userId });
+
+  return {
+    type: REMOVE_USER_FROM_TEAM,
+    payload: request
   };
 }

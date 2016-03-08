@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
-import { getUserTeams, setActiveTeam, getUser } from "../actions/index";
+import { getUserTeams, setActiveTeam, getUser, leaveTeam } from "../actions/index";
 import {colors}  from "../constants/color_scheme";
 import { Link, browserHistory } from "react-router";
 
@@ -11,6 +11,7 @@ class SideBar extends Component{
 		this.state = {
 			teams: {}
 		};
+		this.leaveTeam = this.leaveTeam.bind(this);
 	}
 
 	componentWillMount() {
@@ -46,6 +47,18 @@ class SideBar extends Component{
 			activeTeam: team
 		});
 		this.props.setActiveTeam(team);
+	}
+
+	leaveTeam() {
+		console.log('leaving team');
+		this.props.leaveTeam(this.props.activeTeam._id, this.props.user._id).then(() => {
+			this.props.getUserTeams().then( (response) => {
+				let membersToNotify = this.props.activeTeam.members.map((member) => {
+					return member._id;
+				})
+			    this.props.socket.emit('UPDATE_MEMBERS', membersToNotify);
+			});
+		});
 	}
 
 	renderActiveTeam(team) {
@@ -89,7 +102,7 @@ class SideBar extends Component{
 				<div className="dropDownMenu">
 					<i className="zmdi zmdi-menu zmdi-hc-2x" style={{fontSize: '1.4em'}}></i>
 					<div className="dropDownContent">
-						<div className="menuIcon"><span className="menuIconInfo" style={{bottom: '2px'}}>Leave Team</span><Link to="/team/invite" className="zmdi zmdi-arrow-left" style={{fontSize: '2.2em'}}></Link></div>
+						<div className="menuIcon"><span className="menuIconInfo" style={{bottom: '2px'}}>Leave Team</span><span onClick={this.leaveTeam} className="zmdi zmdi-caret-left-circle" style={{fontSize: '1.5em'}}></span></div>
 					</div>
 				</div>
 			);
@@ -163,4 +176,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps, { getUserTeams, setActiveTeam, getUser })(SideBar);
+export default connect(mapStateToProps, { getUserTeams, setActiveTeam, getUser, leaveTeam })(SideBar);
