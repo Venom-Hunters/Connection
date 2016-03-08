@@ -13,7 +13,7 @@ class MainView extends Component {
     super(props);
 
     this.props.initiateSocket();
-  } 
+  }
 
 
   componentWillReceiveProps(props) {
@@ -60,11 +60,13 @@ class MainView extends Component {
   }
 
   componentDidMount() {
-    
+
     this.props.getUser().then(() => {
       this.props.user.socket.emit('I_CAME_ONLINE', this.props.user._id);
     if (!this.props.user._id) {
       browserHistory.push('/login');
+    } else if (this.props.activeTeam._id) {
+      browserHistory.push('/team/chat');
     }
   });
 

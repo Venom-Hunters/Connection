@@ -16,7 +16,7 @@ export default (
   		<Route path="/team/chat" component={ChatView} />
   		<Route path="/team/create" component={CreateTeamBox} />
   		<Route path="/team/manage" component={ManageTeamBox} />
-      	<Route path="/team/invite" component={InviteTeamBox} />
+      <Route path="/team/invite" component={InviteTeamBox} />
     </Route>
     <Route path="login" component={LoginView} />
     <Route path="register" component={RegistrationView} />
