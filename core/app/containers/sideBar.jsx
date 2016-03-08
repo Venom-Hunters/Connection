@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
-import { getUserTeams, setActiveTeam, getUser, getActiveTeamChats } from "../actions/index";
+import { getUserTeams, setActiveTeam, getUser } from "../actions/index";
 import {colors}  from "../constants/color_scheme";
 import { Link, browserHistory } from "react-router";
 
@@ -154,4 +154,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps, { getUserTeams, setActiveTeam, getUser, getActiveTeamChats })(SideBar);
+export default connect(mapStateToProps, { getUserTeams, setActiveTeam, getUser })(SideBar);

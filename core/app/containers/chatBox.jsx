@@ -6,7 +6,6 @@ import ChatBody from "../components/chat_body";
 import ChatInput from "../components/chat_input";
 import VideoBox from "../components/video";
 import Info from "../components/info";
-import {getActiveTeamChats} from "../actions/index";
 
 
 export default class App extends Component {
@@ -40,10 +39,4 @@ function mapStateToProps(state) {
   return {activeTeam: state.teams.active};
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    getActiveTeamChats
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, null)(App);

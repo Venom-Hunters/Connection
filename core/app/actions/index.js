@@ -13,7 +13,6 @@ export const GET_USER_TEAMS = "GET_USER_TEAMS";
 export const SET_ACTIVE_TEAM = "SET_ACTIVE_TEAM";
 export const GET_ACTIVE_TEAM_CHATS = "GET_ACTIVE_TEAM_CHATS";
 
-export const SEND_MESSAGE = "SEND_MESSAGE";
 export const JOIN_ROOM = "JOIN_ROOM";
 export const ADD_MESSAGE = "ADD_MESSAGE";
 export const CHAT_SESSION = 'CHAT_SESSION';
@@ -119,8 +118,8 @@ export function setActiveTeam(team) {
   };
 }
 
-export function getActiveTeamChats(teamId) {
-  const request = axios.get(`${ROOT_URL}/chat/${teamId}`);
+export function getActiveTeamChats(team) {
+  const request = axios.post(`${ROOT_URL}/chat/read`, team);
 
   return {
     type: GET_ACTIVE_TEAM_CHATS,

@@ -191,17 +191,19 @@ io.on("connection", function(socket) {
 					}
 				}
 			});
-			team.sessionId = chatSession._id;
+			var membersToNotify = chatSession.members.map(function(member) {
+				return member._id.toString();
+			});
 			socketsArray.map(function(connectedUser) {
-				if (chatSession.teamId.members.indexOf(connectedUser.sessionId) !== -1) {
-					io.sockets.connected[connectedUser.socketId].emit('CHAT_SESSION_STARTED', team);
+				if (membersToNotify.indexOf(connectedUser.sessionId.toString()) !== -1) {
+					io.sockets.connected[connectedUser.socketId].emit('CHAT_SESSION_STARTED', chatSession);
 				}
 			});
 		});
 	});
 
 	socket.on('END_CHAT_SESSION', function(team) {
-		chatCtrl.endChatSession(team.sessionId).then(function(chatSession) {
+		chatCtrl.endChatSession(team).then(function(chatSession) {
 			var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
 				if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
 					return {
@@ -210,10 +212,12 @@ io.on("connection", function(socket) {
 					};
 				}
 			});
-			team.sessionId = null;
+			var membersToNotify = chatSession.members.map(function(member) {
+				return member._id.toString();
+			});
 			socketsArray.map(function(connectedUser) {
-				if (chatSession.teamId.members.indexOf(connectedUser.sessionId) !== -1) {
-					io.sockets.connected[connectedUser.socketId].emit('CHAT_SESSION_ENDED', team);
+				if (membersToNotify.indexOf(connectedUser.sessionId.toString()) !== -1) {
+					io.sockets.connected[connectedUser.socketId].emit('CHAT_SESSION_STARTED', chatSession);
 				}
 			});
 		});
@@ -295,8 +299,7 @@ app.delete("/user/delete/:userId", userCtrl.deleteUser);
 //tested through user
 
 //chat endpoints
-app.post("/chat/:teamId", chatCtrl.create);
-app.get("/chat/:teamId", chatCtrl.readAllChatsInTeam);
+app.post("/chat/read", chatCtrl.readAllChatsInTeam);
 app.get('/chat/sessions/:teamId', chatCtrl.retrieveTeamChatSessions);
 app.get('/chat/sessions/chats/:sessionId', chatCtrl.getSessionChats);
 
