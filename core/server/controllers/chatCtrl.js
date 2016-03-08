@@ -1,5 +1,6 @@
 var Chat = require("./../models/chatModel");
 var ChatSession = require('./../models/chatSessionModel');
+var Team = require("./../models/teamModel");
 var q = require("q");
 
 module.exports = {
@@ -21,12 +22,7 @@ module.exports = {
 		return dfd.promise;
 	},
 	readAllChatsInTeam: function(req, res, next) {
-		/*ChatSession
-		.find({'teamId': req.params.teamId})
-		.sort('-timeEnd')
-		.exec(function(err, chatSessions) {
-			console.log('chatSessions', chatSessions);
-		})*/
+		ChatSession
 		Chat
 		.find({"teamId": req.params.teamId})
 		.populate("userId")
@@ -44,37 +40,89 @@ module.exports = {
 		newChatSession.save(function(err, newChatSession) {
 			if (err) return false;
 			else {
-				ChatSession
-				.findById(newChatSession._id)
-				.populate('teamId')
-				.exec(function(err, result) {
-					if (err) return false;
-					else dfd.resolve(result);
+				Team.findById(teamId, function(err, team) {
+					if (err) return dfd.resolve(err);
+					else {
+						team.sessionId = newChatSession._id;
+						team.save(function(err, result) {
+							if (err) return dfd.resolve(err);
+							else {
+								Team.populate(result, {path: 'teamLead members'}, function(err, populateResult) {
+									if (err) return dfd.resolve(err);
+									else return dfd.resolve(populateResult);
+								})
+							}
+						})
+					}
 				})
 			}
 		});
 		return dfd.promise;
 	},
-	endChatSession: function(sessionId) {
+	endChatSession: function(team) {
 		var dfd = q.defer();
-		ChatSession.findById(sessionId, function(err, session) {
-			if (err) return err;
+		ChatSession.findById(team.sessionId, function(err, session) {
+			if (err) return dfd.resolve(err);
 			else {
-				session.timeEnd = new Date();
-				session.save(function(err, result) {
-					if (err) return result;
+				Chat.count({sessionId: session._id}, function(err, result) {
+					if (err) return dfd.resolve(err);
 					else {
-						ChatSession
-						.findById(session._id)
-						.populate('teamId')
-						.exec(function(err, result) {
-							if (err) return err;
-							else dfd.resolve(result);
-						})
-						
-					} 
+						if (result === 0) {
+							ChatSession.findOneAndRemove({_id: session._id}, function(err, findResult) {
+								if (err) return dfd.resolve(err);
+								else {
+									console.log('removing session');
+									Team.findById(team._id, function(err, team) {
+										if (err) return dfd.resolve(err);
+										else {
+											team.sessionId = null;
+											team.save(function(err, result) {
+												if (err) return dfd.resolve(err);
+												else {
+													Team.populate(result, {path: 'teamLead members'}, function(err, populateResult) {
+														if (err) return dfd.resolve(err);
+														else return dfd.resolve(populateResult);
+													})
+												}
+											})
+										}
+									})
+								}
+							})
+						} else {
+							session.chatQty = result;
+							session.timeEnd = new Date();
+							session.save(function(err, saveResult) {
+								if (err) return dfd.resolve(err);
+								else {
+									Team.findById(team._id, function(err, team) {
+										if (err) return dfd.resolve(err);
+										else {
+											team.sessionId = null;
+											team.save(function(err, result) {
+												if (err) return dfd.resolve(err);
+												else {
+													Team.populate(result, {path: 'teamLead members'}, function(err, populateResult) {
+														if (err) return dfd.resolve(err);
+														else return dfd.resolve(populateResult);
+													})
+												}
+											})
+										}
+									})
+/*									ChatSession
+									.findById(session._id)
+									.populate('teamId')
+									.exec(function(err, sessionResult) {
+										if (err) return dfd.resolve(err);
+										else dfd.resolve(sessionResult);
+									})*/
+								} 
 
-				})
+							})
+						}
+					}
+				});
 			}
 		})
 		return dfd.promise;

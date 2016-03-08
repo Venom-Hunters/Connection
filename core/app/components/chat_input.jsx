@@ -77,13 +77,11 @@ class ChatInput extends Component {
   }
 
   startChatSession() {
-    console.log('starting chat session', this.props);
     this.props.socket.emit('START_CHAT_SESSION', this.props.activeTeam);
     document.getElementById("chatInputArea").focus();
   }
 
   endChatSession() {
-    console.log('ending chat session', this.props);
     this.props.socket.emit('END_CHAT_SESSION', this.props.activeTeam);
     document.getElementById("chatInputArea").focus();
   }
