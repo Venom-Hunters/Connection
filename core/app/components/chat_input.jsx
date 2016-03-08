@@ -58,7 +58,6 @@ class ChatInput extends Component {
 
   renderChatSessionControls() {
     if (this.props.user && this.props.activeTeam && (this.props.user._id === this.props.activeTeam.teamLead._id)) {
-      
       if (!this.props.activeTeam || !this.props.activeTeam.sessionId) {
         return (
           <div>

@@ -80,18 +80,24 @@ module.exports = {
 		return dfd.promise;
 	},
 	retrieveTeamChatSessions: function(req, res, next) {
-		ChatSession.find({'teamId': req.params.teamId}, function(err, result) {
-			if (err) return res.sendStatus(500);
-			else res.send(result);
+		ChatSession
+			.find({'teamId': req.params.teamId})
+			.populate('teamId')
+			.exec(function(err, result) {
+				if (err) return res.sendStatus(500);
+				else res.send(result);
 		});
 	},
 	getSessionChats: function(req, res, next) {
-		Chat.find({sessionId: req.params.sessionId}, function(err, chats) {
-			if (err) return res.sendStatus(500);
-			else {
-				return res.send(chats);
-			}
-		})
+		Chat
+			.find({sessionId: req.params.sessionId})
+			.populate('userId')
+			.exec(function(err, chats) {
+				if (err) return res.sendStatus(500);
+				else {
+					return res.send(chats);
+				}
+		});
 	},
 	deleteNullSessionTeamChats: function(teamId) {
 		var dfd = q.defer();
