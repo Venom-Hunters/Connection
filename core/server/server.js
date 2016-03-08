@@ -272,8 +272,7 @@ app.delete("/user/delete/:userId", userCtrl.deleteUser);
 //tested through user
 
 //chat endpoints
-app.post("/chat/:teamId", chatCtrl.create);
-app.get("/chat/:teamId", chatCtrl.readAllChatsInTeam);
+app.post("/chat/read", chatCtrl.readAllChatsInTeam);
 app.get('/chat/sessions/:teamId', chatCtrl.retrieveTeamChatSessions);
 app.get('/chat/sessions/chats/:sessionId', chatCtrl.getSessionChats);
 

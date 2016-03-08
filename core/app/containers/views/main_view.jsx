@@ -46,14 +46,12 @@ class MainView extends Component {
         });
       }.bind(this))
       props.socket.on('CHAT_SESSION_STARTED', function(activeTeam) {
-        console.log('CHAT_SESSION_STARTED', activeTeam);
         props.startChatSession(activeTeam);
       })
       props.socket.on('CHAT_SESSION_ENDED', function(activeTeam) {
         props.endChatSession(activeTeam);
       })
     } else if (this.props.socket && !props.socket) {
-      console.log("cleaning socket");
       this.props.socket.off("RECEIVE_MESSAGE");
     }
   }

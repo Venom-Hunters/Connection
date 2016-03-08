@@ -22,9 +22,13 @@ module.exports = {
 		return dfd.promise;
 	},
 	readAllChatsInTeam: function(req, res, next) {
-		ChatSession
 		Chat
-		.find({"teamId": req.params.teamId})
+		.find({
+			$and: [
+				{'teamId': req.body._id}, 
+				{$or: [{'sessionId': req.body.sessionId}, {'sessionId': {$exists: false}}]}
+			]
+		})
 		.populate("userId")
 		.sort("-timeStamp")
 		.exec(function(err, result) {
@@ -110,15 +114,7 @@ module.exports = {
 											})
 										}
 									})
-/*									ChatSession
-									.findById(session._id)
-									.populate('teamId')
-									.exec(function(err, sessionResult) {
-										if (err) return dfd.resolve(err);
-										else dfd.resolve(sessionResult);
-									})*/
 								} 
-
 							})
 						}
 					}

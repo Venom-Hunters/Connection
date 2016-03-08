@@ -15,7 +15,7 @@ class ChatBody extends Component {
 
   componentDidMount() {
     if (this.props.activeTeam && this.props.activeTeam._id) {
-      this.props.getActiveTeamChats(this.props.activeTeam._id);
+      this.props.getActiveTeamChats(this.props.activeTeam);
     }
   }
 
@@ -28,9 +28,9 @@ class ChatBody extends Component {
     if (!props.activeTeam) {
       return;
     } else if (!this.props.activeTeam && (props.activeTeam && props.activeTeam._id)) {
-      this.props.getActiveTeamChats(props.activeTeam._id);
+      this.props.getActiveTeamChats(props.activeTeam);
     } else if (this.props.activeTeam && (this.props.activeTeam._id !== props.activeTeam._id)) {
-      this.props.getActiveTeamChats(props.activeTeam._id);
+      this.props.getActiveTeamChats(props.activeTeam);
     }
   }
 
