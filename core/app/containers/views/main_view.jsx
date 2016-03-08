@@ -13,7 +13,7 @@ class MainView extends Component {
     super(props);
 
     this.props.initiateSocket();
-  } 
+  }
 
 
   componentWillReceiveProps(props) {
@@ -46,11 +46,9 @@ class MainView extends Component {
         });
       }.bind(this))
       props.socket.on('CHAT_SESSION_STARTED', function(activeTeam) {
-        console.log('chat: ', activeTeam);
         props.startChatSession(activeTeam);
       })
       props.socket.on('CHAT_SESSION_ENDED', function(activeTeam) {
-        console.log('chat session ended --->',activeTeam);
         props.endChatSession(activeTeam);
       })
     } else if (this.props.socket && !props.socket) {
@@ -60,11 +58,13 @@ class MainView extends Component {
   }
 
   componentDidMount() {
-    
+
     this.props.getUser().then(() => {
       this.props.user.socket.emit('I_CAME_ONLINE', this.props.user._id);
     if (!this.props.user._id) {
       browserHistory.push('/login');
+    } else if (this.props.activeTeam._id) {
+      browserHistory.push('/team/chat');
     }
   });
 

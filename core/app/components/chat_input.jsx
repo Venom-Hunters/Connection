@@ -16,6 +16,8 @@ class ChatInput extends Component {
     this.onInputChange = this.onInputChange.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.startChatSession = this.startChatSession.bind(this);
+    this.endChatSession = this.endChatSession.bind(this);
   }
 
   componentDidMount() {
@@ -46,11 +48,45 @@ class ChatInput extends Component {
   render() {
     return (
       <div className="chatInput">
+        {this.renderChatSessionControls()}
         <form onSubmit={this.onFormSubmit} className="pure-form chatInputTextarea">
             <textarea id="chatInputArea" className="chatInputTextarea" onKeyPress={this.handleKeyPress} value={this.state.message} onChange={this.onInputChange} placeholder="Enter a message.."></textarea>
         </form>
       </div>
     );
+  }
+
+  renderChatSessionControls() {
+    if (this.props.user && this.props.activeTeam && (this.props.user._id === this.props.activeTeam.teamLead._id)) {
+      
+      if (!this.props.activeTeam || !this.props.activeTeam.sessionId) {
+        return (
+          <div>
+            <button onClick={this.startChatSession} className="pure-button pure-button-primary" style={{marginBottom: '0.5em', fontSize: '.8em', padding: '5px'}}>Start Session</button>
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            <button onClick={this.endChatSession} className="pure-button pure-button-secondary" style={{marginBottom: '0.5em', fontSize: '.8em', padding: '5px'}}>End Session</button>
+          </div>
+        );
+      }
+    } else {
+      return;
+    }
+  }
+
+  startChatSession() {
+    console.log('starting chat session', this.props);
+    this.props.socket.emit('START_CHAT_SESSION', this.props.activeTeam);
+    document.getElementById("chatInputArea").focus();
+  }
+
+  endChatSession() {
+    console.log('ending chat session', this.props);
+    this.props.socket.emit('END_CHAT_SESSION', this.props.activeTeam);
+    document.getElementById("chatInputArea").focus();
   }
 }
 

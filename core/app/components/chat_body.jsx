@@ -25,7 +25,9 @@ class ChatBody extends Component {
   }
 
   componentWillReceiveProps(props) {
-    if (!this.props.activeTeam && (props.activeTeam && props.activeTeam._id)) {
+    if (!props.activeTeam) {
+      return;
+    } else if (!this.props.activeTeam && (props.activeTeam && props.activeTeam._id)) {
       this.props.getActiveTeamChats(props.activeTeam._id);
     } else if (this.props.activeTeam && (this.props.activeTeam._id !== props.activeTeam._id)) {
       this.props.getActiveTeamChats(props.activeTeam._id);
@@ -76,12 +78,15 @@ class ChatBody extends Component {
         <div>Loading Messages...</div>
       );
     }
-
   }
 }
 
 function mapStateToProps(state) {
-  return {messages: state.chatMessages, socket: state.user.socket, activeTeam: state.teams.active, user: state.user};
+  return {
+    messages: state.chatMessages,
+    activeTeam: state.teams.active,
+    user: state.user
+  };
 }
 
 function mapDispatchToProps(dispatch) {

@@ -22,6 +22,7 @@ class RegisterBox extends Component {
 
     return(
       <div className="registration">
+                <div className="registrationLogo"> <img src="../../../assets/img/reylink-logo-sm.png" /> </div>
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))} className="pure-form pure-form-aligned">
           <fieldset>
             <div className="pure-control-group">
