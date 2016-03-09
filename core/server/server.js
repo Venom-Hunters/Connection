@@ -202,6 +202,7 @@ io.on("connection", function(socket) {
   });
 
   socket.on('UPDATE_MEMBERS', function(memberIdArray) {
+  	console.log('updating members');
   	var socketsArray = Object.keys(io.sockets.connected).map(function(item) {
   		if (io.sockets.connected[item].request.session.passport && io.sockets.connected[item].request.session.passport.user) {
   			return {
