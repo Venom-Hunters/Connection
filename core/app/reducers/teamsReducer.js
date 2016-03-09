@@ -18,6 +18,7 @@ export default function(state = {all: [], active: {}}, action = "") {
       });
 
     case(CREATE_TEAM):
+      location.reload();
       return action.payload.data;
 
     case(GET_USER_TEAMS):
@@ -31,6 +32,8 @@ export default function(state = {all: [], active: {}}, action = "") {
       });
 
     case(SET_ACTIVE_TEAM):
+      console.log('Setting active team...');
+      console.log(action.payload);
       return Object.assign({}, state, {
         active: action.payload
       });

@@ -20,6 +20,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactDom = require('react-dom');
 
+var _c
+
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var WebRTC = (function (_React$Component) {
@@ -59,10 +61,13 @@ var WebRTC = (function (_React$Component) {
       this.webrtc.joinRoom(this.props.roomname);
       }
       }.bind(this), 1000);
-     
+      
+     console.log('CREATING AN EVENT LISTENER');
       this.webrtc.on('videoAdded', this.addVideo);
+      
       this.webrtc.on('videoRemoved', this.removeVideo);
       this.webrtc.on('readyToCall', this.readyToCall);
+      
     }
   },
    {
@@ -95,7 +100,9 @@ var WebRTC = (function (_React$Component) {
    value: function componentWillUnmount() {
      if (this.webrtc.roomName) {
      console.log('leaving room.');
+     this.webrtc.stopLocalVideo();
      this.webrtc.leaveRoom();
+     this.webrtc = {};
      }
    }
   },
@@ -103,11 +110,13 @@ var WebRTC = (function (_React$Component) {
    {
     key: 'addVideo',
     value: function addVideo(video, peer) {
+    
+    console.log('Teams are..');
+    console.log(this.props.teams);
       var remotes = _reactDom2['default'].findDOMNode(this.refs.remotes); 
  
-   
-   
       console.log('video added', peer.nick);
+      console.log(video);
       if (!peer.nick) {
       this.setState({ blah: true });
       }

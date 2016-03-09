@@ -52,7 +52,7 @@ class CreateTeamBox extends Component {
       teamName: ""
     });
 
-    this.context.router.push("/team/chat");
+ 
 
   }
 }
