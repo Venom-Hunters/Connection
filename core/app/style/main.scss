@@ -12,6 +12,30 @@ a {
 	text-decoration: none;
 }
 
+video {
+	height: 200px;
+	margin: 0 0.25em;
+	padding: 0;
+	display: inline-block;
+}
+
+.videoBox > div {
+  display: inline;
+  text-align: center;
+}
+
+.local {
+display: inline;
+}
+
+.remotes {
+display: inline;
+}
+
+.videoContainer {
+display: inline-block;
+}
+
 .root {
 	height: 100%;
 }
@@ -281,6 +305,7 @@ input {
 textarea {
 	box-sizing: border-box;
 	resize: none;
+	min-height: 50px;
 }
 
 .chatBox {
@@ -303,8 +328,8 @@ textarea {
 	display: flex;
 	flex-direction: column;
 	flex: 1;
-	max-height: 200px;
-	min-height: 200px;
+	max-height: 100px;
+	min-height: 100px;
 	margin-bottom: 2em;
 	box-sizing: border-box;
 	padding: 1em;
