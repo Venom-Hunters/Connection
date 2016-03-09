@@ -64,7 +64,6 @@ class ManageTeamBox extends Component {
       _id: this.props.activeTeam._id,
       teamName: this.state.teamName
     }).then((response) => {
-      console.log(response.payload.data.members);
       let membersToNotify = response.payload.data.members.map((member) => {
         return member._id;
       })
