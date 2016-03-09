@@ -18,7 +18,6 @@ export default function(state = {all: [], active: {}}, action = "") {
       });
 
     case(CREATE_TEAM):
-      location.reload();
       return action.payload.data;
 
     case(GET_USER_TEAMS):

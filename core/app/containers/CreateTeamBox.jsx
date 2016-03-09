@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router";
+import { Link, browserHistory } from "react-router";
 import { createTeam, setActiveTeam } from "../actions/index";
+
 
 class CreateTeamBox extends Component {
   constructor(props) {
@@ -46,12 +47,14 @@ class CreateTeamBox extends Component {
     this.props.createTeam({teamName: this.state.teamName}).then((response) => {
       this.props.setActiveTeam(response.payload.data.active);
       this.props.socket.emit('JOIN_ROOMS', response.payload.data.all);
+      browserHistory.push('/team/chat');
     });
 
     this.setState({
       teamName: ""
     });
 
+    
  
 
   }

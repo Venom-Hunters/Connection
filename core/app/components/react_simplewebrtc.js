@@ -52,17 +52,20 @@ var WebRTC = (function (_React$Component) {
         socketio: { forceNewConnection: true },
         nick: this.props.username
       });
+      
+      this.webrtc.leaveRoom();
 
       console.log("webrtc component mounted");
 
       setTimeout(function() {
       if (!this.webrtc.roomName && this.props.roomname) {
-      console.log('Hey, were not in a room.. rejoining...');
-      this.webrtc.joinRoom(this.props.roomname);
-      }
+        console.log('Hey, we\'re not in a room.. rejoining...');
+        this.webrtc.joinRoom(this.props.roomname);
+       }
       }.bind(this), 1000);
       
      console.log('CREATING AN EVENT LISTENER');
+     
       this.webrtc.on('videoAdded', this.addVideo);
       this.webrtc.on('videoRemoved', this.removeVideo);
       this.webrtc.on('readyToCall', this.readyToCall);
@@ -79,7 +82,7 @@ var WebRTC = (function (_React$Component) {
 
        
        if (this.props.roomname !== props.roomname) {
-       var remotes = _reactDom2['default'].findDOMNode(this.refs.remotes);
+      var remotes = _reactDom2['default'].findDOMNode(this.refs.remotes);
        if (remotes.firstChild)
        {
          console.log("There are other video streams!");
@@ -108,14 +111,30 @@ var WebRTC = (function (_React$Component) {
     key: 'addVideo',
     value: function addVideo(video, peer) {
     
+    
+    
     console.log('Teams are..');
     console.log(this.props.teams);
       var remotes = _reactDom2['default'].findDOMNode(this.refs.remotes); 
+      
+      if (!peer.nick) {
+      return;
+      }
+      if (!remotes) {
+      console.log('Video and peer, no remotes: ');
+      console.log(video);
+      console.log(peer);
+      var remotes = document.getElementById('remoteVideos');
+      } else {
+      console.log('Video and peer, remotes: ');
+      console.log(video);
+      console.log(peer);
+      }
  
       console.log('video added', peer.nick);
       console.log(video);
 
-      console.log(this.refs);
+      console.log(this);
       //  console.log(this.refs.remotes);
       
       console.log(remotes);

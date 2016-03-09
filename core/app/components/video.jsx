@@ -23,7 +23,7 @@ class VideoBox extends Component {
          };
 
         return ( <div id="videoBox" className="videoBox">
-               <WebRtc teams={this.props.teams} roomname={this.props.activeTeam ? this.props.activeTeam._id : "lobby"} username={this.props.username} options = {infoObject} />
+               <WebRtc roomname={this.props.activeTeam ? this.props.activeTeam._id : undefined} username={this.props.username} options = {infoObject} />
           </div>  );
    }   
  }
@@ -31,7 +31,6 @@ class VideoBox extends Component {
  function mapStateToProps(state) {
    return {
      activeTeam: state.teams.active,
-     teams: state.teams,
      username: state.user.userName
    };
  }
