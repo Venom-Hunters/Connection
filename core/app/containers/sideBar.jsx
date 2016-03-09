@@ -50,7 +50,6 @@ class SideBar extends Component{
 	}
 
 	leaveTeam() {
-		console.log('leaving team');
 		this.props.leaveTeam(this.props.activeTeam._id, this.props.user._id).then(() => {
 			this.props.getUserTeams().then( (response) => {
 				let membersToNotify = this.props.activeTeam.members.map((member) => {
@@ -125,9 +124,15 @@ class SideBar extends Component{
 	renderTeamList() {
 
 		if (this.props.teams && this.props.teams.length) {
+				let teamsArray = this.props.teams.map((team) => {
+					return team;
+				});
+				teamsArray.sort(function(a, b) {
+  					return a.lowerCaseTeamName == b.lowerCaseTeamName ? 0 : +(a.lowerCaseTeamName < b.lowerCaseTeamName) || -1;
+				});
 				return (
 					<ul className="teamList">
-						{this.props.teams.map((team) => {
+						{teamsArray.map((team) => {
 							if (this.props.activeTeam && (team._id === this.props.activeTeam._id)) {
 								return (
 									<li key={team._id} className="activeTeam">
@@ -137,7 +142,7 @@ class SideBar extends Component{
 							}
 						})}
 
-						{this.props.teams.map((team) => {
+						{teamsArray.map((team) => {
 
 							if (this.props.activeTeam && (team._id === this.props.activeTeam._id)) {
 								return;

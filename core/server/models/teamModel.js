@@ -4,6 +4,7 @@ var mongoose = require("mongoose"),
 
 var teamSchema = mongoose.Schema({
 	teamName: {type: "String"},
+	lowerCaseTeamName: {type: "String"},
 	members: [{type: mongoose.Schema.Types.ObjectId, ref: "users"}],
 	teamLead: {type: mongoose.Schema.Types.ObjectId, ref: "users"},
 	regToken: {type: "String"},

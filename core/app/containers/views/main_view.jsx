@@ -62,7 +62,7 @@ class MainView extends Component {
       this.props.user.socket.emit('I_CAME_ONLINE', this.props.user._id);
     if (!this.props.user._id) {
       browserHistory.push('/login');
-    } else if (this.props.activeTeam._id) {
+    } else if (this.props.activeTeam && this.props.activeTeam._id) {
       browserHistory.push('/team/chat');
     }
   });

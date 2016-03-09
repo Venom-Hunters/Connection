@@ -63,6 +63,11 @@ class ManageTeamBox extends Component {
     this.props.updateTeam({
       _id: this.props.activeTeam._id,
       teamName: this.state.teamName
+    }).then((response) => {
+      let membersToNotify = response.payload.data.members.map((member) => {
+        return member._id;
+      })
+      this.props.socket.emit('UPDATE_MEMBERS', membersToNotify);
     });
 
     this.setState({
@@ -79,7 +84,6 @@ class ManageTeamBox extends Component {
         return member._id;
       })
     this.props.deleteTeam(this.props.activeTeam._id).then(() => {
-      console.log('members to notify: ', membersToNotify);
       this.props.socket.emit('UPDATE_MEMBERS', membersToNotify);
       browserHistory.push('/team/chat');
     });
