@@ -10,7 +10,7 @@ export default class Info extends Component {
           <ol className="infoList">
             <li>To create a new team, click <i className="zmdi zmdi-plus-circle-o infoButton"></i></li>
             <li>Enter a name of the new team you want to create</li>
-            <li>Click <button className="pure-button pure-button-primary">Create</button>!</li>
+            <li>Click <button className="pure-button pure-button-primary" style={{cursor: 'text'}}>Create</button>!</li>
           </ol>
         </div>
       </div>
