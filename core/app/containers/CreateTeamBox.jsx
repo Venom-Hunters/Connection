@@ -44,8 +44,12 @@ class CreateTeamBox extends Component {
     event.preventDefault();
 
     this.props.createTeam({teamName: this.state.teamName}).then((response) => {
+      console.log(response.payload.data);
       this.props.setActiveTeam(response.payload.data.active);
-      this.props.socket.emit('JOIN_ROOMS', response.payload.data.all);
+      let membersToUpdate = response.payload.data.active.members.map((member) => {
+        return member._id;
+      })
+      this.props.socket.emit('UPDATE_MEMBERS',membersToUpdate);
     });
 
     this.setState({

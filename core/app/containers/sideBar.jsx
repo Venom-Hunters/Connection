@@ -56,6 +56,7 @@ class SideBar extends Component{
 					return member._id;
 				})
 			    this.props.socket.emit('UPDATE_MEMBERS', membersToNotify);
+			    browserHistory.push('/');
 			});
 		});
 	}
