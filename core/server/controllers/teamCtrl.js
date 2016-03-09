@@ -14,10 +14,10 @@ module.exports = {
 
 		var newTeam = new Team();
 		newTeam.teamName = req.body.teamName;
+		newTeam.lowerCaseTeamName = req.body.teamName.toLowerCase();
 		newTeam.members = [req.user._id];
 		newTeam.teamLead = req.user._id;
 		newTeam.creationDate = new Date();
-		/*newTeam.regToken = req.body.regToken;*/
 		newTeam.save(function(err, result) {
 		if (err) { return res.sendStatus(500); }
 			Team
@@ -38,16 +38,6 @@ module.exports = {
 			})
 			.populate('members teamLead');
 		});
-
-		/*
-		Hash regToken?
-		newTeam.regToken = newTeam.generateHash(req.body.regToken).then(function(response) {
-			newTeam.regToken = response;
-			newTeam.save(function(err, result) {
-				if (err) res.sendStatus(500);
-				else res.send(result);
-			})
-		})	*/
 		} else {
 			res.sendStatus(500);
 		}
@@ -126,6 +116,7 @@ module.exports = {
 			if (err) return res.sendStatus(500);
 			else {
 				team.teamName = req.body.teamName;
+				team.lowerCaseTeamName = req.body.teamName.toLowerCase();
 				team.save(function(err, result) {
 					if (err) return res.sendStatus(500);
 					else return next();
@@ -164,7 +155,6 @@ module.exports = {
 						membersToAdd.push(ObjectId(proposedMember._id));
 					}
 				});
-				/*team.members = team.members.concat(membersToAdd);*/
 				team.members = req.body;
 				team.save(function(err, result) {
 					if (err) return res.sendStatus(500);
