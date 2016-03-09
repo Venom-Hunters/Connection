@@ -8,6 +8,13 @@ class VideoBox extends Component {
         super(props);    
     }
     
+    componentWillReceiveProps(props) {
+    if (this.props.userName && !props.userName) {
+    React.unmountComponentAtNode(document.getElementById('videoBox'));
+    }
+    
+    }
+    
     render() {
          var infoObject = {
            roomname : this.props.activeTeam ? this.props.activeTeam._id : "lobby",
@@ -15,7 +22,7 @@ class VideoBox extends Component {
            signalmasterUrl : "reylink.com:8888"
          };
 
-        return ( <div className="videoBox">
+        return ( <div id="videoBox" className="videoBox">
                <WebRtc teams={this.props.teams} roomname={this.props.activeTeam ? this.props.activeTeam._id : "lobby"} username={this.props.username} options = {infoObject} />
           </div>  );
    }   

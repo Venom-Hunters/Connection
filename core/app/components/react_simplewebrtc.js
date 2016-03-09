@@ -64,7 +64,6 @@ var WebRTC = (function (_React$Component) {
       
      console.log('CREATING AN EVENT LISTENER');
       this.webrtc.on('videoAdded', this.addVideo);
-      
       this.webrtc.on('videoRemoved', this.removeVideo);
       this.webrtc.on('readyToCall', this.readyToCall);
       
@@ -100,9 +99,7 @@ var WebRTC = (function (_React$Component) {
    value: function componentWillUnmount() {
      if (this.webrtc.roomName) {
      console.log('leaving room.');
-     this.webrtc.stopLocalVideo();
      this.webrtc.leaveRoom();
-     this.webrtc = {};
      }
    }
   },
@@ -117,9 +114,7 @@ var WebRTC = (function (_React$Component) {
  
       console.log('video added', peer.nick);
       console.log(video);
-      if (!peer.nick) {
-      this.setState({ blah: true });
-      }
+
       console.log(this.refs);
       //  console.log(this.refs.remotes);
       

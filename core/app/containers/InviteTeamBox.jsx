@@ -84,6 +84,8 @@ class InviteTeamBox extends Component {
       })
       let membersToNotify = _.union(oldMemberIdArray, updatedMemberIdArray);
       this.props.socket.emit('UPDATE_MEMBERS', membersToNotify);
+    
+      browserHistory.push('/team/chat');
     }.bind(this));
 
   }
