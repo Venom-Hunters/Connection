@@ -309,6 +309,7 @@ input {
 textarea {
 	box-sizing: border-box;
 	resize: none;
+	min-height: 50px;
 }
 
 .chatBox {

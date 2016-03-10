@@ -241,7 +241,7 @@ io.on("connection", function(socket) {
   		}
   	});
   	socketsArray.map(function(connectedUser) {
-  		if (memberIdArray.indexOf(connectedUser.sessionId) !== -1) {
+  		if (connectedUser && memberIdArray.indexOf(connectedUser.sessionId) !== -1) {
   			io.sockets.connected[connectedUser.socketId].emit('UPDATE_TEAMS');
   		}
   	});
