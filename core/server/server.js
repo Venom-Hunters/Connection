@@ -76,7 +76,7 @@ redirectApp.get('*', function(req, res) {
 redirectApp.listen(80);
 
 var lex = LEX.create({
-	configDir: require('os').homedir() + '/letsencrypt/etc',
+	configDir: '/etc/letsencrypt',
 	approveRegistration: function(hostname, cb) {
 		cb(null, {
 			domains: ['reylink.com', 'www.reylink.com'],
